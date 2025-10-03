@@ -1,0 +1,7 @@
+*.iml
+.idea/
+
+bin/
+out/
+
+ignore.me
