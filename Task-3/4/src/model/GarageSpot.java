@@ -1,6 +1,8 @@
+package model;
+
 public class GarageSpot {
-    private static int glonal_id=1; // for serial primary key
-    private int id;
+    private static int global_id=1; // for serial primary key
+    private final int id;
     private boolean isFree = true;
 
     public void occupy(){
@@ -20,7 +22,11 @@ public class GarageSpot {
         }
     }
 
+    public int getId() {
+        return id;
+    }
+
     public GarageSpot() {
-        this.id = glonal_id++;
+        this.id = global_id++;
     }
 }

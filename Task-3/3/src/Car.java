@@ -1,3 +1,5 @@
+import parts.IProductPart;
+
 public class Car implements IProduct{
 
     private IProductPart body;

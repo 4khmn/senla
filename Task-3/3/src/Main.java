@@ -1,3 +1,8 @@
+import steps.BodyStep;
+import steps.ChassisStep;
+import steps.EngineStep;
+import steps.ILineStep;
+
 public class Main {
     public static void main(String[] args) {
         ILineStep bodyStep = new BodyStep();

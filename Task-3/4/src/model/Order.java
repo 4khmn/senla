@@ -1,8 +1,9 @@
-import java.time.LocalDateTime;
+package model;
 
+import java.time.LocalDateTime;
 public class Order {
-    private static int glonal_id=1; // for serial primary key
-    private int id;
+    private static int global_id=1; // for serial primary key
+    private final int id;
     private String description;
     private Master master;
     private GarageSpot garageSpot;
@@ -10,17 +11,42 @@ public class Order {
     private LocalDateTime endTime;
     private OrderStatus orderStatus = OrderStatus.OPEN;
 
+    public int getId() {
+        return id;
+    }
+
     public Order(String description,
                  Master master,
                  GarageSpot garageSpot,
                  LocalDateTime startTime,
                  LocalDateTime endTime) {
-        this.id = glonal_id++;
-        this.description = description;
+        if (startTime.isBefore(endTime)) {
+            this.id = global_id++;
+            this.description = description;
+            this.master = master;
+            this.garageSpot = garageSpot;
+            this.startTime = startTime;
+            this.endTime = endTime;
+        }
+        else{
+            throw new IllegalArgumentException("Invalid time settings: start time must be before end time");
+        }
+    }
+
+    public Master getMaster() {
+        return master;
+    }
+
+    public void setMaster(Master master) {
         this.master = master;
+    }
+
+    public GarageSpot getGarageSpot() {
+        return garageSpot;
+    }
+
+    public void setGarageSpot(GarageSpot garageSpot) {
         this.garageSpot = garageSpot;
-        this.startTime = startTime;
-        this.endTime = endTime;
     }
 
     public void setOrderStatus(OrderStatus orderStatus) {
@@ -50,7 +76,7 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order{" +
+        return "model.Order{" +
                 "id=" + id +
                 ", description='" + description + '\'' +
                 ", master=" + master +

@@ -1,3 +1,6 @@
+import parts.IProductPart;
+import steps.ILineStep;
+
 public class CarAssemblyLine implements IAssemblyLine{
 
     private ILineStep bodyStep;

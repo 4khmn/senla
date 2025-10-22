@@ -1,98 +1,75 @@
+import manager.GarageSpotManager;
+import manager.MasterManager;
+import manager.OrderManager;
+import model.GarageSpot;
+import model.Master;
+import model.Order;
+import result.GarageSpotResult;
+import result.MasterResult;
+import result.OrderResult;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class AutoService {
-    private List<Master> masters;
-    private List<Order> orders;
-    private List<GarageSpot> garageSpots;
+    private final GarageSpotManager garageManager;
+    private final OrderManager orderManager;
+    private final MasterManager masterManager;
 
     public AutoService() {
-        masters = new ArrayList<>();
-        orders = new ArrayList<>();
-        garageSpots = new ArrayList<>();
-    }
-    //Master
-    public void addMaster(Master master){
-        if (!masters.contains(master)){
-            masters.add(master);
-        }
-        else{
-            System.out.println("This master is already exist in System");
-        }
+        List<Master> masters = new ArrayList<>();
+        List<Order> orders = new ArrayList<>();
+        List<GarageSpot> spots = new ArrayList<>();
+
+        this.garageManager = new GarageSpotManager(spots);
+        this.orderManager = new OrderManager(orders);
+        this.masterManager = new MasterManager(masters);
     }
 
-    public void deleteMaster(Master master){
-        if (masters.contains(master)){
-            masters.remove(master);
-        }
-        else{
-            System.out.println("There is no such master in System");
-        }
-    }
-    //GarageSpot
-    public void addGarageSpot(GarageSpot garageSpot){
-        if (!garageSpots.contains(garageSpot)){
-            garageSpots.add(garageSpot);
-        }
-        else{
-            System.out.println("This garage spot is already exist in System");
-        }
+    @Override
+    public String toString() {
+        return "AutoService{" +
+                "garageManager=" + garageManager +
+                ", orderManager=" + orderManager +
+                ", masterManager=" + masterManager +
+                '}';
     }
 
-    public void deleteGarageSpot(GarageSpot garageSpot){
-        if (garageSpots.contains(garageSpot)){
-            garageSpots.remove(garageSpot);
-        }
-        else{
-            System.out.println("There is no such garage spot in System");
-        }
-    }
-    //Order
-    public void addOrder(Order order){
-        if (!orders.contains(order)){
-            orders.add(order);
-        }
-        else{
-            System.out.println("This order is already exist in System");
-        }
+    //model.Master
+    public MasterResult addMaster(Master master){
+        return masterManager.addMaster(master);
     }
 
-    public void deleteOrder(Order order){
-        if (orders.contains(order)){
-            orders.remove(order);
-        }
-        else{
-            System.out.println("There is no such order in System");
-        }
+    public MasterResult deleteMaster(Master master){
+        return masterManager.deleteMaster(master);
+    }
+    //model.GarageSpot
+    public GarageSpotResult addGarageSpot(GarageSpot garageSpot){
+        return garageManager.addGarageSpot(garageSpot);
     }
 
-    public void closeOrder(Order order){
-        if (order.getOrderStatus()==OrderStatus.CLOSED || order.getOrderStatus()==OrderStatus.CANCELLED){
-            System.out.println("This order is already closed or canceled");
-        }
-        else{
-            order.setOrderStatus(OrderStatus.CLOSED);
-        }
+    public GarageSpotResult deleteGarageSpot(GarageSpot garageSpot){
+        return garageManager.deleteGarageSpot(garageSpot);
+    }
+    //model.Order
+    public OrderResult addOrder(Order order){
+        return orderManager.addOrder(order);
     }
 
-    public void cancelOrder(Order order){
-        if (order.getOrderStatus()==OrderStatus.CANCELLED || order.getOrderStatus()==OrderStatus.CLOSED){
-            System.out.println("This order is already canceled or closed");
-        }
-        else{
-            order.setOrderStatus(OrderStatus.CANCELLED);
-        }
+    public OrderResult deleteOrder(Order order){
+        return orderManager.deleteOrder(order);
     }
 
-    public void shiftOrder(Order order, int hours){
-        order.setStartTime(order.getStartTime().plusHours(hours));
-        order.setEndTime(order.getEndTime().plusHours(hours));
-        int index = orders.indexOf(order);
-        for (int i=index+1; i<orders.size(); i++){
-            Order current = orders.get(i);
-            current.setStartTime(current.getStartTime().plusHours(hours));
-            current.setEndTime(current.getEndTime().plusHours(hours));
-        }
+    public OrderResult closeOrder(Order order){
+        return orderManager.closeOrder(order);
+    }
+
+    public OrderResult cancelOrder(Order order){
+        return orderManager.cancelOrder(order);
+    }
+
+    public OrderResult shiftOrder(Order order, int hours){
+        return orderManager.shiftOrder(order, hours);
     }
 
 }
