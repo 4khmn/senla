@@ -9,10 +9,100 @@ import result.OrderResult;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class OrderManager {
     private List<Order> orders;
+    //4
+    public List<Order> ordersSort(int decision){
+        List<Order> sortedOrders = orders.stream()
+                .filter(v -> v.getOrderStatus() != OrderStatus.CANCELLED
+                        && v.getOrderStatus() != OrderStatus.CLOSED)
+                .toList();
+        switch (decision){
+            case 1:
+                //по дате подачи
+                sortedOrders = sortedOrders.stream()
+                        .sorted(Comparator.comparing(Order::getCreatedAt))
+                        .toList();
+                break;
+            case 2:
+                //дата выполнения
+                sortedOrders = sortedOrders.stream()
+                        .sorted(Comparator.comparing(Order::getEndTime))
+                        .toList();
+                break;
+            case 3:
+                //дата планируемого начала выполнения
+                sortedOrders = sortedOrders.stream()
+                        .sorted(Comparator.comparing(Order::getStartTime))
+                        .toList();
+                break;
+            case 4:
+                //по цене
+                sortedOrders = sortedOrders.stream()
+                        .sorted(Comparator.comparing(Order::getPrice))
+                        .toList();
+                break;
+            default:
+                //error
+        }
+        return sortedOrders;
+    }
 
+    //4
+    public List<Order> activeOrdersSort(int decision){
+        List<Order> sortedOrders = orders.stream()
+                .filter(v -> v.getOrderStatus() != OrderStatus.CANCELLED
+                        && v.getOrderStatus() != OrderStatus.CLOSED)
+                .filter(v-> (v.getStartTime().isAfter(LocalDateTime.now())
+                        && v.getEndTime().isBefore(LocalDateTime.now())))
+                .toList();
+        switch (decision){
+            case 1:
+                //по дате подачи
+                sortedOrders = sortedOrders.stream()
+                        .sorted(Comparator.comparing(Order::getCreatedAt))
+                        .toList();
+                break;
+            case 2:
+                //по дате выполнения
+                sortedOrders = sortedOrders.stream()
+                        .sorted(Comparator.comparing(Order::getEndTime))
+                        .toList();
+                break;
+            case 3:
+                //по цене
+                sortedOrders = sortedOrders.stream()
+                        .sorted(Comparator.comparing(Order::getPrice))
+                        .toList();
+                break;
+            default:
+                //error
+        }
+        return sortedOrders;
+    }
+
+
+    //4
+    public Order getOrderByMaster(Master master){
+        Optional<Order> optionalOrder = orders.stream()
+                .filter(v -> v.getMaster().equals(master))
+                .findAny();
+        return optionalOrder.orElse(null);
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    //4
+//    public List<Order> ordersSortByTime(LocalDateTime start, LocalDateTime end, int decision){
+//        switch (decision){
+//
+//        }
+//    }
     public OrderManager(List<Order> orders) {
         this.orders = orders;
     }

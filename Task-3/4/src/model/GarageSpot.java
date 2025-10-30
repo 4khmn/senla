@@ -22,6 +22,14 @@ public class GarageSpot {
         }
     }
 
+    public boolean isFree() {
+        return isFree;
+    }
+
+    public void setFree(boolean free) {
+        isFree = free;
+    }
+
     public int getId() {
         return id;
     }

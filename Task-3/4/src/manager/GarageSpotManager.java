@@ -41,4 +41,12 @@ public class GarageSpotManager {
                 "garageSpots=" + garageSpots +
                 '}';
     }
+
+    public List<GarageSpot> getGarageSpots() {
+        return garageSpots;
+    }
+
+    public void setGarageSpots(List<GarageSpot> garageSpots) {
+        this.garageSpots = garageSpots;
+    }
 }

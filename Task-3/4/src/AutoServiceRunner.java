@@ -12,13 +12,11 @@ public class AutoServiceRunner {
     public static void main(String[] args) {
         Master master1 = new Master("Bob", new BigDecimal(120_000));
         Master master2 = new Master("Alex", new BigDecimal(115_000));
+        Master master3 = new Master("Alex", new BigDecimal(115_000));
         GarageSpot garageSpot1 = new GarageSpot();
         GarageSpot garageSpot2 = new GarageSpot();
-        GarageSpot garageSpot3 = new GarageSpot();
-        Order order1 = new Order("tire fix", master1, garageSpot1, LocalDateTime.now(), LocalDateTime.now().plusHours(2));
-        Order order2 = new Order("check engine", master2, garageSpot1, LocalDateTime.now().plusHours(1), LocalDateTime.now().plusHours(3));
-        Order order3 = new Order("new oil", master1, garageSpot3, LocalDateTime.now().plusHours(1), LocalDateTime.now().plusHours(3));
-        Order order4 = new Order("new color", master1, garageSpot3, LocalDateTime.now().plusHours(6), LocalDateTime.now().plusHours(8));
+        Order order1 = new Order("tire fix", master1, garageSpot1, LocalDateTime.now(), LocalDateTime.now().plusHours(3), new BigDecimal(100));
+        Order order2 = new Order("check engine", master2, garageSpot2, LocalDateTime.now(), LocalDateTime.now().plusHours(3), new BigDecimal(100));
 
         System.out.println(order1);
         System.out.println(master1);
@@ -33,11 +31,6 @@ public class AutoServiceRunner {
         resultGarageSpot = autoService.addGarageSpot(garageSpot2);
         printResultAboutGarageSpot(resultGarageSpot, garageSpot2);
 
-        resultGarageSpot =autoService.addGarageSpot(garageSpot3);
-        printResultAboutGarageSpot(resultGarageSpot, garageSpot3);
-
-        resultGarageSpot = autoService.addGarageSpot(garageSpot3);
-        printResultAboutGarageSpot(resultGarageSpot, garageSpot3);
 
 
 
@@ -48,34 +41,20 @@ public class AutoServiceRunner {
         resultMaster = autoService.addMaster(master2);
         printResultAboutMaster(resultMaster, master2);
 
-        resultMaster = autoService.addMaster(master2);
-        printResultAboutMaster(resultMaster, master2);
 
+        resultMaster = autoService.addMaster(master3);
+        printResultAboutMaster(resultMaster, master3);
 
 
         OrderResult resultOrder = autoService.addOrder(order1);
         printResultAboutOrder(resultOrder, order1);
 
-        resultOrder = autoService.addOrder(order1);
-        printResultAboutOrder(resultOrder, order1);
-
         resultOrder = autoService.addOrder(order2);
         printResultAboutOrder(resultOrder, order2);
 
-        resultOrder = autoService.addOrder(order3);
-        printResultAboutOrder(resultOrder, order3);
-
-        resultOrder = autoService.deleteOrder(order1);
-        printResultAboutOrder(resultOrder, order1);
-        resultOrder = autoService.shiftOrder(order2, 3);
-        printResultAboutOrder(resultOrder, order2);
 
 
-        resultGarageSpot = autoService.deleteGarageSpot(garageSpot2);
-        printResultAboutGarageSpot(resultGarageSpot, garageSpot2);
-
-        resultOrder = autoService.cancelOrder(order4);
-        printResultAboutOrder(resultOrder, order4);
+        System.out.println(autoService.getFreeLotsByDate(LocalDateTime.now().plusHours(1)));
 
         System.out.println(autoService);
 
