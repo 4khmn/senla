@@ -1,39 +1,38 @@
 package manager;
 
 import model.GarageSpot;
-import result.GarageSpotResult;
+import model.TimeSlot;
 
+import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 
 public class GarageSpotManager {
     private List<GarageSpot> garageSpots;
 
+
     public GarageSpotManager(List<GarageSpot> garageSpots) {
         this.garageSpots = garageSpots;
     }
 
-    public GarageSpotResult addGarageSpot(GarageSpot garageSpot){
-        if (!garageSpots.contains(garageSpot)){
-            garageSpots.add(garageSpot);
-            return GarageSpotResult.SUCCESS_ADDED;
-            //System.out.println("garageSpot #" + garageSpot.getId() + " was successfully added");
-        }
-        else{
-            return GarageSpotResult.ALREADY_EXISTS;
-            //System.out.println("This garage spot is already exist in System {garageSpot #" + garageSpot.getId() + "}");
-        }
+
+    public long addGarageSpot(){
+        GarageSpot garageSpot = new GarageSpot();
+        garageSpots.add(garageSpot);
+        return garageSpot.getId();
+    }
+    public boolean addTimeSlot(LocalDateTime start, LocalDateTime end){
+        return true;
     }
 
-    public GarageSpotResult deleteGarageSpot(GarageSpot garageSpot){
-        if (garageSpots.contains(garageSpot)){
-            garageSpots.remove(garageSpot);
-            return GarageSpotResult.SUCCESS_REMOVED;
-            //System.out.println("garageSpot #" + garageSpot.getId() + " was successfully removed");
+    public boolean deleteGarageSpot(long id){
+        for (var v: garageSpots){
+            if (v.getId()==id){
+                garageSpots.remove(v);
+                return true;
+            }
         }
-        else{
-            return GarageSpotResult.NOT_FOUND;
-            //System.out.println("There is no such garage spot in System {garageSpot #" + garageSpot.getId() + "}");
-        }
+        return false;
     }
     @Override
     public String toString() {
@@ -44,9 +43,5 @@ public class GarageSpotManager {
 
     public List<GarageSpot> getGarageSpots() {
         return garageSpots;
-    }
-
-    public void setGarageSpots(List<GarageSpot> garageSpots) {
-        this.garageSpots = garageSpots;
     }
 }

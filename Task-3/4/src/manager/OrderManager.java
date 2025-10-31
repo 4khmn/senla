@@ -4,8 +4,8 @@ import model.GarageSpot;
 import model.Master;
 import model.Order;
 import model.OrderStatus;
-import result.OrderResult;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
@@ -14,13 +14,14 @@ import java.util.stream.Collectors;
 
 public class OrderManager {
     private List<Order> orders;
+
     //4
-    public List<Order> ordersSort(int decision){
+    public List<Order> ordersSort(int decision) {
         List<Order> sortedOrders = orders.stream()
                 .filter(v -> v.getOrderStatus() != OrderStatus.CANCELLED
                         && v.getOrderStatus() != OrderStatus.CLOSED)
                 .toList();
-        switch (decision){
+        switch (decision) {
             case 1:
                 //по дате подачи
                 sortedOrders = sortedOrders.stream()
@@ -47,19 +48,20 @@ public class OrderManager {
                 break;
             default:
                 //error
+                return null;
         }
         return sortedOrders;
     }
 
     //4
-    public List<Order> activeOrdersSort(int decision){
+    public List<Order> activeOrdersSort(int decision) {
         List<Order> sortedOrders = orders.stream()
                 .filter(v -> v.getOrderStatus() != OrderStatus.CANCELLED
                         && v.getOrderStatus() != OrderStatus.CLOSED)
-                .filter(v-> (v.getStartTime().isAfter(LocalDateTime.now())
-                        && v.getEndTime().isBefore(LocalDateTime.now())))
+                .filter(v -> (v.getStartTime().isBefore(LocalDateTime.now())
+                        && v.getEndTime().isAfter(LocalDateTime.now())))
                 .toList();
-        switch (decision){
+        switch (decision) {
             case 1:
                 //по дате подачи
                 sortedOrders = sortedOrders.stream()
@@ -80,13 +82,14 @@ public class OrderManager {
                 break;
             default:
                 //error
+                return null;
         }
         return sortedOrders;
     }
 
 
     //4
-    public Order getOrderByMaster(Master master){
+    public Order getOrderByMaster(Master master) {
         Optional<Order> optionalOrder = orders.stream()
                 .filter(v -> v.getMaster().equals(master))
                 .findAny();
@@ -98,24 +101,51 @@ public class OrderManager {
     }
 
     //4
-//    public List<Order> ordersSortByTime(LocalDateTime start, LocalDateTime end, int decision){
-//        switch (decision){
-//
-//        }
-//    }
+    public List<Order> ordersSortByTime(LocalDateTime start, LocalDateTime end, int decision) {
+        List<Order> ordersAtCurrentTime = orders.stream()
+                .filter(v -> v.getStartTime().isBefore(start) && v.getEndTime().isAfter(end))
+                .toList();
+        switch (decision) {
+            case 1:
+                //по дате подачи
+                ordersAtCurrentTime = ordersAtCurrentTime.stream()
+                        .sorted(Comparator.comparing(Order::getCreatedAt))
+                        .toList();
+                break;
+            case 2:
+                //по дате выполнения
+                ordersAtCurrentTime = ordersAtCurrentTime.stream()
+                        .sorted(Comparator.comparing(Order::getEndTime))
+                        .toList();
+                break;
+            case 3:
+                //по цене
+                ordersAtCurrentTime = ordersAtCurrentTime.stream()
+                        .sorted(Comparator.comparing(Order::getPrice))
+                        .toList();
+                break;
+            default:
+                //error
+                return null;
+        }
+        return ordersAtCurrentTime;
+    }
+
+
     public OrderManager(List<Order> orders) {
         this.orders = orders;
     }
+
     private boolean overlaps(LocalDateTime start1, LocalDateTime end1, LocalDateTime start2, LocalDateTime end2) {
         return start1.isBefore(end2) && start2.isBefore(end1);
     }
 
-    private boolean isMasterAvailable(Master master, LocalDateTime start, LocalDateTime end){
-        for (var v: orders){
-            if (v.getMaster().equals(master)){
-                if (v.getOrderStatus()!=OrderStatus.CLOSED &&
-                v.getOrderStatus()!=OrderStatus.CANCELLED){
-                    if(overlaps(v.getStartTime(), v.getEndTime(), start, end)){
+    private boolean isMasterAvailable(Master master, LocalDateTime start, LocalDateTime end) {
+        for (var v : orders) {
+            if (v.getMaster().equals(master)) {
+                if (v.getOrderStatus() != OrderStatus.CLOSED &&
+                        v.getOrderStatus() != OrderStatus.CANCELLED) {
+                    if (overlaps(v.getStartTime(), v.getEndTime(), start, end)) {
                         return false;
                     }
                 }
@@ -123,12 +153,13 @@ public class OrderManager {
         }
         return true;
     }
-    private boolean isSpotAvailable(GarageSpot garageSpot, LocalDateTime start, LocalDateTime end){
-        for (var v: orders){
-            if (v.getGarageSpot().equals(garageSpot)){
-                if (v.getOrderStatus()!=OrderStatus.CLOSED &&
-                v.getOrderStatus()!=OrderStatus.CANCELLED){
-                    if (overlaps(v.getStartTime(), v.getEndTime(), start, end)){
+
+    private boolean isSpotAvailable(GarageSpot garageSpot, LocalDateTime start, LocalDateTime end) {
+        for (var v : orders) {
+            if (v.getGarageSpot().equals(garageSpot)) {
+                if (v.getOrderStatus() != OrderStatus.CLOSED &&
+                        v.getOrderStatus() != OrderStatus.CANCELLED) {
+                    if (overlaps(v.getStartTime(), v.getEndTime(), start, end)) {
                         return false;
                     }
                 }
@@ -136,105 +167,61 @@ public class OrderManager {
         }
         return true;
     }
-    public OrderResult addOrder(Order order){
-        if (!orders.contains(order)){
-            Master master = order.getMaster();
-            GarageSpot garageSpot = order.getGarageSpot();
-            LocalDateTime start = order.getStartTime();
-            LocalDateTime end = order.getEndTime();
-            if (!isMasterAvailable(master, start, end) &&
-            !isSpotAvailable(garageSpot, start, end)){
-                return OrderResult.MASTER_BUSY_AND_SPOT_OCCUPIED;
-                //System.out.println("Master and garage spot are not available at this time {order #" + order.getId() + "}");
-            }
-            else if(!isMasterAvailable(master, start, end) ) {
-                return OrderResult.MASTER_BUSY;
-                //System.out.println("Master is busy at this time {order #" + order.getId() + "}");
-            }
-            else if (!isSpotAvailable(garageSpot, start, end)){
-                return OrderResult.SPOT_OCCUPIED;
-                //System.out.println("Garage spot is occupied at this time {order #" + order.getId() + "}");
-            }
-            else{
-                orders.add(order);
-                orders.sort(Comparator.comparing(Order::getStartTime));
-                return OrderResult.SUCCESS_ADDED;
-                //System.out.println("Order #" + order.getId() + " was successfully added");
-            }
-        }
-        else{
-            return OrderResult.ALREADY_EXISTS;
-            //System.out.println("This order is already exist in System {order #" + order.getId() + "}");
-        }
+
+    public long addOrder(String description, Master master, GarageSpot garageSpot, LocalDateTime startTime, LocalDateTime endtime,BigDecimal price) {
+        Order order = new Order(description, master, garageSpot, startTime, endtime, price);
+        orders.add(order);
+        orders.sort(Comparator.comparing(Order::getStartTime));
+        return order.getId();
+        //System.out.println("Order #" + order.getId() + " was successfully added");
     }
 
-    public OrderResult deleteOrder(Order order){
-        if (orders.contains(order)){
-            orders.remove(order);
-            return OrderResult.SUCCESS_DELETED;
-            //System.out.println("Order #" + order.getId() + " was successfully deleted");
-        }
-        else{
-            return OrderResult.NOT_FOUND;
-            //System.out.println("There is no such order in System {order #" + order.getId() + "}");
-        }
-    }
-
-    public OrderResult closeOrder(Order order){
-        if (orders.contains(order)) {
-            if (order.getOrderStatus() == OrderStatus.CLOSED || order.getOrderStatus() == OrderStatus.CANCELLED) {
-                return OrderResult.ALREADY_CLOSED_OR_CANCELLED;
-                //System.out.println("This order is already closed or canceled {order #" + order.getId() + "}");
-            } else {
-                order.setOrderStatus(OrderStatus.CLOSED);
-                return OrderResult.SUCCESS_CLOSED;
-                //System.out.println("Order #" + order.getId() + " was successfully closed");
+    public boolean deleteOrder(long id){
+        boolean removed=false;
+        for (var v: orders) {
+            if (v.getId()==id){
+                orders.remove(v);
+                removed=true;
             }
         }
-        else{
-            return OrderResult.NOT_FOUND;
-            //System.out.println("There is no such order in System {order #" + order.getId() + "}");
-        }
+        return removed;
     }
 
-    public OrderResult cancelOrder(Order order){
-        if (orders.contains(order)) {
-            if (order.getOrderStatus() == OrderStatus.CANCELLED || order.getOrderStatus() == OrderStatus.CLOSED) {
-                return OrderResult.ALREADY_CLOSED_OR_CANCELLED;
-                //ystem.out.println("This order is already canceled or closed {order #" + order.getId() + "}");
-            } else {
-                order.setOrderStatus(OrderStatus.CANCELLED);
-                return OrderResult.SUCCESS_CANCELLED;
-                //System.out.println("Order #" + order.getId() + " was successfully cancelled");
+    public Order getOrderById(long id){
+        for (var v: orders){
+            if (v.getId()==id){
+                return v;
             }
         }
-        else{
-            return OrderResult.NOT_FOUND;
-            //System.out.println("There is no such order in System {order #" + order.getId() + "}");
+        return null;
+    }
+
+    public boolean closeOrder(long id){
+        boolean closed = false;
+        for (var v: orders){
+            if (v.getId()==id){
+                v.setOrderStatus(OrderStatus.CLOSED);
+                closed = true;
+            }
         }
+        return closed;
+    }
+
+    public boolean cancelOrder(long id){
+        boolean canceled = false;
+        for (var v: orders){
+            if (v.getId()==id){
+                v.setOrderStatus(OrderStatus.CANCELLED);
+                canceled = true;
+            }
+        }
+        return canceled;
     }
 
 
 
-    public OrderResult shiftOrder(Order order, int hours){
-        order.setEndTime(order.getEndTime().plusHours(hours));
-        int index = orders.indexOf(order);
-        if(index!= -1) {
-            for (int i = index + 1; i < orders.size(); i++) {
-                Order current = orders.get(i);
-                if (current.getMaster().equals(order.getMaster()) ||
-                        current.getGarageSpot().equals(order.getGarageSpot())) {
-                    current.setStartTime(current.getStartTime().plusHours(hours));
-                    current.setEndTime(current.getEndTime().plusHours(hours));
-                }
-            }
-            return OrderResult.SUCCESS_SHIFTED;
-            //System.out.println("Order #" + order.getId() + " was successfully shifted");
-        }
-        else{
-            return OrderResult.NOT_FOUND;
-            //System.out.println("There is no such order in System {order #" + order.getId() + "}");
-        }
+    public boolean shiftOrder(long id, int hours){
+return true;
     }
 
     @Override

@@ -1,18 +1,22 @@
 package model;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class Master {
     private static int global_id=1; // for serial primary key
     private final int id;
     private String name;
     private BigDecimal salary;
-    private boolean isAvailable = true; // с самого начала у работника нету заказа
+    private SortedSet<TimeSlot> calendar;
 
     public Master(String name, BigDecimal salary) {
         this.name = name;
         this.salary = salary;
         id = global_id++;
+        this.calendar = new TreeSet<>();
     }
 
     public int getId() {
@@ -25,24 +29,36 @@ public class Master {
                 "WorkId=" + id +
                 ", name='" + name + '\'' +
                 ", salary=" + salary +
-                ", isAvailable=" + isAvailable +
                 '}';
     }
 
-    public boolean isAvailable() {
-        return isAvailable;
+    public boolean addBusyTime(LocalDateTime start, LocalDateTime end) {
+        TimeSlot newSlot = new TimeSlot(start, end);
+        for (TimeSlot slot : calendar) {
+            if (slot.overlaps(start, end)) {
+                return false;
+            }
+        }
+
+        calendar.add(newSlot);
+        return true;
     }
 
-    public void setAvailable(boolean available) {
-        isAvailable = available;
+    public void freeTimeSlot(LocalDateTime start, LocalDateTime end){
+        calendar.remove(new TimeSlot(start, end));
     }
 
-    public void processTheOrder(Order order){
-
+    public boolean isAvailable(LocalDateTime start, LocalDateTime end) {
+        for (TimeSlot slot : calendar) {
+            if (slot.overlaps(start, end)) {
+                return false;
+            }
+        }
+        return true;
     }
 
-    public void finishTheOrder(Order order){
-
+    public SortedSet<TimeSlot> getCalendar() {
+        return calendar;
     }
 
     public String getName() {
