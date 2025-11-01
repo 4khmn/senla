@@ -82,6 +82,15 @@ public class MasterManager {
         }
         return false;
     }
+
+    public Master getMasterById(long id){
+        for (var v: masters){
+            if (v.getId()==id){
+                return v;
+            }
+        }
+        return null;
+    }
     @Override
     public String toString() {
         return "MasterManager{" +

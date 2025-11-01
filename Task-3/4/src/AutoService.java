@@ -5,6 +5,7 @@ import model.*;
 
 
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -145,31 +146,44 @@ public class AutoService {
     }
     //model.Order
 
+    public Master getMasterById(long id){
+        return masterManager.getMasterById(id);
+    }
+    public Order getOrderById(long id){
+        return orderManager.getOrderById(id);
+    }
 
-    public long addOrder(String description, int duration, BigDecimal price) {
-        LocalDateTime now = LocalDateTime.now();
+
+    public long addOrder(String description, int durationInHours, BigDecimal price) {
         Master selectedMaster = null;
         GarageSpot selectedSpot = null;
         LocalDateTime bestStartTime = null;
 
         for (GarageSpot spot : garageManager.getGarageSpots()) {
-            LocalDateTime spotStartTime = now;
-            while (spot.isAvailable(spotStartTime, spotStartTime.plusHours(duration))) {
-                for (Master master : masterManager.getMasters()) {
-                    if (master.isAvailable(spotStartTime, spotStartTime.plusHours(duration))) {
-                        if (bestStartTime == null || spotStartTime.isBefore(bestStartTime)) {
-                            bestStartTime = spotStartTime;
-                            selectedMaster = master;
-                            selectedSpot = spot;
+            Iterator<TimeSlot> iterator = spot.getCalendar().iterator();
+            LocalDateTime previous = LocalDateTime.now();
+            while(iterator.hasNext()){
+                TimeSlot currentTimeSlot = iterator.next();
+                if(Duration.between(currentTimeSlot.getStart(), previous).toHours() >=durationInHours){
+                    for (var v: masterManager.getMasters()){
+                        Iterator<TimeSlot> iteratorManager = v.getCalendar().iterator();
+                        while(iterator.hasNext()){
+                            TimeSlot currentTimeSlotManager = iterator.next();
+                            if (Duration.between(currentTimeSlot.getStart(), previous).toHours()>=durationInHours){
+                                if(bestStartTime == null || bestStartTime.isAfter(previous)){
+                                    bestStartTime = previous;
+                                    selectedMaster = v;
+                                    selectedSpot = spot;
+                                }
+                            }
                         }
                     }
                 }
-                spotStartTime = spotStartTime.plusMinutes(1);
             }
         }
 
         if (bestStartTime != null && selectedMaster != null && selectedSpot != null) {
-            LocalDateTime endTime = bestStartTime.plusHours(duration);
+            LocalDateTime endTime = bestStartTime.plusHours(durationInHours);
             selectedSpot.addBusyTime(bestStartTime, endTime);
             selectedMaster.addBusyTime(bestStartTime, endTime);
             return orderManager.addOrder(description, selectedMaster, selectedSpot, bestStartTime, endTime, price);
@@ -221,22 +235,52 @@ public class AutoService {
         return false;
     }
 
-    public boolean shiftOrder(long id, int durationInHours){
+    public boolean shiftOrder(long id, int durationToShiftInHours) throws Exception {
         Master master = orderManager.getOrderById(id).getMaster();
         SortedSet<TimeSlot> reversedCalendar = master.getCalendar().reversed();
         Iterator<TimeSlot> iterator = reversedCalendar.iterator();
-        if (iterator.hasNext()) {
+        while(iterator.hasNext()){
             TimeSlot currentTimeSlot = iterator.next();
             master.freeTimeSlot(currentTimeSlot.getStart(), currentTimeSlot.getEnd());
-            master.addBusyTime(currentTimeSlot.getStart().plusHours(durationInHours), currentTimeSlot.getEnd().plusHours(durationInHours));
-
-
-
+            if (!master.addBusyTime(currentTimeSlot.getStart().plusHours(durationToShiftInHours),
+                    currentTimeSlot.getEnd().plusHours(durationToShiftInHours))){
+                throw new Exception("Перенести задание не удалось");
+            }
+        }
+        TimeSlot firstTimeSlot = master.getCalendar().getFirst();
+        master.freeTimeSlot(firstTimeSlot.getStart(), firstTimeSlot.getEnd());
+        if(!master.addBusyTime(firstTimeSlot.getStart().minusHours(durationToShiftInHours), firstTimeSlot.getEnd())){
+            throw new Exception("Перенести задание не удалось");
         }
 
+        Iterator<TimeSlot> iterator2 = master.getCalendar().iterator();
+        LocalDateTime previousEndAt = null;
+        if (iterator2.hasNext()){
+            previousEndAt = iterator2.next().getEnd();
+        }
+        while(iterator2.hasNext()){
+            TimeSlot currentTimeSlot = iterator2.next();
+            if (currentTimeSlot.getStart().minusHours(durationToShiftInHours).isBefore(previousEndAt) ||
+                    currentTimeSlot.getStart().minusHours(durationToShiftInHours).isEqual(previousEndAt)){
+                master.freeTimeSlot(currentTimeSlot.getStart(), currentTimeSlot.getEnd());
+                if(!master.addBusyTime(currentTimeSlot.getStart().minusHours(durationToShiftInHours),
+                        currentTimeSlot.getEnd().minusHours(durationToShiftInHours))){
+                    throw new Exception("Перенести задание не удалось");
+                }
+                previousEndAt = currentTimeSlot.getEnd().minusHours(durationToShiftInHours);
+            }
+            else{
+                master.freeTimeSlot(currentTimeSlot.getStart(), currentTimeSlot.getEnd());
+                long differenceInHours = Math.abs(Duration.between(currentTimeSlot.getStart(), previousEndAt).toHours());
+                if(!master.addBusyTime(currentTimeSlot.getStart().minusHours(differenceInHours),
+                        currentTimeSlot.getEnd().minusHours(differenceInHours))){
+                    throw new Exception("Перенести задание не удалось");
+                }
+                previousEndAt = currentTimeSlot.getEnd().minusHours(differenceInHours);
+            }
+        }
 
-
-
+        return true;
 
     }
 
