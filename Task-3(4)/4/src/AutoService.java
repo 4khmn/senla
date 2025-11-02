@@ -241,7 +241,8 @@ public class AutoService {
     public boolean shiftOrder(long id, int durationToShiftInHours) throws Exception {
         Master master = orderManager.getOrderById(id).getMaster();
         GarageSpot garageSpot = orderManager.getOrderById(id).getGarageSpot();
-        SortedSet<TimeSlot> reversedCalendar = master.getCalendar().reversed();
+        SortedSet<TimeSlot> calendar = master.getCalendar(); // твой обычный TreeSet
+        SortedSet<TimeSlot> reversedCalendar = ((TreeSet<TimeSlot>) calendar).descendingSet();
         //1. перенос всех задач на durationToShiftInHours с конца
         List<TimeSlot> timeSlotsToShift = new ArrayList<>(reversedCalendar);
         List<Order> orders = new ArrayList<>();
@@ -269,7 +270,7 @@ public class AutoService {
                 }
             }
         }
-        TimeSlot firstTimeSlot = timeSlotsToShift.getLast();
+        TimeSlot firstTimeSlot = timeSlotsToShift.get(timeSlotsToShift.size()-1);
 
         master.freeTimeSlot(firstTimeSlot.getStart().plusHours(durationToShiftInHours), firstTimeSlot.getEnd().plusHours(durationToShiftInHours));
         garageSpot.freeTimeSlot(firstTimeSlot.getStart().plusHours(durationToShiftInHours), firstTimeSlot.getEnd().plusHours(durationToShiftInHours));
@@ -282,9 +283,9 @@ public class AutoService {
         LocalDateTime previousEndAt = null;
         //2. возвращение если зря пододвинул в действии 1
         List<TimeSlot> timeSlotsToShift2 = new ArrayList<>(master.getCalendar());
-        previousEndAt = timeSlotsToShift2.getFirst().getEnd();
-        orders = orders.reversed();
-        orders.getFirst().setEndTime(previousEndAt);
+        previousEndAt = timeSlotsToShift2.get(0).getEnd();
+        Collections.reverse(orders);
+        orders.get(0).setEndTime(previousEndAt);
         for (int i=1; i<timeSlotsToShift2.size(); i++){
             TimeSlot currentTimeSlot = timeSlotsToShift2.get(i);
             if (currentTimeSlot.getStart().minusHours(durationToShiftInHours).isAfter(previousEndAt) ||
