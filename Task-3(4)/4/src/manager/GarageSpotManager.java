@@ -1,9 +1,10 @@
 package manager;
 
 import model.GarageSpot;
-import model.TimeSlot;
+
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -20,9 +21,6 @@ public class GarageSpotManager {
         GarageSpot garageSpot = new GarageSpot();
         garageSpots.add(garageSpot);
         return garageSpot.getId();
-    }
-    public boolean addTimeSlot(LocalDateTime start, LocalDateTime end){
-        return true;
     }
 
     public boolean deleteGarageSpot(long id){
@@ -43,5 +41,25 @@ public class GarageSpotManager {
 
     public List<GarageSpot> getGarageSpots() {
         return garageSpots;
+    }
+    //4
+    public GarageSpot getGarageSpotById(long id){
+        for (var v: garageSpots){
+            if (v.getId()==id){
+                return v;
+            }
+        }
+        return null;
+    }
+
+    //4 список свободных мест в сервисных гаражах
+    public List<GarageSpot> getFreeSpots(){
+        List<GarageSpot> freeGarageSpots = new ArrayList<>();
+        for (var v: garageSpots){
+            if (v.isAvailable(LocalDateTime.now(), LocalDateTime.now().plusMinutes(1))){
+                freeGarageSpots.add(v);
+            }
+        }
+        return freeGarageSpots;
     }
 }

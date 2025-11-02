@@ -19,7 +19,7 @@ public class MasterManager {
 
 
     //4
-    public List<Master> mastersSort(int decision, LocalDateTime checkTime, int duration){
+    public List<Master> mastersSort(int decision, LocalDateTime checkTime, int durationInHours){
         List<Master> sortedMasters = masters;
         switch (decision){
             case 1:
@@ -32,22 +32,19 @@ public class MasterManager {
                 //по занятости
                 sortedMasters = sortedMasters.stream()
                         .sorted((master1, master2) -> {
-                            boolean isMaster1Free = master1.isAvailable(checkTime, checkTime.plusHours(duration));
-                            boolean isMaster2Free = master2.isAvailable(checkTime, checkTime.plusHours(duration));
+                            boolean isMaster1Free = master1.isAvailable(checkTime, checkTime.plusHours(durationInHours));
+                            boolean isMaster2Free = master2.isAvailable(checkTime, checkTime.plusHours(durationInHours));
 
                             // если оба свободны, сравниваем их по имени
                             if (isMaster1Free && isMaster2Free) {
                                 return master1.getName().compareTo(master2.getName());
                             }
-
                             if (isMaster1Free) {
                                 return -1;
                             }
-
                             if (isMaster2Free) {
                                 return 1;
                             }
-
                             return 0;
                         })
                         .toList();

@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class OrderManager {
     private List<Order> orders;
 
-    //4
+    //4 список заказов
     public List<Order> ordersSort(int decision) {
         List<Order> sortedOrders = orders.stream()
                 .filter(v -> v.getOrderStatus() != OrderStatus.CANCELLED
@@ -217,11 +217,13 @@ public class OrderManager {
         }
         return canceled;
     }
-
-
-
-    public boolean shiftOrder(long id, int hours){
-return true;
+    public long findOrderByTimeByCurrentMaster(Master master, LocalDateTime date){
+        for (var v: orders){
+            if (v.getMaster().equals(master) && v.getStartTime().isEqual(date)){
+                return v.getId();
+            }
+        }
+        return -1;
     }
 
     @Override
