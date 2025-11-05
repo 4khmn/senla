@@ -165,6 +165,7 @@ public class AutoService {
         System.out.println("Нельзя добавить в данное время.");
         return -1;
     }
+
     //сама записывает на ближайшее время
     public long addOrder(String description, int durationInHours, BigDecimal price) {
         LocalDateTime now = LocalDateTime.now();
@@ -239,89 +240,13 @@ public class AutoService {
     }
 
     public boolean shiftOrder(long id, int durationToShiftInHours) throws Exception {
-        Master master = orderManager.getOrderById(id).getMaster();
-        GarageSpot garageSpot = orderManager.getOrderById(id).getGarageSpot();
-        SortedSet<TimeSlot> calendar = master.getCalendar(); // твой обычный TreeSet
-        SortedSet<TimeSlot> reversedCalendar = ((TreeSet<TimeSlot>) calendar).descendingSet();
-        //1. перенос всех задач на durationToShiftInHours с конца
-        List<TimeSlot> timeSlotsToShift = new ArrayList<>(reversedCalendar);
-        List<Order> orders = new ArrayList<>();
-        for (TimeSlot currentTimeSlot : timeSlotsToShift) {
-            master.freeTimeSlot(currentTimeSlot.getStart(), currentTimeSlot.getEnd());
-            garageSpot.freeTimeSlot(currentTimeSlot.getStart(), currentTimeSlot.getEnd());
-            orders.add(orderManager.getOrderById(orderManager.findOrderByTimeByCurrentMaster(master,currentTimeSlot.getStart())));
-            if (!master.addBusyTime(currentTimeSlot.getStart().plusHours(durationToShiftInHours),
-                    currentTimeSlot.getEnd().plusHours(durationToShiftInHours))){
-                throw new Exception("Перенести задание не удалось");
-            }
-            if (!garageSpot.addBusyTime(currentTimeSlot.getStart().plusHours(durationToShiftInHours),
-                    currentTimeSlot.getEnd().plusHours(durationToShiftInHours))){
-                throw new Exception("Перенести задание не удалось");
-            }
-            //найти заказ по времени у конкретного машино-места
-            for (var v: orderManager.getOrders()){
-                if (v.getGarageSpot().equals(garageSpot)){
-                    if (v.getStartTime().isEqual(currentTimeSlot.getStart())){
-                        if (!v.getMaster().equals(master)){
-                            //делаем сдвиги у других мастеров
-                            shiftOrder(v.getId(), durationToShiftInHours);
-                        }
-                    }
-                }
-            }
+        for (var v: masterManager.getMasters()){
+            v.freeAllSchedule();
         }
-        TimeSlot firstTimeSlot = timeSlotsToShift.get(timeSlotsToShift.size()-1);
-
-        master.freeTimeSlot(firstTimeSlot.getStart().plusHours(durationToShiftInHours), firstTimeSlot.getEnd().plusHours(durationToShiftInHours));
-        garageSpot.freeTimeSlot(firstTimeSlot.getStart().plusHours(durationToShiftInHours), firstTimeSlot.getEnd().plusHours(durationToShiftInHours));
-        if(!master.addBusyTime(firstTimeSlot.getStart(), firstTimeSlot.getEnd().plusHours(durationToShiftInHours))){
-            throw new Exception("Перенести задание не удалось");
+        for (var v: garageManager.getGarageSpots()){
+            v.freeAllSchedule();
         }
-        if(!garageSpot.addBusyTime(firstTimeSlot.getStart(), firstTimeSlot.getEnd().plusHours(durationToShiftInHours))){
-            throw new Exception("Перенести задание не удалось");
-        }
-        LocalDateTime previousEndAt = null;
-        //2. возвращение если зря пододвинул в действии 1
-        List<TimeSlot> timeSlotsToShift2 = new ArrayList<>(master.getCalendar());
-        previousEndAt = timeSlotsToShift2.get(0).getEnd();
-        Collections.reverse(orders);
-        orders.get(0).setEndTime(previousEndAt);
-        for (int i=1; i<timeSlotsToShift2.size(); i++){
-            TimeSlot currentTimeSlot = timeSlotsToShift2.get(i);
-            if (currentTimeSlot.getStart().minusHours(durationToShiftInHours).isAfter(previousEndAt) ||
-                    currentTimeSlot.getStart().minusHours(durationToShiftInHours).isEqual(previousEndAt)){
-                master.freeTimeSlot(currentTimeSlot.getStart(), currentTimeSlot.getEnd());
-                garageSpot.freeTimeSlot(currentTimeSlot.getStart(), currentTimeSlot.getEnd());
-                orders.get(i).setCreatedAt(currentTimeSlot.getStart().minusHours(durationToShiftInHours));
-                orders.get(i).setEndTime(currentTimeSlot.getEnd().minusHours(durationToShiftInHours));
-                if(!master.addBusyTime(currentTimeSlot.getStart().minusHours(durationToShiftInHours),
-                        currentTimeSlot.getEnd().minusHours(durationToShiftInHours))){
-                    throw new Exception("Перенести задание не удалось");
-                }
-                if(!garageSpot.addBusyTime(currentTimeSlot.getStart().minusHours(durationToShiftInHours),
-                        currentTimeSlot.getEnd().minusHours(durationToShiftInHours))){
-                    throw new Exception("Перенести задание не удалось");
-                }
-                previousEndAt = currentTimeSlot.getEnd().minusHours(durationToShiftInHours);
-            }
-            else{
-                master.freeTimeSlot(currentTimeSlot.getStart(), currentTimeSlot.getEnd());
-                garageSpot.freeTimeSlot(currentTimeSlot.getStart(), currentTimeSlot.getEnd());
-                long differenceInHours = Math.abs(Duration.between(currentTimeSlot.getStart(), previousEndAt).toHours());
-                orders.get(i).setCreatedAt(currentTimeSlot.getStart().minusHours(differenceInHours));
-                orders.get(i).setEndTime(currentTimeSlot.getEnd().minusHours(differenceInHours));
-                if(!master.addBusyTime(currentTimeSlot.getStart().minusHours(differenceInHours),
-                        currentTimeSlot.getEnd().minusHours(differenceInHours))){
-                    throw new Exception("Перенести задание не удалось");
-                }
-                if(!garageSpot.addBusyTime(currentTimeSlot.getStart().minusHours(differenceInHours),
-                        currentTimeSlot.getEnd().minusHours(differenceInHours))){
-                    throw new Exception("Перенести задание не удалось");
-                }
-                previousEndAt = currentTimeSlot.getEnd().minusHours(differenceInHours);
-            }
-        }
-        return true;
+        return orderManager.shiftOrder(id, durationToShiftInHours);
     }
 
 

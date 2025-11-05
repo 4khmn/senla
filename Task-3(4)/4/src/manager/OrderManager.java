@@ -1,15 +1,11 @@
 package manager;
 
-import model.GarageSpot;
-import model.Master;
-import model.Order;
-import model.OrderStatus;
+import model.*;
 
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class OrderManager {
@@ -48,7 +44,7 @@ public class OrderManager {
                 break;
             default:
                 //error
-                return null;
+                throw new IllegalArgumentException("Неизвестный тип: " + decision);
         }
         return sortedOrders;
     }
@@ -82,7 +78,7 @@ public class OrderManager {
                 break;
             default:
                 //error
-                return null;
+                throw new IllegalArgumentException("Неизвестный тип: " + decision);
         }
         return sortedOrders;
     }
@@ -126,7 +122,7 @@ public class OrderManager {
                 break;
             default:
                 //error
-                return null;
+                throw new IllegalArgumentException("Неизвестный тип: " + decision);
         }
         return ordersAtCurrentTime;
     }
@@ -136,42 +132,18 @@ public class OrderManager {
         this.orders = orders;
     }
 
-    private boolean overlaps(LocalDateTime start1, LocalDateTime end1, LocalDateTime start2, LocalDateTime end2) {
-        return start1.isBefore(end2) && start2.isBefore(end1);
+    public long addOrderTest(Order order){
+        orders.add(order);
+        order.getMaster().addBusyTime(order.getStartTime(), order.getEndTime());
+        order.getGarageSpot().addBusyTime(order.getStartTime(), order.getEndTime());
+        return order.getId();
     }
-
-    private boolean isMasterAvailable(Master master, LocalDateTime start, LocalDateTime end) {
-        for (var v : orders) {
-            if (v.getMaster().equals(master)) {
-                if (v.getOrderStatus() != OrderStatus.CLOSED &&
-                        v.getOrderStatus() != OrderStatus.CANCELLED) {
-                    if (overlaps(v.getStartTime(), v.getEndTime(), start, end)) {
-                        return false;
-                    }
-                }
-            }
-        }
-        return true;
-    }
-
-    private boolean isSpotAvailable(GarageSpot garageSpot, LocalDateTime start, LocalDateTime end) {
-        for (var v : orders) {
-            if (v.getGarageSpot().equals(garageSpot)) {
-                if (v.getOrderStatus() != OrderStatus.CLOSED &&
-                        v.getOrderStatus() != OrderStatus.CANCELLED) {
-                    if (overlaps(v.getStartTime(), v.getEndTime(), start, end)) {
-                        return false;
-                    }
-                }
-            }
-        }
-        return true;
-    }
-
     public long addOrder(String description, Master master, GarageSpot garageSpot, LocalDateTime startTime, LocalDateTime endtime,BigDecimal price) {
         Order order = new Order(description, master, garageSpot, startTime, endtime, price);
         orders.add(order);
-        orders.sort(Comparator.comparing(Order::getStartTime));
+        Collections.sort(orders);
+        order.getMaster().addBusyTime(order.getStartTime(), order.getEndTime());
+        order.getGarageSpot().addBusyTime(order.getStartTime(), order.getEndTime());
         return order.getId();
         //System.out.println("Order #" + order.getId() + " was successfully added");
     }
@@ -224,6 +196,58 @@ public class OrderManager {
             }
         }
         return -1;
+    }
+
+    public boolean shiftOrder(long id, int durationToShiftInHours){
+        Order orderToShift = getOrderById(id);
+        List<Order> ordersFromOrderToShift = orders.subList(orders.indexOf(orderToShift), orders.size());
+
+        List<Order> copy = new ArrayList<>(ordersFromOrderToShift);
+        copy.remove(orderToShift);
+        orderToShift.setEndTime(orderToShift.getEndTime().plusHours(durationToShiftInHours));
+
+
+        copy.add(orderToShift);
+        int index = 1;
+        Order next = copy.get(index);
+        Collections.sort(copy);
+        while(index<copy.size()) {
+            List<Order> range = copy.subList(copy.indexOf(orderToShift), index);
+
+            for (var v : new ArrayList<>(range)) {
+                if (isConflict(v, next)) {
+                    Duration shift = Duration.between(next.getStartTime(), v.getEndTime());
+                    if (!shift.isNegative()) {
+                        copy.remove(next);
+
+
+                        next.setStartTime(next.getStartTime().plus(shift));
+                        next.setEndTime(next.getEndTime().plus(shift));
+
+                        copy.add(index, next);
+                    }
+                }
+            }
+            if (index<copy.size()-1) {
+                next = copy.get(index + 1);
+            }
+            index+=1;
+        }
+        Collections.sort(orders);
+        for (var v: orders){
+            v.getMaster().addBusyTime(v.getStartTime(), v.getEndTime());
+        }
+        for (var v: orders){
+            v.getGarageSpot().addBusyTime(v.getStartTime(), v.getEndTime());
+        }
+        return true;
+    }
+
+    private boolean isConflict(Order a, Order b) {
+        boolean sameMaster = a.getMaster().equals(b.getMaster());
+        boolean sameSpot = a.getGarageSpot().equals(b.getGarageSpot());
+        boolean timeOverlap = !a.getEndTime().isBefore(b.getStartTime());
+        return (sameMaster || sameSpot) && timeOverlap;
     }
 
     @Override

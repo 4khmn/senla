@@ -2,7 +2,7 @@ package model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-public class Order {
+public class Order implements Comparable<Order> {
     private static int global_id=1; // for serial primary key
     private final int id;
     private String description;
@@ -107,5 +107,17 @@ public class Order {
                 ", endTime=" + endTime +
                 ", orderStatus=" + orderStatus +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Order other) {
+        int cmp = this.startTime.compareTo(other.startTime);
+        if (cmp == 0) {
+            cmp = this.endTime.compareTo(other.endTime);
+        }
+        if (cmp == 0) {
+            cmp = Integer.compare(this.id, other.id); // или hashCode(), если нет id
+        }
+        return cmp;
     }
 }

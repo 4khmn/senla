@@ -50,7 +50,7 @@ public class MasterManager {
                 break;
             default:
                 //error
-                return null;
+                throw new IllegalArgumentException("Неизвестный тип: " + decision);
         }
         return sortedMasters;
     }

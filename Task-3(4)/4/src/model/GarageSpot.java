@@ -21,14 +21,11 @@ public class GarageSpot {
 
     public boolean addBusyTime(LocalDateTime start, LocalDateTime end) {
         TimeSlot newSlot = new TimeSlot(start, end);
-        for (TimeSlot slot : calendar) {
-            if (slot.overlaps(start, end)) {
-                return false;
-            }
-        }
-
         calendar.add(newSlot);
         return true;
+    }
+    public void freeAllSchedule(){
+        this.calendar = new TreeSet<>();
     }
     public void freeTimeSlot(LocalDateTime start, LocalDateTime end){
         calendar.remove(new TimeSlot(start, end));
