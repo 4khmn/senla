@@ -1,5 +1,6 @@
 package model;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 public class Order implements Comparable<Order> {
     private static int global_id=1; // for serial primary key
@@ -10,16 +11,27 @@ public class Order implements Comparable<Order> {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private OrderStatus orderStatus = OrderStatus.OPEN;
+    private BigDecimal price;
+    private LocalDateTime createdAt;
 
     public int getId() {
         return id;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     public Order(String description,
                  Master master,
                  GarageSpot garageSpot,
                  LocalDateTime startTime,
-                 LocalDateTime endTime) {
+                 LocalDateTime endTime,
+                 BigDecimal price) {
         if (startTime.isBefore(endTime)) {
             this.id = global_id++;
             this.description = description;
@@ -27,10 +39,20 @@ public class Order implements Comparable<Order> {
             this.garageSpot = garageSpot;
             this.startTime = startTime;
             this.endTime = endTime;
+            this.price = price;
+            this.createdAt = LocalDateTime.now();
         }
         else{
             throw new IllegalArgumentException("Invalid time settings: start time must be before end time");
         }
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Master getMaster() {
