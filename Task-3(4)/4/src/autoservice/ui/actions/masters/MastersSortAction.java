@@ -1,0 +1,48 @@
+package autoservice.ui.actions.masters;
+
+import autoservice.model.AutoService;
+import autoservice.model.entities.Master;
+import autoservice.model.enums.MastersSortEnum;
+import autoservice.ui.actions.IAction;
+
+import java.util.List;
+import java.util.Scanner;
+
+public class MastersSortAction implements IAction {
+    private final AutoService service;
+
+    public MastersSortAction(AutoService autoService) {
+        this.service = autoService;
+    }
+
+    @Override
+    public void execute() {
+        if (service.getMastersCount() == 0) {
+            System.out.println("В авто-сервисе нету мастеров.");
+            return;
+        }
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Выберите критерий сортировки:\n" +
+                "1 - по алфавиту\n" +
+                "2 - по занятости");
+        System.out.print("Ваш выбор: ");
+        MastersSortEnum sortType = null;
+        while (sortType == null) {
+            int decision = sc.nextInt();
+            sortType = switch (decision) {
+                case 1 -> MastersSortEnum.BY_NAME;
+                case 2 -> MastersSortEnum.BY_EMPLOYMENT;
+                default -> {
+                    System.out.println("Попробуйте еще раз!");
+                    yield null;
+                }
+            };
+        }
+        List<Master> masters = service.mastersSort(sortType);
+
+        System.out.println("Списко заказов: ");
+        for (var v : masters) {
+            System.out.println(v);
+        }
+    }
+}
