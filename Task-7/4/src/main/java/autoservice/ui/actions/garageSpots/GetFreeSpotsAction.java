@@ -1,8 +1,8 @@
-package main.java.autoservice.ui.actions.garageSpots;
+package autoservice.ui.actions.garageSpots;
 
-import main.java.autoservice.model.AutoService;
-import main.java.autoservice.model.entities.GarageSpot;
-import main.java.autoservice.ui.actions.IAction;
+import autoservice.model.AutoService;
+import autoservice.model.entities.GarageSpot;
+import autoservice.ui.actions.IAction;
 
 import java.util.List;
 

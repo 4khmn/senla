@@ -1,6 +1,6 @@
-package main.java.autoservice.ui.menu;
+package autoservice.ui.menu;
 
-import main.java.autoservice.ui.actions.IAction;
+import autoservice.ui.actions.IAction;
 
 public class MenuItem {
     private String title;

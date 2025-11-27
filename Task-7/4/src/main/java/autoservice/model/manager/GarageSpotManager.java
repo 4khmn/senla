@@ -1,6 +1,6 @@
-package main.java.autoservice.model.manager;
+package autoservice.model.manager;
 
-import main.java.autoservice.model.entities.GarageSpot;
+import autoservice.model.entities.GarageSpot;
 
 
 import java.time.LocalDateTime;

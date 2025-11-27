@@ -1,8 +1,8 @@
-package main.java.autoservice.model.manager;
+package autoservice.model.manager;
 
-import main.java.autoservice.model.entities.Master;
-import main.java.autoservice.model.entities.Order;
-import main.java.autoservice.model.enums.MastersSortEnum;
+import autoservice.model.entities.Master;
+import autoservice.model.entities.Order;
+import autoservice.model.enums.MastersSortEnum;
 
 import java.math.BigDecimal;
 import java.time.Duration;

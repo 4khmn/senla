@@ -1,6 +1,6 @@
-package main.java.autoservice.ui.factory;
+package autoservice.ui.factory;
 
-import main.java.autoservice.ui.menu.Menu;
+import autoservice.ui.menu.Menu;
 
 public interface IMenuFactory {
     Menu createMainMenu();

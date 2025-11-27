@@ -1,6 +1,7 @@
-package main.java.autoservice.ui.menu;
+package autoservice.ui.menu;
 
-import main.java.autoservice.ui.actions.IAction;
+import autoservice.ui.actions.IAction;
+
 import java.util.ArrayList;
 import java.util.List;
 

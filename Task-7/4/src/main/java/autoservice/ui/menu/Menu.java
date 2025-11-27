@@ -1,4 +1,4 @@
-package main.java.autoservice.ui.menu;
+package autoservice.ui.menu;
 
 public class Menu {
     private String name;

@@ -1,11 +1,11 @@
-package main.java.autoservice.model.io;
+package autoservice.model.io;
 
-import main.java.autoservice.model.entities.GarageSpot;
-import main.java.autoservice.model.entities.Master;
-import main.java.autoservice.model.entities.Order;
-import main.java.autoservice.model.manager.GarageSpotManager;
-import main.java.autoservice.model.manager.MasterManager;
-import main.java.autoservice.model.manager.OrderManager;
+import autoservice.model.entities.GarageSpot;
+import autoservice.model.entities.Master;
+import autoservice.model.entities.Order;
+import autoservice.model.manager.GarageSpotManager;
+import autoservice.model.manager.MasterManager;
+import autoservice.model.manager.OrderManager;
 
 import java.io.*;
 

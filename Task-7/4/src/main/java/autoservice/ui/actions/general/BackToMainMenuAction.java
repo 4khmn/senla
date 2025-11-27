@@ -1,7 +1,7 @@
-package main.java.autoservice.ui.actions.general;
+package autoservice.ui.actions.general;
 
-import main.java.autoservice.ui.actions.IAction;
-import main.java.autoservice.ui.menu.Navigator;
+import autoservice.ui.actions.IAction;
+import autoservice.ui.menu.Navigator;
 
 public class BackToMainMenuAction implements IAction {
     @Override

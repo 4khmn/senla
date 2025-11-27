@@ -1,20 +1,20 @@
-package main.java.autoservice.ui.factory;
+package autoservice.ui.factory;
 
-import main.java.autoservice.model.AutoService;
-import main.java.autoservice.ui.actions.garageSpots.AddGarageSpotAction;
-import main.java.autoservice.ui.actions.garageSpots.DeleteGarageSpotAction;
-import main.java.autoservice.ui.actions.garageSpots.GetFreeSpotsAction;
-import main.java.autoservice.ui.actions.garageSpots.GetNumberOfFreeSpotsByDateAction;
-import main.java.autoservice.ui.actions.general.*;
-import main.java.autoservice.ui.actions.general.*;
-import main.java.autoservice.ui.actions.masters.AddMasterAction;
-import main.java.autoservice.ui.actions.masters.DeleteMasterAction;
-import main.java.autoservice.ui.actions.masters.GetMasterByOrderAction;
-import main.java.autoservice.ui.actions.masters.MastersSortAction;
-import main.java.autoservice.ui.actions.orders.*;
-import main.java.autoservice.ui.actions.orders.*;
-import main.java.autoservice.ui.menu.Menu;
-import main.java.autoservice.ui.menu.MenuBuilder;
+import autoservice.model.AutoService;
+import autoservice.ui.actions.garageSpots.AddGarageSpotAction;
+import autoservice.ui.actions.garageSpots.DeleteGarageSpotAction;
+import autoservice.ui.actions.garageSpots.GetFreeSpotsAction;
+import autoservice.ui.actions.garageSpots.GetNumberOfFreeSpotsByDateAction;
+import autoservice.ui.actions.general.*;
+import autoservice.ui.actions.general.*;
+import autoservice.ui.actions.masters.AddMasterAction;
+import autoservice.ui.actions.masters.DeleteMasterAction;
+import autoservice.ui.actions.masters.GetMasterByOrderAction;
+import autoservice.ui.actions.masters.MastersSortAction;
+import autoservice.ui.actions.orders.*;
+import autoservice.ui.actions.orders.*;
+import autoservice.ui.menu.Menu;
+import autoservice.ui.menu.MenuBuilder;
 
 public class ConsoleMenuFactory implements IMenuFactory {
     private final AutoService service = AutoService.getInstance();

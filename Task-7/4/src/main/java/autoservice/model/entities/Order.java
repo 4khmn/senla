@@ -1,6 +1,6 @@
-package main.java.autoservice.model.entities;
+package autoservice.model.entities;
 
-import main.java.autoservice.model.enums.OrderStatus;
+import autoservice.model.enums.OrderStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

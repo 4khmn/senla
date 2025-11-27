@@ -1,4 +1,4 @@
-package main.java.autoservice.model.entities;
+package autoservice.model.entities;
 
 import java.time.LocalDateTime;
 import java.util.Objects;

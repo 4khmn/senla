@@ -1,12 +1,12 @@
-package main.java.autoservice.model.manager;
+package autoservice.model.manager;
 
-import main.java.autoservice.model.entities.GarageSpot;
-import main.java.autoservice.model.entities.Master;
-import main.java.autoservice.model.entities.Order;
-import main.java.autoservice.model.enums.ActiveOrdersSortEnum;
-import main.java.autoservice.model.enums.OrderStatus;
-import main.java.autoservice.model.enums.OrdersSortByTimeFrameEnum;
-import main.java.autoservice.model.enums.OrdersSortEnum;
+import autoservice.model.entities.GarageSpot;
+import autoservice.model.entities.Master;
+import autoservice.model.entities.Order;
+import autoservice.model.enums.ActiveOrdersSortEnum;
+import autoservice.model.enums.OrderStatus;
+import autoservice.model.enums.OrdersSortByTimeFrameEnum;
+import autoservice.model.enums.OrdersSortEnum;
 
 import java.math.BigDecimal;
 import java.time.Duration;

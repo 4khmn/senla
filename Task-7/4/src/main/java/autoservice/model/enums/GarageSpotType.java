@@ -1,4 +1,4 @@
-package main.java.autoservice.model.enums;
+package autoservice.model.enums;
 
 public enum GarageSpotType {
     DIAGNOSTIC,

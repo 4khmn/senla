@@ -1,8 +1,8 @@
-package main.java.autoservice.ui.controller;
+package autoservice.ui.controller;
 
-import main.java.autoservice.ui.factory.ConsoleMenuFactory;
-import main.java.autoservice.ui.factory.IMenuFactory;
-import main.java.autoservice.ui.menu.Navigator;
+import autoservice.ui.factory.ConsoleMenuFactory;
+import autoservice.ui.factory.IMenuFactory;
+import autoservice.ui.menu.Navigator;
 
 import java.util.Scanner;
 

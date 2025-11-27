@@ -1,9 +1,9 @@
-package main.java.autoservice.ui.actions.orders;
+package autoservice.ui.actions.orders;
 
-import main.java.autoservice.model.AutoService;
-import main.java.autoservice.model.entities.Order;
-import main.java.autoservice.model.enums.ActiveOrdersSortEnum;
-import main.java.autoservice.ui.actions.IAction;
+import autoservice.model.AutoService;
+import autoservice.model.entities.Order;
+import autoservice.model.enums.ActiveOrdersSortEnum;
+import autoservice.ui.actions.IAction;
 
 import java.util.List;
 import java.util.Scanner;

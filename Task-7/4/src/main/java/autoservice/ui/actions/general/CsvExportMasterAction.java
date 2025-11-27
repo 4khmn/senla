@@ -1,7 +1,7 @@
-package main.java.autoservice.ui.actions.general;
+package autoservice.ui.actions.general;
 
-import main.java.autoservice.model.AutoService;
-import main.java.autoservice.ui.actions.IAction;
+import autoservice.model.AutoService;
+import autoservice.ui.actions.IAction;
 
 import java.io.IOException;
 

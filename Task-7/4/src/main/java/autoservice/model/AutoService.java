@@ -1,21 +1,21 @@
-package main.java.autoservice.model;
+package autoservice.model;
 
-import main.java.autoservice.model.entities.GarageSpot;
-import main.java.autoservice.model.entities.Master;
-import main.java.autoservice.model.entities.Order;
-import main.java.autoservice.model.enums.*;
-import main.java.autoservice.model.enums.ActiveOrdersSortEnum;
-import main.java.autoservice.model.enums.MastersSortEnum;
-import main.java.autoservice.model.enums.OrdersSortByTimeFrameEnum;
-import main.java.autoservice.model.enums.OrdersSortEnum;
-import main.java.autoservice.model.exceptions.CsvParsingException;
-import main.java.autoservice.model.exceptions.IllegalGarageSpotSize;
-import main.java.autoservice.model.exceptions.ImportException;
-import main.java.autoservice.model.io.CsvExportService;
-import main.java.autoservice.model.io.CsvImportService;
-import main.java.autoservice.model.manager.GarageSpotManager;
-import main.java.autoservice.model.manager.MasterManager;
-import main.java.autoservice.model.manager.OrderManager;
+import autoservice.model.entities.GarageSpot;
+import autoservice.model.entities.Master;
+import autoservice.model.entities.Order;
+import autoservice.model.enums.*;
+import autoservice.model.enums.ActiveOrdersSortEnum;
+import autoservice.model.enums.MastersSortEnum;
+import autoservice.model.enums.OrdersSortByTimeFrameEnum;
+import autoservice.model.enums.OrdersSortEnum;
+import autoservice.model.exceptions.CsvParsingException;
+import autoservice.model.exceptions.IllegalGarageSpotSize;
+import autoservice.model.exceptions.ImportException;
+import autoservice.model.io.CsvExportService;
+import autoservice.model.io.CsvImportService;
+import autoservice.model.manager.GarageSpotManager;
+import autoservice.model.manager.MasterManager;
+import autoservice.model.manager.OrderManager;
 
 
 import java.io.IOException;
