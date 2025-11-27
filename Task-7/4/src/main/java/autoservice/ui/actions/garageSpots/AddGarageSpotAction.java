@@ -1,5 +1,6 @@
 package autoservice.ui.actions.garageSpots;
 
+import autoservice.config.AppConfig;
 import autoservice.model.AutoService;
 import autoservice.ui.actions.IAction;
 
@@ -14,17 +15,16 @@ public class AddGarageSpotAction implements IAction {
     @Override
     public void execute() {
 
-
         Scanner sc = new Scanner(System.in);
-        System.out.println("Введите размер места в метрах квадратных");
         double size;
         boolean hasLift;
         boolean hasPit;
         while(true) {
+            System.out.println("Введите размер места в метрах квадратных");
             size = sc.nextDouble();
-            if (size<=8.00){
+            if (size<8.00){
                 System.out.println("Минимальный резмер места - 8");
-                sc.next();
+                sc.nextLine();
             }
             else{
                 break;

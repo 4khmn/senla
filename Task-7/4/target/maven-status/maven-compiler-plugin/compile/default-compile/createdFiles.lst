@@ -14,7 +14,6 @@ autoservice\ui\actions\IAction.class
 autoservice\AutoServiceRunner.class
 autoservice\model\entities\TimeSlot.class
 autoservice\ui\menu\Menu.class
-autoservice\bkjvhb.class
 autoservice\ui\actions\orders\AddOrderAtCurrentTimeAction.class
 autoservice\model\exceptions\CsvParsingException.class
 autoservice\model\manager\GarageSpotManager.class
@@ -31,6 +30,7 @@ autoservice\ui\factory\ConsoleMenuFactory.class
 autoservice\model\enums\OrdersSortByTimeFrameEnum.class
 autoservice\ui\menu\MenuBuilder.class
 autoservice\ui\actions\orders\OrdersSortByTimeFrameAction.class
+autoservice\config\AppConfig.class
 autoservice\ui\actions\general\CsvImportMastersAction.class
 autoservice\ui\actions\orders\DeleteOrderAction.class
 autoservice\model\enums\OrdersSortEnum.class

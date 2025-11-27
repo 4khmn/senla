@@ -1,5 +1,6 @@
 package autoservice.model;
 
+import autoservice.config.AppConfig;
 import autoservice.model.entities.GarageSpot;
 import autoservice.model.entities.Master;
 import autoservice.model.entities.Order;
@@ -150,8 +151,13 @@ public class AutoService {
         return masterManager.deleteMaster(id);
     }
     //model.GarageSpot
-    public long addGarageSpot(double size, boolean hasLift, boolean hasPit){
+    public long addGarageSpot(double size, boolean hasLift, boolean hasPit) {
         return garageManager.addGarageSpot(size, hasLift, hasPit);
+    }
+
+
+    public boolean deleteGarageSpot(long id){
+        return garageManager.deleteGarageSpot(id);
     }
 
     public MasterManager getMasterManager(){
@@ -162,10 +168,6 @@ public class AutoService {
     }
     public GarageSpotManager getGarageManager(){
         return garageManager;
-    }
-
-    public boolean deleteGarageSpot(long id){
-        return garageManager.deleteGarageSpot(id);
     }
 
     public Master getMasterById(long id){
