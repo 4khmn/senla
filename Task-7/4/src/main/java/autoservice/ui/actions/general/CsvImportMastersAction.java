@@ -24,7 +24,7 @@ public class CsvImportMastersAction implements IAction {
         } catch (ImportException e) {
             System.out.println(e.getMessage());
         } catch(IOException e){
-            System.out.println("Файл не найден. Создайте файл по пути <Task-3(6)/4/data/...>");
+            System.out.println("Файл не найден. Создайте файл по пути <resources/data/masters.csv>");
         } catch(CsvParsingException e){
             System.out.println(e.getMessage());
         }
