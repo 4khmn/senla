@@ -1,17 +1,13 @@
-package autoservice.model.io;
+package main.java.autoservice.model.io;
 
-import autoservice.model.AutoService;
-import autoservice.model.entities.GarageSpot;
-import autoservice.model.entities.Master;
-import autoservice.model.entities.Order;
-import autoservice.model.enums.OrderStatus;
-import autoservice.model.manager.GarageSpotManager;
-import autoservice.model.manager.MasterManager;
-import autoservice.model.manager.OrderManager;
+import main.java.autoservice.model.entities.GarageSpot;
+import main.java.autoservice.model.entities.Master;
+import main.java.autoservice.model.entities.Order;
+import main.java.autoservice.model.manager.GarageSpotManager;
+import main.java.autoservice.model.manager.MasterManager;
+import main.java.autoservice.model.manager.OrderManager;
 
 import java.io.*;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 public class CsvExportService {
     OrderManager orderManager;

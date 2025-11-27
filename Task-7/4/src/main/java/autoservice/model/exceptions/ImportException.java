@@ -1,4 +1,4 @@
-package autoservice.model.exceptions;
+package main.java.autoservice.model.exceptions;
 
 public class ImportException extends RuntimeException {
     public ImportException(String message) {

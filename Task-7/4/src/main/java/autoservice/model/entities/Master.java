@@ -1,4 +1,4 @@
-package autoservice.model.entities;
+package main.java.autoservice.model.entities;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

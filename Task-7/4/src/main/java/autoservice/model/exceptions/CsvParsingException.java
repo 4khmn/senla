@@ -1,4 +1,4 @@
-package autoservice.model.exceptions;
+package main.java.autoservice.model.exceptions;
 
 public class CsvParsingException extends RuntimeException {
     public CsvParsingException(String message) {

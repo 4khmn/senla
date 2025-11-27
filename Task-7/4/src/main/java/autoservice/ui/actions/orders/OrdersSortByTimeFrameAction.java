@@ -1,9 +1,9 @@
-package autoservice.ui.actions.orders;
+package main.java.autoservice.ui.actions.orders;
 
-import autoservice.model.AutoService;
-import autoservice.model.entities.Order;
-import autoservice.model.enums.OrdersSortByTimeFrameEnum;
-import autoservice.ui.actions.IAction;
+import main.java.autoservice.model.AutoService;
+import main.java.autoservice.model.entities.Order;
+import main.java.autoservice.model.enums.OrdersSortByTimeFrameEnum;
+import main.java.autoservice.ui.actions.IAction;
 
 import java.time.LocalDateTime;
 import java.util.List;

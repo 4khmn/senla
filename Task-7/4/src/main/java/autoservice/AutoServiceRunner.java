@@ -1,9 +1,6 @@
-package autoservice;
+package main.java.autoservice;
 
-import autoservice.model.AutoService;
-import autoservice.ui.controller.MenuController;
-
-import java.math.BigDecimal;
+import main.java.autoservice.ui.controller.MenuController;
 
 public class AutoServiceRunner {
     public static void main(String[] args) {

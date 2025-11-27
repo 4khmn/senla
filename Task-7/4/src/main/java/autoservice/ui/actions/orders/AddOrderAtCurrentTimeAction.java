@@ -1,7 +1,7 @@
-package autoservice.ui.actions.orders;
+package main.java.autoservice.ui.actions.orders;
 
-import autoservice.model.AutoService;
-import autoservice.ui.actions.IAction;
+import main.java.autoservice.model.AutoService;
+import main.java.autoservice.ui.actions.IAction;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

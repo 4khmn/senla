@@ -1,13 +1,11 @@
-package autoservice.ui.actions.general;
+package main.java.autoservice.ui.actions.general;
 
-import autoservice.model.AutoService;
-import autoservice.model.exceptions.CsvParsingException;
-import autoservice.model.exceptions.IllegalGarageSpotSize;
-import autoservice.model.exceptions.ImportException;
-import autoservice.model.io.CsvImportService;
-import autoservice.ui.actions.IAction;
+import main.java.autoservice.model.AutoService;
+import main.java.autoservice.model.exceptions.CsvParsingException;
+import main.java.autoservice.model.exceptions.IllegalGarageSpotSize;
+import main.java.autoservice.model.exceptions.ImportException;
+import main.java.autoservice.ui.actions.IAction;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class CsvImportGarageSpotsAction implements IAction {

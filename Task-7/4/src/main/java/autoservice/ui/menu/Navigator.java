@@ -1,4 +1,4 @@
-package autoservice.ui.menu;
+package main.java.autoservice.ui.menu;
 
 public class Navigator {
     private static Navigator instance;

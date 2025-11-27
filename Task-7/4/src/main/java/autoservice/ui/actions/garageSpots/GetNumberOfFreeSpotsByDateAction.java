@@ -1,7 +1,7 @@
-package autoservice.ui.actions.garageSpots;
+package main.java.autoservice.ui.actions.garageSpots;
 
-import autoservice.model.AutoService;
-import autoservice.ui.actions.IAction;
+import main.java.autoservice.model.AutoService;
+import main.java.autoservice.ui.actions.IAction;
 
 import java.time.LocalDateTime;
 import java.util.Scanner;

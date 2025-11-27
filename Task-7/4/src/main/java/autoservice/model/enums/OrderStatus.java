@@ -1,4 +1,4 @@
-package autoservice.model.enums;
+package main.java.autoservice.model.enums;
 
 public enum OrderStatus {
     OPEN,
