@@ -1,10 +1,8 @@
 package autoservice.model;
 
-import autoservice.config.AppConfig;
 import autoservice.model.entities.GarageSpot;
 import autoservice.model.entities.Master;
 import autoservice.model.entities.Order;
-import autoservice.model.enums.*;
 import autoservice.model.enums.ActiveOrdersSortEnum;
 import autoservice.model.enums.MastersSortEnum;
 import autoservice.model.enums.OrdersSortByTimeFrameEnum;
@@ -12,8 +10,10 @@ import autoservice.model.enums.OrdersSortEnum;
 import autoservice.model.exceptions.CsvParsingException;
 import autoservice.model.exceptions.IllegalGarageSpotSize;
 import autoservice.model.exceptions.ImportException;
-import autoservice.model.io.CsvExportService;
-import autoservice.model.io.CsvImportService;
+import autoservice.model.io.imports.CsvImportService;
+import autoservice.model.io.exports.GarageSpotsCsvExport;
+import autoservice.model.io.exports.MastersCsvExport;
+import autoservice.model.io.exports.OrdersCsvExport;
 import autoservice.model.manager.GarageSpotManager;
 import autoservice.model.manager.MasterManager;
 import autoservice.model.manager.OrderManager;
@@ -32,8 +32,11 @@ public class AutoService {
     private final GarageSpotManager garageManager;
     private final OrderManager orderManager;
     private final MasterManager masterManager;
-    private final CsvExportService exportService;
     private final CsvImportService importService;
+
+    private final GarageSpotsCsvExport garageSpotsCsvExport;
+    private final MastersCsvExport mastersCsvExport;
+    private final OrdersCsvExport ordersCsvExport;
 
     private AutoService() {
         List<Master> masters = new ArrayList<>();
@@ -44,7 +47,9 @@ public class AutoService {
         this.orderManager = new OrderManager(orders);
         this.masterManager = new MasterManager(masters);
         this.importService = new CsvImportService(orderManager, garageManager, masterManager);
-        this.exportService = new CsvExportService(orderManager, garageManager, masterManager);
+        this.garageSpotsCsvExport = new GarageSpotsCsvExport(garageManager);
+        this.mastersCsvExport = new MastersCsvExport(masterManager);
+        this.ordersCsvExport = new OrdersCsvExport(orderManager);
     }
     public static AutoService getInstance() {
         return instance;
@@ -303,13 +308,13 @@ public class AutoService {
     }
 
     public void exportMasters() throws IOException {
-        exportService.exportMasters();
+        mastersCsvExport.export();
     }
     public void exportGarageSpots() throws IOException {
-        exportService.exportGarageSpots();
+        garageSpotsCsvExport.export();
     }
     public void exportOrders() throws IOException {
-        exportService.exportOrders();
+        ordersCsvExport.export();
     }
 
 

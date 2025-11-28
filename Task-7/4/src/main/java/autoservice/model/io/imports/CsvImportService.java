@@ -1,4 +1,4 @@
-package autoservice.model.io;
+package autoservice.model.io.imports;
 
 import autoservice.config.AppConfig;
 import autoservice.model.entities.GarageSpot;
@@ -21,6 +21,11 @@ public class CsvImportService {
     private final GarageSpotManager garageSpotManager;
     private final MasterManager masterManager;
     private final AppConfig appConfig;
+
+    private final String garageSpotHeader = "id,size,hasLift,hasPit";
+    private final String masterHeader = "id,name,salary";
+    private final String orderHeader = "id,description,masterId,garageSpotId,startTime,endTime,orderStatus,price";
+
     public CsvImportService(OrderManager orderManager, GarageSpotManager garageSpotManager, MasterManager masterManager) {
         this.orderManager = orderManager;
         this.garageSpotManager = garageSpotManager;
@@ -48,7 +53,7 @@ public class CsvImportService {
                 if (header == null) {
                     return false;
                 }
-                if (!header.equals("id,name,salary")) {
+                if (!header.equals(masterHeader)) {
                     throw new ImportException("Некорректный хедер в CSV: " + header);
                 }
                 String line;
@@ -102,7 +107,7 @@ public class CsvImportService {
                 if (header == null) {
                     return false;
                 }
-                if (!header.equals("id,size,hasLift,hasPit")) {
+                if (!header.equals(garageSpotHeader)) {
                     throw new ImportException("Некорректный хедер в CSV: " + header);
                 }
                 String line;
@@ -171,7 +176,7 @@ public class CsvImportService {
                 if (header == null) {
                     return false;
                 }
-                if (!header.equals("id,description,masterId,garageSpotId,startTime,endTime,orderStatus,price")) {
+                if (!header.equals(orderHeader)) {
                     throw new ImportException("Некорректный хедер в CSV: " + header);
                 }
                 String line;
