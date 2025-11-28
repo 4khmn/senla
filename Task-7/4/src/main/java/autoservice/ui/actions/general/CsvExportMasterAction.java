@@ -15,9 +15,9 @@ public class CsvExportMasterAction implements IAction {
     public void execute() {
         try {
             service.exportMasters();
-            System.out.println("Данные успешно экспортированы! Они лежат по пути  <Task-3(6)/4/data/masters.csv>");
+            System.out.println("Данные успешно экспортированы! Они лежат по пути  <data/masters.csv>");
         } catch (IOException e) {
-            System.out.println("Файл не найден. Создайте файл по пути <Task-3(6)/4/data/...>");
+            System.out.println("Файл не найден.");
         }
     }
 }

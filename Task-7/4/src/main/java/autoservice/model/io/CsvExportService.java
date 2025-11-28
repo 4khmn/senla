@@ -3,6 +3,7 @@ package autoservice.model.io;
 import autoservice.model.entities.GarageSpot;
 import autoservice.model.entities.Master;
 import autoservice.model.entities.Order;
+import autoservice.model.enums.EntityType;
 import autoservice.model.manager.GarageSpotManager;
 import autoservice.model.manager.MasterManager;
 import autoservice.model.manager.OrderManager;
@@ -13,6 +14,10 @@ public class CsvExportService {
     OrderManager orderManager;
     GarageSpotManager garageSpotManager;
     MasterManager masterManager;
+
+    private final String orderHeader = "id,description,masterId,garageSpotId,startTime,endTime,orderStatus,price\n";
+    private final String masterHeader = "id,name,salary\n";
+    private final String garageSpotHeader = "id,size,hasLift,hasPit\n";
     public CsvExportService(OrderManager orderManager, GarageSpotManager garageSpotManager, MasterManager masterManager) {
         this.orderManager = orderManager;
         this.garageSpotManager = garageSpotManager;
@@ -20,36 +25,61 @@ public class CsvExportService {
     }
 
 
+    public void export(EntityType entity) throws IOException {
+        File dataDir = new File("data");
+        if (!dataDir.exists()) dataDir.mkdirs();
+        String fileName;
+        if (entity.equals(EntityType.ORDER)){
+            fileName = "orders.csv";
+        }
+        else if (entity.equals(EntityType.MASTER)){
+            fileName = "masters.csv";
+        }
+        else if (entity.equals(EntityType.GARAGESPOT)){
+            fileName = "garageSpots.csv";
+        }
+        else{
+            throw new IllegalArgumentException("Unknown entity: " + entity);
+        }
 
+        File file = new File(dataDir, fileName);
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            if (entity.equals(EntityType.ORDER)) {
+
+                writer.write(orderHeader);
+                for (Order order : orderManager.getOrders()) {
+                    writer.write(formatOrder(order));
+                    writer.newLine();
+
+                }
+            } else if (entity.equals(EntityType.MASTER)) {
+
+                writer.write(masterHeader);
+                for (Master master : masterManager.getMasters()) {
+                    writer.write(formatMaster(master));
+                    writer.newLine();
+                }
+
+            } else if (entity.equals(EntityType.GARAGESPOT)) {
+
+                writer.write(garageSpotHeader);
+                for (GarageSpot garageSpot : garageSpotManager.getGarageSpots()) {
+                    writer.write(formatGarageSpot(garageSpot));
+                    writer.newLine();
+
+                }
+            }
+        }
+    }
     public void exportOrders() throws IOException {
         // Поля не должны содержать ','
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("Task-3(6)/4/data/orders.csv"))) {
-            writer.write("id,description,masterId,garageSpotId,startTime,endTime,orderStatus,price\n");
-            for (Order order : orderManager.getOrders()) {
-                writer.write(formatOrder(order));
-                writer.newLine();
-            }
-        }
+        export(EntityType.ORDER);
     }
     public void exportMasters() throws IOException {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("Task-3(6)/4/data/masters.csv"))) {
-            writer.write("id,name,salary\n");
-
-            for (Master master : masterManager.getMasters()) {
-                writer.write(formatMaster(master));
-                writer.newLine();
-            }
-        }
+        export(EntityType.MASTER);
     }
     public void exportGarageSpots() throws IOException {
-        try(BufferedWriter writer = new BufferedWriter(new FileWriter("Task-3(6)/4/data/garageSpots.csv"))){
-            writer.write("id,size,hasLift,hasPit\n");
-
-            for (GarageSpot garageSpot: garageSpotManager.getGarageSpots()){
-                writer.write(formatGarageSpot(garageSpot));
-                writer.newLine();
-            }
-        }
+       export(EntityType.GARAGESPOT);
     }
 
     private String formatOrder(Order order) {
