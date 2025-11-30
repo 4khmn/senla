@@ -1,0 +1,269 @@
+{
+  "garageManager" : {
+    "garageSpots" : [ {
+      "id" : 1,
+      "size" : 123.0,
+      "hasLift" : true,
+      "hasPit" : true,
+      "calendar" : [ {
+        "start" : "2025-11-16T20:19:30",
+        "end" : "2025-11-21T23:19:30"
+      } ]
+    }, {
+      "id" : 2,
+      "size" : 123.0,
+      "hasLift" : true,
+      "hasPit" : true,
+      "calendar" : [ {
+        "start" : "2025-11-21T23:19:30",
+        "end" : "2025-11-22T00:19:30"
+      } ]
+    }, {
+      "id" : 3,
+      "size" : 123.0,
+      "hasLift" : true,
+      "hasPit" : true,
+      "calendar" : [ {
+        "start" : "2025-11-21T23:19:30",
+        "end" : "2025-11-22T00:19:30"
+      } ]
+    }, {
+      "id" : 4,
+      "size" : 123.0,
+      "hasLift" : true,
+      "hasPit" : true,
+      "calendar" : [ {
+        "start" : "2025-11-21T23:19:30",
+        "end" : "2025-11-22T00:19:30"
+      } ]
+    } ],
+    "freeSpots" : [ {
+      "id" : 1,
+      "size" : 123.0,
+      "hasLift" : true,
+      "hasPit" : true,
+      "calendar" : [ {
+        "start" : "2025-11-16T20:19:30",
+        "end" : "2025-11-21T23:19:30"
+      } ]
+    }, {
+      "id" : 2,
+      "size" : 123.0,
+      "hasLift" : true,
+      "hasPit" : true,
+      "calendar" : [ {
+        "start" : "2025-11-21T23:19:30",
+        "end" : "2025-11-22T00:19:30"
+      } ]
+    }, {
+      "id" : 3,
+      "size" : 123.0,
+      "hasLift" : true,
+      "hasPit" : true,
+      "calendar" : [ {
+        "start" : "2025-11-21T23:19:30",
+        "end" : "2025-11-22T00:19:30"
+      } ]
+    }, {
+      "id" : 4,
+      "size" : 123.0,
+      "hasLift" : true,
+      "hasPit" : true,
+      "calendar" : [ {
+        "start" : "2025-11-21T23:19:30",
+        "end" : "2025-11-22T00:19:30"
+      } ]
+    } ]
+  },
+  "orderManager" : {
+    "orders" : [ {
+      "id" : 1,
+      "description" : "sdfsfd",
+      "master" : {
+        "id" : 1,
+        "name" : "name1",
+        "salary" : 12300000000000,
+        "calendar" : [ {
+          "start" : "2025-11-16T20:19:30",
+          "end" : "2025-11-21T23:19:30"
+        } ]
+      },
+      "garageSpot" : {
+        "id" : 1,
+        "size" : 123.0,
+        "hasLift" : true,
+        "hasPit" : true,
+        "calendar" : [ {
+          "start" : "2025-11-16T20:19:30",
+          "end" : "2025-11-21T23:19:30"
+        } ]
+      },
+      "startTime" : "2025-11-16T20:19:30",
+      "endTime" : "2025-11-21T23:19:30",
+      "orderStatus" : "OPEN",
+      "price" : 12,
+      "createdAt" : "2025-11-29T00:04:56"
+    }, {
+      "id" : 2,
+      "description" : "daswed",
+      "master" : {
+        "id" : 2,
+        "name" : "name2",
+        "salary" : 123332,
+        "calendar" : [ {
+          "start" : "2025-11-21T23:19:30",
+          "end" : "2025-11-22T00:19:30"
+        } ]
+      },
+      "garageSpot" : {
+        "id" : 2,
+        "size" : 123.0,
+        "hasLift" : true,
+        "hasPit" : true,
+        "calendar" : [ {
+          "start" : "2025-11-21T23:19:30",
+          "end" : "2025-11-22T00:19:30"
+        } ]
+      },
+      "startTime" : "2025-11-21T23:19:30",
+      "endTime" : "2025-11-22T00:19:30",
+      "orderStatus" : "OPEN",
+      "price" : 12,
+      "createdAt" : "2025-11-29T00:04:56"
+    }, {
+      "id" : 3,
+      "description" : "daswed",
+      "master" : {
+        "id" : 3,
+        "name" : "name2",
+        "salary" : 123332,
+        "calendar" : [ {
+          "start" : "2025-11-21T23:19:30",
+          "end" : "2025-11-22T00:19:30"
+        } ]
+      },
+      "garageSpot" : {
+        "id" : 3,
+        "size" : 123.0,
+        "hasLift" : true,
+        "hasPit" : true,
+        "calendar" : [ {
+          "start" : "2025-11-21T23:19:30",
+          "end" : "2025-11-22T00:19:30"
+        } ]
+      },
+      "startTime" : "2025-11-21T23:19:30",
+      "endTime" : "2025-11-22T00:19:30",
+      "orderStatus" : "OPEN",
+      "price" : 12,
+      "createdAt" : "2025-11-29T00:04:56"
+    }, {
+      "id" : 4,
+      "description" : "daswed",
+      "master" : {
+        "id" : 4,
+        "name" : "name2",
+        "salary" : 123332,
+        "calendar" : [ {
+          "start" : "2025-11-21T23:19:30",
+          "end" : "2025-11-22T00:19:30"
+        } ]
+      },
+      "garageSpot" : {
+        "id" : 4,
+        "size" : 123.0,
+        "hasLift" : true,
+        "hasPit" : true,
+        "calendar" : [ {
+          "start" : "2025-11-21T23:19:30",
+          "end" : "2025-11-22T00:19:30"
+        } ]
+      },
+      "startTime" : "2025-11-21T23:19:30",
+      "endTime" : "2025-11-22T00:19:30",
+      "orderStatus" : "OPEN",
+      "price" : 12,
+      "createdAt" : "2025-11-29T00:04:56"
+    } ]
+  },
+  "masterManager" : {
+    "masters" : [ {
+      "id" : 1,
+      "name" : "name1",
+      "salary" : 12300000000000,
+      "calendar" : [ {
+        "start" : "2025-11-16T20:19:30",
+        "end" : "2025-11-21T23:19:30"
+      } ]
+    }, {
+      "id" : 2,
+      "name" : "name2",
+      "salary" : 123332,
+      "calendar" : [ {
+        "start" : "2025-11-21T23:19:30",
+        "end" : "2025-11-22T00:19:30"
+      } ]
+    }, {
+      "id" : 3,
+      "name" : "name2",
+      "salary" : 123332,
+      "calendar" : [ {
+        "start" : "2025-11-21T23:19:30",
+        "end" : "2025-11-22T00:19:30"
+      } ]
+    }, {
+      "id" : 4,
+      "name" : "name2",
+      "salary" : 123332,
+      "calendar" : [ {
+        "start" : "2025-11-21T23:19:30",
+        "end" : "2025-11-22T00:19:30"
+      } ]
+    }, {
+      "id" : 5,
+      "name" : "name2",
+      "salary" : 123332,
+      "calendar" : [ ]
+    } ]
+  },
+  "garageSpotsCount" : 4,
+  "mastersCount" : 5,
+  "ordersCount" : 4,
+  "freeSpots" : [ {
+    "id" : 1,
+    "size" : 123.0,
+    "hasLift" : true,
+    "hasPit" : true,
+    "calendar" : [ {
+      "start" : "2025-11-16T20:19:30",
+      "end" : "2025-11-21T23:19:30"
+    } ]
+  }, {
+    "id" : 2,
+    "size" : 123.0,
+    "hasLift" : true,
+    "hasPit" : true,
+    "calendar" : [ {
+      "start" : "2025-11-21T23:19:30",
+      "end" : "2025-11-22T00:19:30"
+    } ]
+  }, {
+    "id" : 3,
+    "size" : 123.0,
+    "hasLift" : true,
+    "hasPit" : true,
+    "calendar" : [ {
+      "start" : "2025-11-21T23:19:30",
+      "end" : "2025-11-22T00:19:30"
+    } ]
+  }, {
+    "id" : 4,
+    "size" : 123.0,
+    "hasLift" : true,
+    "hasPit" : true,
+    "calendar" : [ {
+      "start" : "2025-11-21T23:19:30",
+      "end" : "2025-11-22T00:19:30"
+    } ]
+  } ]
+}
