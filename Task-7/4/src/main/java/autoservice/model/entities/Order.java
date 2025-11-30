@@ -1,21 +1,39 @@
 package autoservice.model.entities;
 
+import autoservice.model.AutoService;
 import autoservice.model.enums.OrderStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 public class Order implements Comparable<Order> {
     private static long global_id=1; // for serial primary key
-    private final long id;
+
+    private long id;
+
     private String description;
+
+
     private Master master;
     private GarageSpot garageSpot;
+
+
+
     private LocalDateTime startTime;
 
     private LocalDateTime endTime;
     private OrderStatus orderStatus = OrderStatus.OPEN;
     private BigDecimal price;
     private LocalDateTime createdAt;
+
+    public Order() {
+    }
+
+
+
+
 
     public long getId() {
         return id;

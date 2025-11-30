@@ -17,20 +17,35 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class CsvImportService {
-    private final OrderManager orderManager;
-    private final GarageSpotManager garageSpotManager;
-    private final MasterManager masterManager;
+    private  OrderManager orderManager;
+    private  GarageSpotManager garageSpotManager;
+    private  MasterManager masterManager;
     private final AppConfig appConfig;
+    private static CsvImportService instance;
 
     private final String garageSpotHeader = "id,size,hasLift,hasPit";
     private final String masterHeader = "id,name,salary";
     private final String orderHeader = "id,description,masterId,garageSpotId,startTime,endTime,orderStatus,price";
 
-    public CsvImportService(OrderManager orderManager, GarageSpotManager garageSpotManager, MasterManager masterManager) {
+    private CsvImportService(OrderManager orderManager, GarageSpotManager garageSpotManager, MasterManager masterManager) {
         this.orderManager = orderManager;
         this.garageSpotManager = garageSpotManager;
         this.masterManager = masterManager;
+
+
         this.appConfig = new AppConfig();
+    }
+
+    public static CsvImportService getInstance(OrderManager orderManager, GarageSpotManager garageSpotManager, MasterManager masterManager) {
+        if (instance == null) {
+            instance = new CsvImportService(orderManager, garageSpotManager, masterManager);
+        }
+        return instance;
+    }
+    public void setManagers(OrderManager o, GarageSpotManager g, MasterManager m) {
+        this.orderManager = o;
+        this.masterManager = m;
+        this.garageSpotManager = g;
     }
 
     public boolean importMasters() throws  IOException, ImportException, CsvParsingException{
@@ -162,7 +177,9 @@ public class CsvImportService {
         try {
             masterCopy = masterManager.cloneManager();
             garageCopy = garageSpotManager.cloneManager();
+
             orderCopy = orderManager.cloneManager(masterCopy, garageCopy);
+
         } catch (CloneNotSupportedException e) {
             throw new RuntimeException("Критическая ошибка: менеджер не поддерживает клонирование");
         }

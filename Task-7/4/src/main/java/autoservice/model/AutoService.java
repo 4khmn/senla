@@ -17,6 +17,8 @@ import autoservice.model.io.exports.OrdersCsvExport;
 import autoservice.model.manager.GarageSpotManager;
 import autoservice.model.manager.MasterManager;
 import autoservice.model.manager.OrderManager;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 import java.io.IOException;
@@ -24,19 +26,27 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
 
-import static java.lang.Math.max;
 import static java.lang.Math.min;
-
+@JsonAutoDetect
 public class AutoService {
-    private static final AutoService instance = new AutoService();
+    @JsonIgnore
+    private static AutoService instance;
+
     private final GarageSpotManager garageManager;
     private final OrderManager orderManager;
     private final MasterManager masterManager;
+    @JsonIgnore
     private final CsvImportService importService;
 
+    @JsonIgnore
     private final GarageSpotsCsvExport garageSpotsCsvExport;
+
+    @JsonIgnore
     private final MastersCsvExport mastersCsvExport;
+
+    @JsonIgnore
     private final OrdersCsvExport ordersCsvExport;
+
 
     private AutoService() {
         List<Master> masters = new ArrayList<>();
@@ -46,13 +56,19 @@ public class AutoService {
         this.garageManager = new GarageSpotManager(spots);
         this.orderManager = new OrderManager(orders);
         this.masterManager = new MasterManager(masters);
-        this.importService = new CsvImportService(orderManager, garageManager, masterManager);
+        this.importService = CsvImportService.getInstance(this.orderManager, this.garageManager, this.masterManager);
         this.garageSpotsCsvExport = new GarageSpotsCsvExport(garageManager);
         this.mastersCsvExport = new MastersCsvExport(masterManager);
         this.ordersCsvExport = new OrdersCsvExport(orderManager);
     }
     public static AutoService getInstance() {
+        if (instance == null) {
+            instance = new AutoService();
+        }
         return instance;
+    }
+    public static void replaceInstance(AutoService service){
+        instance = service;
     }
 
     @Override
@@ -65,6 +81,7 @@ public class AutoService {
     }
 
     //4 список свободных мест в сервисных гаражах
+    @JsonIgnore
     public List<GarageSpot> getFreeSpots(){
         return garageManager.getFreeSpots();
     }
@@ -202,12 +219,15 @@ public class AutoService {
         System.out.println("Нельзя добавить в данное время.");
         return -1;
     }
+    @JsonIgnore
     public int getMastersCount(){
         return masterManager.getMasters().size();
     }
+    @JsonIgnore
     public int getGarageSpotsCount(){
         return garageManager.getGarageSpots().size();
     }
+    @JsonIgnore
     public int getOrdersCount(){
         return orderManager.getOrders().size();
     }
@@ -316,6 +336,7 @@ public class AutoService {
     public void exportOrders() throws IOException {
         ordersCsvExport.export();
     }
+
 
 
 

@@ -1,11 +1,12 @@
 package autoservice.model.entities;
 
+
+
 import java.time.LocalDateTime;
 import java.util.TreeSet;
-
 public class GarageSpot {
     private static long global_id=1; // for serial primary key
-    private final long id;
+    private long id;
 
     private double size;
     private boolean hasLift;
@@ -15,6 +16,17 @@ public class GarageSpot {
 
     public long getId() {
         return id;
+    }
+
+    public void setCalendar(TreeSet<TimeSlot> calendar) {
+        this.calendar = calendar;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public GarageSpot() {
     }
 
     public GarageSpot(double size, boolean hasLift, boolean hasPit) {

@@ -1,14 +1,25 @@
 package autoservice.ui.controller;
 
+import autoservice.model.AutoService;
+import autoservice.model.io.serialization.SerializationService;
 import autoservice.ui.factory.ConsoleMenuFactory;
 import autoservice.ui.factory.IMenuFactory;
 import autoservice.ui.menu.Navigator;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class MenuController {
-    private final IMenuFactory factory = new ConsoleMenuFactory();
+    private AutoService service;
+    private final SerializationService serializer;
+    private final IMenuFactory factory;
     private final Navigator navigator = Navigator.getInstance();
+
+    public MenuController() {
+        this.serializer = SerializationService.getInstance();
+        this.factory = new ConsoleMenuFactory();
+        this.service = AutoService.getInstance();
+    }
 
     public void run() {
         navigator.setCurrentMenu(factory.createMainMenu());
@@ -26,6 +37,12 @@ public class MenuController {
                 System.out.println("Неверный выбор!");
                 sc.next();
             }
+        }
+
+        try {
+            serializer.saveStateToFile(service, "autoservice.json");
+        } catch (Exception e) {
+            System.out.println("Ошибка сохранения: " + e.getMessage());
         }
 
         System.out.println("Программа завершена.");

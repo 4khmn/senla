@@ -1,2 +1,6 @@
 id,size,hasLift,hasPit
 1,123.0,true,true
+2,123.0,true,true
+3,123.0,true,true
+4,123.0,true,true
+5,10000.0,true,true
