@@ -1,5 +1,6 @@
 package autoservice.ui.factory;
 
+import autoservice.config.AppConfig;
 import autoservice.model.AutoService;
 import autoservice.ui.actions.garageSpots.AddGarageSpotAction;
 import autoservice.ui.actions.garageSpots.DeleteGarageSpotAction;
@@ -17,6 +18,12 @@ import autoservice.ui.menu.Menu;
 import autoservice.ui.menu.MenuBuilder;
 
 public class ConsoleMenuFactory implements IMenuFactory {
+    private final AppConfig appConfig;
+
+    public ConsoleMenuFactory() {
+        this.appConfig = new AppConfig();
+    }
+
     private final AutoService service = AutoService.getInstance();
     @Override
     public Menu createMainMenu() {
@@ -36,20 +43,24 @@ public class ConsoleMenuFactory implements IMenuFactory {
 
     @Override
     public Menu createOrderMenu() {
-        return new MenuBuilder()
+        MenuBuilder builder = new MenuBuilder()
                 .setName("Меню заказов")
                 .addItem("Добавить заказ автоматически", new AddOrderAction(service))
-                .addItem("Добавить заказ в конкретное время", new AddOrderAtCurrentTimeAction(service))
-                .addItem("Удалить заказ" , new DeleteOrderAction(service))
-                .addItem("Закрыть заказ", new CloseOrderAction(service))
-                .addItem("Отменить заказ", new CancelOrderAction(service))
-                .addItem("Задержать заказ", new ShiftOrderAction(service))
-                .addItem("Список заказов", new OrdersSortAction(service))
+                .addItem("Добавить заказ в конкретное время", new AddOrderAtCurrentTimeAction(service));
+        if (appConfig.isOrderAllowToDelete()) {
+            builder.addItem("Удалить заказ", new DeleteOrderAction(service));
+        }
+        builder.addItem("Закрыть заказ", new CloseOrderAction(service))
+                .addItem("Отменить заказ", new CancelOrderAction(service));
+        if (appConfig.isOrderAllowToShiftTime()) {
+            builder.addItem("Задержать заказ", new ShiftOrderAction(service));
+        }
+                builder.addItem("Список заказов", new OrdersSortAction(service))
                 .addItem("Список текущих выполняемых заказов", new ActiveOrdersSortAction(service))
                 .addItem("Получить заказ, выполняемый конкретным мастером", new GetOrderByMasterAction(service))
                 .addItem("Заказы за промежуток времени", new OrdersSortByTimeFrameAction(service))
-                .addItem("Назад в главное меню", new BackToMainMenuAction())
-                .build();
+                .addItem("Назад в главное меню", new BackToMainMenuAction());
+        return builder.build();
     }
 
     @Override
@@ -66,14 +77,17 @@ public class ConsoleMenuFactory implements IMenuFactory {
 
     @Override
     public Menu createGarageSpotMenu() {
-        return new MenuBuilder()
-                .setName("Меню гаражных мест")
-                .addItem("Добавить гаражное место", new AddGarageSpotAction(service))
-                .addItem("Удалить гаражное место", new DeleteGarageSpotAction(service))
-                .addItem("Список свободных мест в сервисных гаражах", new GetFreeSpotsAction(service))
+        MenuBuilder builder = new MenuBuilder()
+                .setName("Меню гаражных мест");
+        if (appConfig.isGarageSpotAllowToAddRemove()) {
+
+        builder.addItem("Добавить гаражное место", new AddGarageSpotAction(service))
+                .addItem("Удалить гаражное место", new DeleteGarageSpotAction(service));
+        }
+        builder.addItem("Список свободных мест в сервисных гаражах", new GetFreeSpotsAction(service))
                 .addItem("Количество свободных мест на сервисе на любую дату в будущем", new GetNumberOfFreeSpotsByDateAction(service))
-                .addItem("Назад в главное меню", new BackToMainMenuAction())
-                .build();
+                .addItem("Назад в главное меню", new BackToMainMenuAction());
+        return builder.build();
     }
 
     @Override

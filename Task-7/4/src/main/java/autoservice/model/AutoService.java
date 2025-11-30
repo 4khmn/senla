@@ -3,7 +3,6 @@ package autoservice.model;
 import autoservice.model.entities.GarageSpot;
 import autoservice.model.entities.Master;
 import autoservice.model.entities.Order;
-import autoservice.model.enums.*;
 import autoservice.model.enums.ActiveOrdersSortEnum;
 import autoservice.model.enums.MastersSortEnum;
 import autoservice.model.enums.OrdersSortByTimeFrameEnum;
@@ -11,11 +10,15 @@ import autoservice.model.enums.OrdersSortEnum;
 import autoservice.model.exceptions.CsvParsingException;
 import autoservice.model.exceptions.IllegalGarageSpotSize;
 import autoservice.model.exceptions.ImportException;
-import autoservice.model.io.CsvExportService;
-import autoservice.model.io.CsvImportService;
+import autoservice.model.io.imports.CsvImportService;
+import autoservice.model.io.exports.GarageSpotsCsvExport;
+import autoservice.model.io.exports.MastersCsvExport;
+import autoservice.model.io.exports.OrdersCsvExport;
 import autoservice.model.manager.GarageSpotManager;
 import autoservice.model.manager.MasterManager;
 import autoservice.model.manager.OrderManager;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 import java.io.IOException;
@@ -23,16 +26,27 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
 
-import static java.lang.Math.max;
 import static java.lang.Math.min;
-
+@JsonAutoDetect
 public class AutoService {
-    private static final AutoService instance = new AutoService();
+    @JsonIgnore
+    private static AutoService instance;
+
     private final GarageSpotManager garageManager;
     private final OrderManager orderManager;
     private final MasterManager masterManager;
-    private final CsvExportService exportService;
+    @JsonIgnore
     private final CsvImportService importService;
+
+    @JsonIgnore
+    private final GarageSpotsCsvExport garageSpotsCsvExport;
+
+    @JsonIgnore
+    private final MastersCsvExport mastersCsvExport;
+
+    @JsonIgnore
+    private final OrdersCsvExport ordersCsvExport;
+
 
     private AutoService() {
         List<Master> masters = new ArrayList<>();
@@ -42,11 +56,19 @@ public class AutoService {
         this.garageManager = new GarageSpotManager(spots);
         this.orderManager = new OrderManager(orders);
         this.masterManager = new MasterManager(masters);
-        this.importService = new CsvImportService(orderManager, garageManager, masterManager);
-        this.exportService = new CsvExportService(orderManager, garageManager, masterManager);
+        this.importService = CsvImportService.getInstance(this.orderManager, this.garageManager, this.masterManager);
+        this.garageSpotsCsvExport = new GarageSpotsCsvExport();
+        this.mastersCsvExport = new MastersCsvExport();
+        this.ordersCsvExport = new OrdersCsvExport();
     }
     public static AutoService getInstance() {
+        if (instance == null) {
+            instance = new AutoService();
+        }
         return instance;
+    }
+    public static void replaceInstance(AutoService service){
+        instance = service;
     }
 
     @Override
@@ -59,6 +81,7 @@ public class AutoService {
     }
 
     //4 список свободных мест в сервисных гаражах
+    @JsonIgnore
     public List<GarageSpot> getFreeSpots(){
         return garageManager.getFreeSpots();
     }
@@ -150,8 +173,13 @@ public class AutoService {
         return masterManager.deleteMaster(id);
     }
     //model.GarageSpot
-    public long addGarageSpot(double size, boolean hasLift, boolean hasPit){
+    public long addGarageSpot(double size, boolean hasLift, boolean hasPit) {
         return garageManager.addGarageSpot(size, hasLift, hasPit);
+    }
+
+
+    public boolean deleteGarageSpot(long id){
+        return garageManager.deleteGarageSpot(id);
     }
 
     public MasterManager getMasterManager(){
@@ -162,10 +190,6 @@ public class AutoService {
     }
     public GarageSpotManager getGarageManager(){
         return garageManager;
-    }
-
-    public boolean deleteGarageSpot(long id){
-        return garageManager.deleteGarageSpot(id);
     }
 
     public Master getMasterById(long id){
@@ -195,12 +219,15 @@ public class AutoService {
         System.out.println("Нельзя добавить в данное время.");
         return -1;
     }
+    @JsonIgnore
     public int getMastersCount(){
         return masterManager.getMasters().size();
     }
+    @JsonIgnore
     public int getGarageSpotsCount(){
         return garageManager.getGarageSpots().size();
     }
+    @JsonIgnore
     public int getOrdersCount(){
         return orderManager.getOrders().size();
     }
@@ -301,14 +328,15 @@ public class AutoService {
     }
 
     public void exportMasters() throws IOException {
-        exportService.exportMasters();
+        mastersCsvExport.export();
     }
     public void exportGarageSpots() throws IOException {
-        exportService.exportGarageSpots();
+        garageSpotsCsvExport.export();
     }
     public void exportOrders() throws IOException {
-        exportService.exportOrders();
+        ordersCsvExport.export();
     }
+
 
 
 

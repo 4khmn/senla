@@ -1,21 +1,70 @@
 package autoservice.model.entities;
 
+import autoservice.model.AutoService;
 import autoservice.model.enums.OrderStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 public class Order implements Comparable<Order> {
     private static long global_id=1; // for serial primary key
-    private final long id;
+
+    private long id;
+
     private String description;
+
+
+    @JsonIgnore
     private Master master;
+
+    @JsonIgnore
     private GarageSpot garageSpot;
+
+    @JsonProperty("masterId")
+    public Long getMasterId() {
+        return master != null ? master.getId() : null;
+    }
+
+    @JsonProperty("garageSpotId")
+    public Long getGarageSpotId() {
+        return garageSpot != null ? garageSpot.getId() : null;
+    }
+
+    @JsonProperty("masterId")
+    public void setMasterId(Long masterId) {
+        if (masterId != null) {
+            this.master = new Master();
+            this.master.setId(masterId);
+        } else {
+            this.master = null;
+        }
+    }
+
+    @JsonProperty("garageSpotId")
+    public void setGarageSpotId(Long garageSpotId) {
+        if (garageSpotId != null) {
+            this.garageSpot = new GarageSpot();
+            this.garageSpot.setId(garageSpotId);
+        } else {
+            this.garageSpot = null;
+        }
+    }
+
+
     private LocalDateTime startTime;
 
     private LocalDateTime endTime;
     private OrderStatus orderStatus = OrderStatus.OPEN;
     private BigDecimal price;
     private LocalDateTime createdAt;
+
+    public Order() {
+    }
+
+
+
 
     public long getId() {
         return id;

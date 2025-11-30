@@ -1,19 +1,22 @@
 package autoservice.model.manager;
 
 import autoservice.model.entities.GarageSpot;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 public class GarageSpotManager {
     private List<GarageSpot> garageSpots;
 
 
+    ////////////
     public GarageSpotManager(List<GarageSpot> garageSpots) {
         this.garageSpots = garageSpots;
     }
+    public GarageSpotManager() {}
+    //////////////
 
 
     public long addGarageSpot(double size, boolean hasLift, boolean hasPit){
@@ -72,6 +75,7 @@ public class GarageSpotManager {
     }
 
     //4 список свободных мест в сервисных гаражах
+    @JsonIgnore
     public List<GarageSpot> getFreeSpots(){
         List<GarageSpot> freeGarageSpots = new ArrayList<>();
         for (var v: garageSpots){

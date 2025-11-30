@@ -15,9 +15,9 @@ public class CsvExportGarageSpotsAction implements IAction {
     public void execute() {
         try {
             service.exportGarageSpots();
-            System.out.println("Данные успешно экспортированы! Они лежат по пути  <Task-3(6)/4/data/garageSpots.csv>");
+            System.out.println("Данные успешно экспортированы! Они лежат по пути  <data/garageSpots.csv>");
         } catch (IOException e) {
-            System.out.println("Файл не найден. Создайте файл по пути <Task-3(6)/4/data/...>");
+            System.out.println("Файл не найден.");
         }
     }
 }

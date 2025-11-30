@@ -12,14 +12,18 @@ import java.util.Comparator;
 import java.util.List;
 
 import static java.lang.Math.abs;
-
 public class MasterManager {
     private List<Master> masters;
+
+
 
     public MasterManager(List<Master> masters) {
         this.masters = masters;
     }
-
+    ///////
+    public MasterManager() {
+    }
+    ///////
 
     //4
     public List<Master> mastersSort(MastersSortEnum decision){

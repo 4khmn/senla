@@ -12,10 +12,12 @@ import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
-
 public class OrderManager {
     private List<Order> orders;
 
+    ////////////
+    public OrderManager() {}
+    ////////////
     //4 список заказов
     public List<Order> ordersSort(OrdersSortEnum decision) {
         List<Order> sortedOrders = orders.stream()
@@ -277,6 +279,7 @@ public class OrderManager {
         List<Order> copy = new ArrayList<>();
         for (Order o : this.orders) {
             Order clone = o.clone();
+            System.out.println("1");
             clone.setMaster(masterCopy.getMasterById(o.getMaster().getId()));
             clone.setGarageSpot(garageCopy.getGarageSpotById(o.getGarageSpot().getId()));
             copy.add(clone);

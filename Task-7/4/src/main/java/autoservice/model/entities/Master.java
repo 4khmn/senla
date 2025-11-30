@@ -1,16 +1,33 @@
 package autoservice.model.entities;
 
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.TreeSet;
-
 public class Master {
     private static long global_id=1; // for serial primary key
-    private final long id;
+    private long id;
     private String name;
     private BigDecimal salary;
     private TreeSet<TimeSlot> calendar;
 
+    public Master() {
+    }
+
+    public Master(long id, String name, BigDecimal salary, TreeSet<TimeSlot> calendar) {
+        this.id = id;
+        this.name = name;
+        this.salary = salary;
+        this.calendar = calendar;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setCalendar(TreeSet<TimeSlot> calendar) {
+        this.calendar = calendar;
+    }
 
     public Master(String name, BigDecimal salary) {
         this.name = name;
