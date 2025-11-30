@@ -57,9 +57,9 @@ public class AutoService {
         this.orderManager = new OrderManager(orders);
         this.masterManager = new MasterManager(masters);
         this.importService = CsvImportService.getInstance(this.orderManager, this.garageManager, this.masterManager);
-        this.garageSpotsCsvExport = new GarageSpotsCsvExport(garageManager);
-        this.mastersCsvExport = new MastersCsvExport(masterManager);
-        this.ordersCsvExport = new OrdersCsvExport(orderManager);
+        this.garageSpotsCsvExport = new GarageSpotsCsvExport();
+        this.mastersCsvExport = new MastersCsvExport();
+        this.ordersCsvExport = new OrdersCsvExport();
     }
     public static AutoService getInstance() {
         if (instance == null) {

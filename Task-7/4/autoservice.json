@@ -14,32 +14,32 @@
       } ]
     }, {
       "id" : 2,
-      "size" : 123.0,
+      "size" : 20.0,
       "hasLift" : true,
       "hasPit" : true,
-      "calendar" : [ ]
+      "calendar" : [ {
+        "start" : "2025-11-21T23:19:30.1348506",
+        "end" : "2025-11-22T00:19:30.1348506"
+      } ]
     }, {
       "id" : 3,
-      "size" : 123.0,
-      "hasLift" : true,
-      "hasPit" : true,
+      "size" : 50.0,
+      "hasLift" : false,
+      "hasPit" : false,
       "calendar" : [ {
         "start" : "2025-11-21T23:19:30.1348506",
         "end" : "2025-11-22T00:19:30.1348506"
       } ]
     }, {
       "id" : 4,
-      "size" : 123.0,
+      "size" : 100.0,
       "hasLift" : true,
-      "hasPit" : true,
-      "calendar" : [ {
-        "start" : "2025-11-21T23:19:30.1348506",
-        "end" : "2025-11-22T00:19:30.1348506"
-      } ]
+      "hasPit" : false,
+      "calendar" : [ ]
     }, {
       "id" : 5,
       "size" : 10000.0,
-      "hasLift" : true,
+      "hasLift" : false,
       "hasPit" : true,
       "calendar" : [ ]
     } ]
@@ -47,130 +47,50 @@
   "orderManager" : {
     "orders" : [ {
       "id" : 1,
-      "description" : "sdfsfd",
-      "master" : {
-        "id" : 1,
-        "name" : "name1",
-        "salary" : 12300000000000,
-        "calendar" : [ {
-          "start" : "2025-11-16T20:19:30.1348506",
-          "end" : "2025-11-21T23:19:30.1348506"
-        }, {
-          "start" : "2025-11-21T23:19:30.1348506",
-          "end" : "2025-11-22T00:19:30.1348506"
-        } ]
-      },
-      "garageSpot" : {
-        "id" : 1,
-        "size" : 123.0,
-        "hasLift" : true,
-        "hasPit" : true,
-        "calendar" : [ {
-          "start" : "2025-11-16T20:19:30.1348506",
-          "end" : "2025-11-21T23:19:30.1348506"
-        }, {
-          "start" : "2025-11-21T23:19:30.1348506",
-          "end" : "2025-11-22T00:19:30.1348506"
-        } ]
-      },
+      "description" : "music",
       "startTime" : "2025-11-16T20:19:30.1348506",
       "endTime" : "2025-11-21T23:19:30.1348506",
       "orderStatus" : "OPEN",
-      "price" : 12,
-      "createdAt" : "2025-11-30T14:45:35.9050858"
+      "price" : 120,
+      "createdAt" : "2025-11-30T15:18:17.8400802",
+      "garageSpotId" : 1,
+      "masterId" : 1
     }, {
       "id" : 2,
-      "description" : "daswed",
-      "master" : {
-        "id" : 1,
-        "name" : "name1",
-        "salary" : 12300000000000,
-        "calendar" : [ {
-          "start" : "2025-11-16T20:19:30.1348506",
-          "end" : "2025-11-21T23:19:30.1348506"
-        }, {
-          "start" : "2025-11-21T23:19:30.1348506",
-          "end" : "2025-11-22T00:19:30.1348506"
-        } ]
-      },
-      "garageSpot" : {
-        "id" : 1,
-        "size" : 123.0,
-        "hasLift" : true,
-        "hasPit" : true,
-        "calendar" : [ {
-          "start" : "2025-11-16T20:19:30.1348506",
-          "end" : "2025-11-21T23:19:30.1348506"
-        }, {
-          "start" : "2025-11-21T23:19:30.1348506",
-          "end" : "2025-11-22T00:19:30.1348506"
-        } ]
-      },
+      "description" : "task1",
       "startTime" : "2025-11-21T23:19:30.1348506",
       "endTime" : "2025-11-22T00:19:30.1348506",
       "orderStatus" : "OPEN",
-      "price" : 12,
-      "createdAt" : "2025-11-30T14:45:35.9060855"
+      "price" : 500,
+      "createdAt" : "2025-11-30T15:18:17.841079",
+      "garageSpotId" : 1,
+      "masterId" : 1
     }, {
       "id" : 3,
-      "description" : "daswed",
-      "master" : {
-        "id" : 3,
-        "name" : "name2",
-        "salary" : 123332,
-        "calendar" : [ {
-          "start" : "2025-11-21T23:19:30.1348506",
-          "end" : "2025-11-22T00:19:30.1348506"
-        } ]
-      },
-      "garageSpot" : {
-        "id" : 4,
-        "size" : 123.0,
-        "hasLift" : true,
-        "hasPit" : true,
-        "calendar" : [ {
-          "start" : "2025-11-21T23:19:30.1348506",
-          "end" : "2025-11-22T00:19:30.1348506"
-        } ]
-      },
+      "description" : "something",
       "startTime" : "2025-11-21T23:19:30.1348506",
       "endTime" : "2025-11-22T00:19:30.1348506",
       "orderStatus" : "OPEN",
-      "price" : 12,
-      "createdAt" : "2025-11-30T14:45:35.9060855"
+      "price" : 50,
+      "createdAt" : "2025-11-30T15:18:17.841079",
+      "garageSpotId" : 2,
+      "masterId" : 2
     }, {
       "id" : 4,
-      "description" : "daswed",
-      "master" : {
-        "id" : 4,
-        "name" : "name2",
-        "salary" : 123332,
-        "calendar" : [ {
-          "start" : "2025-11-21T23:19:30.1348506",
-          "end" : "2025-11-22T00:19:30.1348506"
-        } ]
-      },
-      "garageSpot" : {
-        "id" : 3,
-        "size" : 123.0,
-        "hasLift" : true,
-        "hasPit" : true,
-        "calendar" : [ {
-          "start" : "2025-11-21T23:19:30.1348506",
-          "end" : "2025-11-22T00:19:30.1348506"
-        } ]
-      },
+      "description" : "rap",
       "startTime" : "2025-11-21T23:19:30.1348506",
       "endTime" : "2025-11-22T00:19:30.1348506",
       "orderStatus" : "OPEN",
-      "price" : 12,
-      "createdAt" : "2025-11-30T14:45:35.9070928"
+      "price" : 100,
+      "createdAt" : "2025-11-30T15:18:17.841079",
+      "garageSpotId" : 3,
+      "masterId" : 3
     } ]
   },
   "masterManager" : {
     "masters" : [ {
       "id" : 1,
-      "name" : "name1",
+      "name" : "roma",
       "salary" : 12300000000000,
       "calendar" : [ {
         "start" : "2025-11-16T20:19:30.1348506",
@@ -181,30 +101,20 @@
       } ]
     }, {
       "id" : 2,
-      "name" : "name2",
-      "salary" : 123332,
-      "calendar" : [ ]
+      "name" : "denis",
+      "salary" : 0,
+      "calendar" : [ {
+        "start" : "2025-11-21T23:19:30.1348506",
+        "end" : "2025-11-22T00:19:30.1348506"
+      } ]
     }, {
       "id" : 3,
-      "name" : "name2",
-      "salary" : 123332,
+      "name" : "mark",
+      "salary" : 100000,
       "calendar" : [ {
         "start" : "2025-11-21T23:19:30.1348506",
         "end" : "2025-11-22T00:19:30.1348506"
       } ]
-    }, {
-      "id" : 4,
-      "name" : "name2",
-      "salary" : 123332,
-      "calendar" : [ {
-        "start" : "2025-11-21T23:19:30.1348506",
-        "end" : "2025-11-22T00:19:30.1348506"
-      } ]
-    }, {
-      "id" : 5,
-      "name" : "name2",
-      "salary" : 123332,
-      "calendar" : [ ]
     } ]
   }
 }

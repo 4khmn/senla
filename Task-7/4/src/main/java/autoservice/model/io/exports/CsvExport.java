@@ -26,7 +26,6 @@ public abstract class CsvExport {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             writer.write(header);
             writer.newLine();
-
             for (Object entity : getEntities()) {
                 writer.write(formatEntity(entity));
                 writer.newLine();

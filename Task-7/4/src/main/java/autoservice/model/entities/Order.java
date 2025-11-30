@@ -16,9 +16,41 @@ public class Order implements Comparable<Order> {
     private String description;
 
 
+    @JsonIgnore
     private Master master;
+
+    @JsonIgnore
     private GarageSpot garageSpot;
 
+    @JsonProperty("masterId")
+    public Long getMasterId() {
+        return master != null ? master.getId() : null;
+    }
+
+    @JsonProperty("garageSpotId")
+    public Long getGarageSpotId() {
+        return garageSpot != null ? garageSpot.getId() : null;
+    }
+
+    @JsonProperty("masterId")
+    public void setMasterId(Long masterId) {
+        if (masterId != null) {
+            this.master = new Master();
+            this.master.setId(masterId);
+        } else {
+            this.master = null;
+        }
+    }
+
+    @JsonProperty("garageSpotId")
+    public void setGarageSpotId(Long garageSpotId) {
+        if (garageSpotId != null) {
+            this.garageSpot = new GarageSpot();
+            this.garageSpot.setId(garageSpotId);
+        } else {
+            this.garageSpot = null;
+        }
+    }
 
 
     private LocalDateTime startTime;
@@ -30,7 +62,6 @@ public class Order implements Comparable<Order> {
 
     public Order() {
     }
-
 
 
 

@@ -1,14 +1,13 @@
 package autoservice.model.io.exports;
 
+import autoservice.model.AutoService;
 import autoservice.model.entities.GarageSpot;
 import autoservice.model.manager.GarageSpotManager;
 
 public class GarageSpotsCsvExport extends CsvExport {
-    private final GarageSpotManager garageSpotManager;
 
-    public GarageSpotsCsvExport(GarageSpotManager garageSpotManager) {
+    public GarageSpotsCsvExport() {
         super("id,size,hasLift,hasPit", "garageSpots.csv");
-        this.garageSpotManager = garageSpotManager;
     }
 
     @Override
@@ -24,6 +23,7 @@ public class GarageSpotsCsvExport extends CsvExport {
 
     @Override
     protected Iterable<?> getEntities() {
-        return garageSpotManager.getGarageSpots();
+        AutoService autoService = AutoService.getInstance();
+        return autoService.getGarageManager().getGarageSpots();
     }
 }

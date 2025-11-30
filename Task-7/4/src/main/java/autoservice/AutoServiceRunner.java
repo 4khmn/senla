@@ -23,7 +23,6 @@ public class AutoServiceRunner {
             CsvImportService instance = CsvImportService.getInstance(o, g, m);
             instance.setManagers(o, g, m);
 
-
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
