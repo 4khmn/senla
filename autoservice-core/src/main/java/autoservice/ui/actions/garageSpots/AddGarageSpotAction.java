@@ -1,6 +1,5 @@
 package autoservice.ui.actions.garageSpots;
 
-import autoservice.config.AppConfig;
 import autoservice.model.AutoService;
 import autoservice.ui.actions.IAction;
 

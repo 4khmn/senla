@@ -1,27 +1,27 @@
 package autoservice.ui.factory;
 
-import autoservice.config.AppConfig;
+import config.AppConfig;
 import autoservice.model.AutoService;
 import autoservice.ui.actions.garageSpots.AddGarageSpotAction;
 import autoservice.ui.actions.garageSpots.DeleteGarageSpotAction;
 import autoservice.ui.actions.garageSpots.GetFreeSpotsAction;
 import autoservice.ui.actions.garageSpots.GetNumberOfFreeSpotsByDateAction;
 import autoservice.ui.actions.general.*;
-import autoservice.ui.actions.general.*;
 import autoservice.ui.actions.masters.AddMasterAction;
 import autoservice.ui.actions.masters.DeleteMasterAction;
 import autoservice.ui.actions.masters.GetMasterByOrderAction;
 import autoservice.ui.actions.masters.MastersSortAction;
 import autoservice.ui.actions.orders.*;
-import autoservice.ui.actions.orders.*;
 import autoservice.ui.menu.Menu;
 import autoservice.ui.menu.MenuBuilder;
+import config.ConfigLoader;
 
 public class ConsoleMenuFactory implements IMenuFactory {
     private final AppConfig appConfig;
 
     public ConsoleMenuFactory() {
         this.appConfig = new AppConfig();
+        ConfigLoader.load(appConfig);
     }
 
     private final AutoService service = AutoService.getInstance();

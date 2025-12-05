@@ -1,6 +1,6 @@
 package autoservice.model.io.imports;
 
-import autoservice.config.AppConfig;
+import config.AppConfig;
 import autoservice.model.entities.GarageSpot;
 import autoservice.model.entities.Master;
 import autoservice.model.entities.Order;
