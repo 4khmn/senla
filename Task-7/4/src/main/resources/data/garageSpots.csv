@@ -1,6 +1,0 @@
-id,size,hasLift,hasPit
-1,123.0,true,true
-2,20.0,true,true
-3,50.0,false,false
-4,100.0,true,false
-5,10000.0,false,true
