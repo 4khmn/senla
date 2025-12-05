@@ -21,7 +21,6 @@ public class ConsoleMenuFactory implements IMenuFactory {
 
     public ConsoleMenuFactory() {
         this.appConfig = new AppConfig();
-        ConfigLoader.load(appConfig);
     }
 
     private final AutoService service = AutoService.getInstance();

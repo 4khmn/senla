@@ -6,264 +6,115 @@
       "hasLift" : true,
       "hasPit" : true,
       "calendar" : [ {
-        "start" : "2025-11-16T20:19:30",
-        "end" : "2025-11-21T23:19:30"
+        "start" : "2025-11-16T20:19:30.1348506",
+        "end" : "2025-11-21T23:19:30.1348506"
+      }, {
+        "start" : "2025-11-21T23:19:30.1348506",
+        "end" : "2025-11-22T00:19:30.1348506"
       } ]
     }, {
       "id" : 2,
-      "size" : 123.0,
+      "size" : 20.0,
       "hasLift" : true,
       "hasPit" : true,
       "calendar" : [ {
-        "start" : "2025-11-21T23:19:30",
-        "end" : "2025-11-22T00:19:30"
+        "start" : "2025-11-21T23:19:30.1348506",
+        "end" : "2025-11-22T00:19:30.1348506"
       } ]
     }, {
       "id" : 3,
-      "size" : 123.0,
-      "hasLift" : true,
-      "hasPit" : true,
+      "size" : 50.0,
+      "hasLift" : false,
+      "hasPit" : false,
       "calendar" : [ {
-        "start" : "2025-11-21T23:19:30",
-        "end" : "2025-11-22T00:19:30"
+        "start" : "2025-11-21T23:19:30.1348506",
+        "end" : "2025-11-22T00:19:30.1348506"
       } ]
     }, {
       "id" : 4,
-      "size" : 123.0,
+      "size" : 100.0,
       "hasLift" : true,
-      "hasPit" : true,
-      "calendar" : [ {
-        "start" : "2025-11-21T23:19:30",
-        "end" : "2025-11-22T00:19:30"
-      } ]
-    } ],
-    "freeSpots" : [ {
-      "id" : 1,
-      "size" : 123.0,
-      "hasLift" : true,
-      "hasPit" : true,
-      "calendar" : [ {
-        "start" : "2025-11-16T20:19:30",
-        "end" : "2025-11-21T23:19:30"
-      } ]
+      "hasPit" : false,
+      "calendar" : [ ]
     }, {
-      "id" : 2,
-      "size" : 123.0,
-      "hasLift" : true,
+      "id" : 5,
+      "size" : 10000.0,
+      "hasLift" : false,
       "hasPit" : true,
-      "calendar" : [ {
-        "start" : "2025-11-21T23:19:30",
-        "end" : "2025-11-22T00:19:30"
-      } ]
-    }, {
-      "id" : 3,
-      "size" : 123.0,
-      "hasLift" : true,
-      "hasPit" : true,
-      "calendar" : [ {
-        "start" : "2025-11-21T23:19:30",
-        "end" : "2025-11-22T00:19:30"
-      } ]
-    }, {
-      "id" : 4,
-      "size" : 123.0,
-      "hasLift" : true,
-      "hasPit" : true,
-      "calendar" : [ {
-        "start" : "2025-11-21T23:19:30",
-        "end" : "2025-11-22T00:19:30"
-      } ]
+      "calendar" : [ ]
     } ]
   },
   "orderManager" : {
     "orders" : [ {
       "id" : 1,
-      "description" : "sdfsfd",
-      "master" : {
-        "id" : 1,
-        "name" : "name1",
-        "salary" : 12300000000000,
-        "calendar" : [ {
-          "start" : "2025-11-16T20:19:30",
-          "end" : "2025-11-21T23:19:30"
-        } ]
-      },
-      "garageSpot" : {
-        "id" : 1,
-        "size" : 123.0,
-        "hasLift" : true,
-        "hasPit" : true,
-        "calendar" : [ {
-          "start" : "2025-11-16T20:19:30",
-          "end" : "2025-11-21T23:19:30"
-        } ]
-      },
-      "startTime" : "2025-11-16T20:19:30",
-      "endTime" : "2025-11-21T23:19:30",
+      "description" : "music",
+      "startTime" : "2025-11-16T20:19:30.1348506",
+      "endTime" : "2025-11-21T23:19:30.1348506",
       "orderStatus" : "OPEN",
-      "price" : 12,
-      "createdAt" : "2025-11-29T00:04:56"
+      "price" : 120,
+      "createdAt" : "2025-12-05T15:42:10.6655108",
+      "garageSpotId" : 1,
+      "masterId" : 1
     }, {
       "id" : 2,
-      "description" : "daswed",
-      "master" : {
-        "id" : 2,
-        "name" : "name2",
-        "salary" : 123332,
-        "calendar" : [ {
-          "start" : "2025-11-21T23:19:30",
-          "end" : "2025-11-22T00:19:30"
-        } ]
-      },
-      "garageSpot" : {
-        "id" : 2,
-        "size" : 123.0,
-        "hasLift" : true,
-        "hasPit" : true,
-        "calendar" : [ {
-          "start" : "2025-11-21T23:19:30",
-          "end" : "2025-11-22T00:19:30"
-        } ]
-      },
-      "startTime" : "2025-11-21T23:19:30",
-      "endTime" : "2025-11-22T00:19:30",
+      "description" : "task1",
+      "startTime" : "2025-11-21T23:19:30.1348506",
+      "endTime" : "2025-11-22T00:19:30.1348506",
       "orderStatus" : "OPEN",
-      "price" : 12,
-      "createdAt" : "2025-11-29T00:04:56"
+      "price" : 500,
+      "createdAt" : "2025-12-05T15:42:10.6665109",
+      "garageSpotId" : 1,
+      "masterId" : 1
     }, {
       "id" : 3,
-      "description" : "daswed",
-      "master" : {
-        "id" : 3,
-        "name" : "name2",
-        "salary" : 123332,
-        "calendar" : [ {
-          "start" : "2025-11-21T23:19:30",
-          "end" : "2025-11-22T00:19:30"
-        } ]
-      },
-      "garageSpot" : {
-        "id" : 3,
-        "size" : 123.0,
-        "hasLift" : true,
-        "hasPit" : true,
-        "calendar" : [ {
-          "start" : "2025-11-21T23:19:30",
-          "end" : "2025-11-22T00:19:30"
-        } ]
-      },
-      "startTime" : "2025-11-21T23:19:30",
-      "endTime" : "2025-11-22T00:19:30",
+      "description" : "something",
+      "startTime" : "2025-11-21T23:19:30.1348506",
+      "endTime" : "2025-11-22T00:19:30.1348506",
       "orderStatus" : "OPEN",
-      "price" : 12,
-      "createdAt" : "2025-11-29T00:04:56"
+      "price" : 50,
+      "createdAt" : "2025-12-05T15:42:10.6665109",
+      "garageSpotId" : 2,
+      "masterId" : 2
     }, {
       "id" : 4,
-      "description" : "daswed",
-      "master" : {
-        "id" : 4,
-        "name" : "name2",
-        "salary" : 123332,
-        "calendar" : [ {
-          "start" : "2025-11-21T23:19:30",
-          "end" : "2025-11-22T00:19:30"
-        } ]
-      },
-      "garageSpot" : {
-        "id" : 4,
-        "size" : 123.0,
-        "hasLift" : true,
-        "hasPit" : true,
-        "calendar" : [ {
-          "start" : "2025-11-21T23:19:30",
-          "end" : "2025-11-22T00:19:30"
-        } ]
-      },
-      "startTime" : "2025-11-21T23:19:30",
-      "endTime" : "2025-11-22T00:19:30",
+      "description" : "rap",
+      "startTime" : "2025-11-21T23:19:30.1348506",
+      "endTime" : "2025-11-22T00:19:30.1348506",
       "orderStatus" : "OPEN",
-      "price" : 12,
-      "createdAt" : "2025-11-29T00:04:56"
+      "price" : 100,
+      "createdAt" : "2025-12-05T15:42:10.6665109",
+      "garageSpotId" : 3,
+      "masterId" : 3
     } ]
   },
   "masterManager" : {
     "masters" : [ {
       "id" : 1,
-      "name" : "name1",
+      "name" : "roma",
       "salary" : 12300000000000,
       "calendar" : [ {
-        "start" : "2025-11-16T20:19:30",
-        "end" : "2025-11-21T23:19:30"
+        "start" : "2025-11-16T20:19:30.1348506",
+        "end" : "2025-11-21T23:19:30.1348506"
+      }, {
+        "start" : "2025-11-21T23:19:30.1348506",
+        "end" : "2025-11-22T00:19:30.1348506"
       } ]
     }, {
       "id" : 2,
-      "name" : "name2",
-      "salary" : 123332,
+      "name" : "denis",
+      "salary" : 0,
       "calendar" : [ {
-        "start" : "2025-11-21T23:19:30",
-        "end" : "2025-11-22T00:19:30"
+        "start" : "2025-11-21T23:19:30.1348506",
+        "end" : "2025-11-22T00:19:30.1348506"
       } ]
     }, {
       "id" : 3,
-      "name" : "name2",
-      "salary" : 123332,
+      "name" : "mark",
+      "salary" : 100000,
       "calendar" : [ {
-        "start" : "2025-11-21T23:19:30",
-        "end" : "2025-11-22T00:19:30"
+        "start" : "2025-11-21T23:19:30.1348506",
+        "end" : "2025-11-22T00:19:30.1348506"
       } ]
-    }, {
-      "id" : 4,
-      "name" : "name2",
-      "salary" : 123332,
-      "calendar" : [ {
-        "start" : "2025-11-21T23:19:30",
-        "end" : "2025-11-22T00:19:30"
-      } ]
-    }, {
-      "id" : 5,
-      "name" : "name2",
-      "salary" : 123332,
-      "calendar" : [ ]
     } ]
-  },
-  "garageSpotsCount" : 4,
-  "mastersCount" : 5,
-  "ordersCount" : 4,
-  "freeSpots" : [ {
-    "id" : 1,
-    "size" : 123.0,
-    "hasLift" : true,
-    "hasPit" : true,
-    "calendar" : [ {
-      "start" : "2025-11-16T20:19:30",
-      "end" : "2025-11-21T23:19:30"
-    } ]
-  }, {
-    "id" : 2,
-    "size" : 123.0,
-    "hasLift" : true,
-    "hasPit" : true,
-    "calendar" : [ {
-      "start" : "2025-11-21T23:19:30",
-      "end" : "2025-11-22T00:19:30"
-    } ]
-  }, {
-    "id" : 3,
-    "size" : 123.0,
-    "hasLift" : true,
-    "hasPit" : true,
-    "calendar" : [ {
-      "start" : "2025-11-21T23:19:30",
-      "end" : "2025-11-22T00:19:30"
-    } ]
-  }, {
-    "id" : 4,
-    "size" : 123.0,
-    "hasLift" : true,
-    "hasPit" : true,
-    "calendar" : [ {
-      "start" : "2025-11-21T23:19:30",
-      "end" : "2025-11-22T00:19:30"
-    } ]
-  } ]
+  }
 }

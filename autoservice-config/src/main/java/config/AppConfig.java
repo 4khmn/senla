@@ -3,6 +3,9 @@ package config;
 import config.annotation.ConfigProperty;
 
 public class AppConfig {
+    public AppConfig() {
+        ConfigLoader.load(this);
+    }
 
     @ConfigProperty(propertyName = "garage.allowToAddRemove")
     private boolean allowGarageSpotAddRemove;
