@@ -12,22 +12,23 @@ import autoservice.model.manager.GarageSpotManager;
 import autoservice.model.manager.MasterManager;
 import autoservice.model.manager.OrderManager;
 import config.ConfigLoader;
+import config.annotation.Component;
+import config.annotation.Inject;
 
 import java.io.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-
+@Component
 public class CsvImportService {
     private  OrderManager orderManager;
     private  GarageSpotManager garageSpotManager;
     private  MasterManager masterManager;
     private final AppConfig appConfig;
-    private static CsvImportService instance;
 
     private final String garageSpotHeader = "id,size,hasLift,hasPit";
     private final String masterHeader = "id,name,salary";
     private final String orderHeader = "id,description,masterId,garageSpotId,startTime,endTime,orderStatus,price";
-
+    @Inject
     private CsvImportService(OrderManager orderManager, GarageSpotManager garageSpotManager, MasterManager masterManager) {
         this.orderManager = orderManager;
         this.garageSpotManager = garageSpotManager;
@@ -37,12 +38,6 @@ public class CsvImportService {
         this.appConfig = new AppConfig();
     }
 
-    public static CsvImportService getInstance(OrderManager orderManager, GarageSpotManager garageSpotManager, MasterManager masterManager) {
-        if (instance == null) {
-            instance = new CsvImportService(orderManager, garageSpotManager, masterManager);
-        }
-        return instance;
-    }
     public void setManagers(OrderManager o, GarageSpotManager g, MasterManager m) {
         this.orderManager = o;
         this.masterManager = m;

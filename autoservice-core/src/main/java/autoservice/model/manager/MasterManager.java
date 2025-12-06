@@ -1,8 +1,10 @@
 package autoservice.model.manager;
 
+import autoservice.model.entities.GarageSpot;
 import autoservice.model.entities.Master;
 import autoservice.model.entities.Order;
 import autoservice.model.enums.MastersSortEnum;
+import config.annotation.Component;
 
 import java.math.BigDecimal;
 import java.time.Duration;
@@ -12,6 +14,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import static java.lang.Math.abs;
+@Component
 public class MasterManager {
     private List<Master> masters;
 
@@ -22,9 +25,22 @@ public class MasterManager {
     }
     ///////
     public MasterManager() {
+        this.masters = new ArrayList<>();
     }
     ///////
 
+
+    public void updateGlobalId() {
+        long max=-1;
+        for (var v: masters) {
+            if (v.getId()>max){
+                max=v.getId();
+            }
+        }
+        if (max!=-1){
+            Master.updateGlobalId(max);
+        }
+    }
     //4
     public List<Master> mastersSort(MastersSortEnum decision){
         List<Master> sortedMasters = masters;

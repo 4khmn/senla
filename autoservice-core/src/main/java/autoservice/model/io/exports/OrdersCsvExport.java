@@ -3,12 +3,18 @@ package autoservice.model.io.exports;
 import autoservice.model.AutoService;
 import autoservice.model.entities.Order;
 import autoservice.model.manager.OrderManager;
+import config.annotation.Component;
+import config.annotation.Inject;
 
+@Component
 public class OrdersCsvExport extends CsvExport {
 
 
-    public OrdersCsvExport() {
+    private final OrderManager orderManager;
+    @Inject
+    public OrdersCsvExport(OrderManager orderManager) {
         super("id,description,masterId,garageSpotId,startTime,endTime,orderStatus,price", "orders.csv");
+        this.orderManager = orderManager;
     }
 
     @Override
@@ -28,6 +34,6 @@ public class OrdersCsvExport extends CsvExport {
 
     @Override
     protected Iterable<?> getEntities() {
-        return AutoService.getInstance().getOrderManager().getOrders();
+        return orderManager.getOrders();
     }
 }

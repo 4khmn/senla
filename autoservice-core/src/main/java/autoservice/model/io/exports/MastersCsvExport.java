@@ -3,12 +3,16 @@ package autoservice.model.io.exports;
 import autoservice.model.AutoService;
 import autoservice.model.entities.Master;
 import autoservice.model.manager.MasterManager;
-
+import config.annotation.Component;
+import config.annotation.Inject;
+@Component
 public class MastersCsvExport extends CsvExport {
 
-
-    public MastersCsvExport() {
+    private final MasterManager masterManager;
+    @Inject
+    public MastersCsvExport(MasterManager masterManager) {
         super("id,name,salary", "masters.csv");
+        this.masterManager = masterManager;
     }
     @Override
     protected String formatEntity(Object entity) {
@@ -22,6 +26,6 @@ public class MastersCsvExport extends CsvExport {
 
     @Override
     protected Iterable<?> getEntities() {
-        return AutoService.getInstance().getMasterManager().getMasters();
+        return masterManager.getMasters();
     }
 }

@@ -19,6 +19,8 @@ import autoservice.model.manager.MasterManager;
 import autoservice.model.manager.OrderManager;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import config.annotation.Component;
+import config.annotation.Inject;
 
 
 import java.io.IOException;
@@ -27,49 +29,46 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 import static java.lang.Math.min;
+@Component
 @JsonAutoDetect
 public class AutoService {
-    @JsonIgnore
-    private static AutoService instance;
 
-    private final GarageSpotManager garageManager;
-    private final OrderManager orderManager;
-    private final MasterManager masterManager;
-    @JsonIgnore
-    private final CsvImportService importService;
+
+    private GarageSpotManager garageManager;
+    private OrderManager orderManager;
+    private MasterManager masterManager;
 
     @JsonIgnore
-    private final GarageSpotsCsvExport garageSpotsCsvExport;
+    private CsvImportService importService;
 
     @JsonIgnore
-    private final MastersCsvExport mastersCsvExport;
+    private GarageSpotsCsvExport garageSpotsCsvExport;
 
     @JsonIgnore
-    private final OrdersCsvExport ordersCsvExport;
+    private MastersCsvExport mastersCsvExport;
+
+    @JsonIgnore
+    private OrdersCsvExport ordersCsvExport;
 
 
-    private AutoService() {
-        List<Master> masters = new ArrayList<>();
-        List<Order> orders = new ArrayList<>();
-        List<GarageSpot> spots = new ArrayList<>();
 
-        this.garageManager = new GarageSpotManager(spots);
-        this.orderManager = new OrderManager(orders);
-        this.masterManager = new MasterManager(masters);
-        this.importService = CsvImportService.getInstance(this.orderManager, this.garageManager, this.masterManager);
-        this.garageSpotsCsvExport = new GarageSpotsCsvExport();
-        this.mastersCsvExport = new MastersCsvExport();
-        this.ordersCsvExport = new OrdersCsvExport();
+    @Inject
+    public AutoService(GarageSpotManager garageManager,
+                        OrderManager orderManager,
+                        MasterManager masterManager,
+                        CsvImportService importService,
+                        GarageSpotsCsvExport garageSpotsCsvExport,
+                        MastersCsvExport mastersCsvExport,
+                        OrdersCsvExport ordersCsvExport) {
+        this.garageManager = garageManager;
+        this.orderManager = orderManager;
+        this.masterManager = masterManager;
+        this.importService = importService;
+        this.garageSpotsCsvExport = garageSpotsCsvExport;
+        this.mastersCsvExport = mastersCsvExport;
+        this.ordersCsvExport = ordersCsvExport;
     }
-    public static AutoService getInstance() {
-        if (instance == null) {
-            instance = new AutoService();
-        }
-        return instance;
-    }
-    public static void replaceInstance(AutoService service){
-        instance = service;
-    }
+
 
     @Override
     public String toString() {

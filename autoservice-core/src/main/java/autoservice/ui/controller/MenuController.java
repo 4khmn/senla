@@ -5,20 +5,24 @@ import autoservice.model.io.serialization.SerializationService;
 import autoservice.ui.factory.ConsoleMenuFactory;
 import autoservice.ui.factory.IMenuFactory;
 import autoservice.ui.menu.Navigator;
+import config.annotation.Component;
+import config.annotation.Inject;
 
 import java.io.IOException;
 import java.util.Scanner;
-
+@Component
 public class MenuController {
     private AutoService service;
     private final SerializationService serializer;
     private final IMenuFactory factory;
-    private final Navigator navigator = Navigator.getInstance();
+    private final Navigator navigator;
 
-    public MenuController() {
-        this.serializer = SerializationService.getInstance();
-        this.factory = new ConsoleMenuFactory();
-        this.service = AutoService.getInstance();
+    @Inject
+    public MenuController(AutoService service,  SerializationService serializer, Navigator navigator, ConsoleMenuFactory menuFactory) {
+        this.serializer = serializer;
+        this.service = service;
+        this.navigator = navigator;
+        this.factory = menuFactory;
     }
 
     public void run() {

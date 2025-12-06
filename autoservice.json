@@ -4,7 +4,7 @@
       "id" : 1,
       "size" : 123.0,
       "hasLift" : true,
-      "hasPit" : true,
+      "hasPit" : false,
       "calendar" : [ {
         "start" : "2025-11-16T20:19:30.1348506",
         "end" : "2025-11-21T23:19:30.1348506"
@@ -42,6 +42,24 @@
       "hasLift" : false,
       "hasPit" : true,
       "calendar" : [ ]
+    }, {
+      "id" : 10,
+      "size" : 10.0,
+      "hasLift" : true,
+      "hasPit" : false,
+      "calendar" : [ ]
+    }, {
+      "id" : 100,
+      "size" : 10.0,
+      "hasLift" : true,
+      "hasPit" : false,
+      "calendar" : [ ]
+    }, {
+      "id" : 101,
+      "size" : 10.0,
+      "hasLift" : true,
+      "hasPit" : true,
+      "calendar" : [ ]
     } ]
   },
   "orderManager" : {
@@ -52,9 +70,9 @@
       "endTime" : "2025-11-21T23:19:30.1348506",
       "orderStatus" : "OPEN",
       "price" : 120,
-      "createdAt" : "2025-12-05T15:42:10.6655108",
-      "garageSpotId" : 1,
-      "masterId" : 1
+      "createdAt" : "2025-12-06T21:29:44.8172831",
+      "masterId" : 1,
+      "garageSpotId" : 1
     }, {
       "id" : 2,
       "description" : "task1",
@@ -62,9 +80,9 @@
       "endTime" : "2025-11-22T00:19:30.1348506",
       "orderStatus" : "OPEN",
       "price" : 500,
-      "createdAt" : "2025-12-05T15:42:10.6665109",
-      "garageSpotId" : 1,
-      "masterId" : 1
+      "createdAt" : "2025-12-06T21:29:44.8172831",
+      "masterId" : 1,
+      "garageSpotId" : 1
     }, {
       "id" : 3,
       "description" : "something",
@@ -72,9 +90,9 @@
       "endTime" : "2025-11-22T00:19:30.1348506",
       "orderStatus" : "OPEN",
       "price" : 50,
-      "createdAt" : "2025-12-05T15:42:10.6665109",
-      "garageSpotId" : 2,
-      "masterId" : 2
+      "createdAt" : "2025-12-06T21:29:44.8172831",
+      "masterId" : 2,
+      "garageSpotId" : 2
     }, {
       "id" : 4,
       "description" : "rap",
@@ -82,9 +100,9 @@
       "endTime" : "2025-11-22T00:19:30.1348506",
       "orderStatus" : "OPEN",
       "price" : 100,
-      "createdAt" : "2025-12-05T15:42:10.6665109",
-      "garageSpotId" : 3,
-      "masterId" : 3
+      "createdAt" : "2025-12-06T21:29:44.8172831",
+      "masterId" : 3,
+      "garageSpotId" : 3
     } ]
   },
   "masterManager" : {
@@ -115,6 +133,11 @@
         "start" : "2025-11-21T23:19:30.1348506",
         "end" : "2025-11-22T00:19:30.1348506"
       } ]
+    }, {
+      "id" : 4,
+      "name" : "qwerty",
+      "salary" : 1,
+      "calendar" : [ ]
     } ]
   }
 }

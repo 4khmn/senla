@@ -7,17 +7,38 @@ import autoservice.model.enums.ActiveOrdersSortEnum;
 import autoservice.model.enums.OrderStatus;
 import autoservice.model.enums.OrdersSortByTimeFrameEnum;
 import autoservice.model.enums.OrdersSortEnum;
+import config.annotation.Component;
 
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
+
+@Component
 public class OrderManager {
     private List<Order> orders;
 
+
+    public OrderManager(List<Order> orders) {
+        this.orders = orders;
+    }
     ////////////
-    public OrderManager() {}
+    public OrderManager() {
+        this.orders = new ArrayList<>();
+    }
     ////////////
+
+    public void updateGlobalId() {
+        long max=-1;
+        for (var v: orders) {
+            if (v.getId()>max){
+                max=v.getId();
+            }
+        }
+        if (max!=-1){
+            Order.updateGlobalId(max);
+        }
+    }
     //4 список заказов
     public List<Order> ordersSort(OrdersSortEnum decision) {
         List<Order> sortedOrders = orders.stream()
@@ -134,10 +155,6 @@ public class OrderManager {
         return ordersAtCurrentTime;
     }
 
-
-    public OrderManager(List<Order> orders) {
-        this.orders = orders;
-    }
 
     public long addOrderTest(Order order){
         orders.add(order);

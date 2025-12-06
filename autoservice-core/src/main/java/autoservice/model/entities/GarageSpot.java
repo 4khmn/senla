@@ -110,6 +110,7 @@ public class GarageSpot {
         }
         return true;
     }
+
     public static void updateGlobalId(long maxId) {
         if (maxId >= global_id) {
             global_id = maxId + 1;

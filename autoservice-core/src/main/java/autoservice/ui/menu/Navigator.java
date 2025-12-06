@@ -1,16 +1,13 @@
 package autoservice.ui.menu;
 
+import config.annotation.Component;
+
+@Component
 public class Navigator {
-    private static Navigator instance;
     private Menu currentMenu;
     private Menu mainMenu;
     private Navigator() {}
 
-    public static Navigator getInstance() {
-        if (instance == null)
-            instance = new Navigator();
-        return instance;
-    }
     public void setCurrentMenu(Menu menu) {
         if (mainMenu == null) mainMenu = menu;
         this.currentMenu = menu;

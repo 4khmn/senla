@@ -1,5 +1,6 @@
 package autoservice.ui.factory;
 
+import autoservice.ui.menu.Navigator;
 import config.AppConfig;
 import autoservice.model.AutoService;
 import autoservice.ui.actions.garageSpots.AddGarageSpotAction;
@@ -15,15 +16,19 @@ import autoservice.ui.actions.orders.*;
 import autoservice.ui.menu.Menu;
 import autoservice.ui.menu.MenuBuilder;
 import config.ConfigLoader;
-
+import config.annotation.Component;
+import config.annotation.Inject;
+@Component
 public class ConsoleMenuFactory implements IMenuFactory {
     private final AppConfig appConfig;
-
-    public ConsoleMenuFactory() {
-        this.appConfig = new AppConfig();
+    private final AutoService service;
+    private final Navigator navigator;
+    @Inject
+    public ConsoleMenuFactory(AppConfig appConfig, AutoService autoService, Navigator navigator) {
+        this.appConfig = appConfig;
+        this.service = autoService;
+        this.navigator = navigator;
     }
-
-    private final AutoService service = AutoService.getInstance();
     @Override
     public Menu createMainMenu() {
         Menu orderMenu = createOrderMenu();
@@ -58,7 +63,7 @@ public class ConsoleMenuFactory implements IMenuFactory {
                 .addItem("Список текущих выполняемых заказов", new ActiveOrdersSortAction(service))
                 .addItem("Получить заказ, выполняемый конкретным мастером", new GetOrderByMasterAction(service))
                 .addItem("Заказы за промежуток времени", new OrdersSortByTimeFrameAction(service))
-                .addItem("Назад в главное меню", new BackToMainMenuAction());
+                .addItem("Назад в главное меню", new BackToMainMenuAction(navigator));
         return builder.build();
     }
 
@@ -70,7 +75,7 @@ public class ConsoleMenuFactory implements IMenuFactory {
                 .addItem("Удалить мастера", new DeleteMasterAction(service))
                 .addItem("Получить мастера, выполняющий конкретный заказ", new GetMasterByOrderAction(service))
                 .addItem("Список авто-мастеров", new MastersSortAction(service))
-                .addItem("Назад в главное меню", new BackToMainMenuAction())
+                .addItem("Назад в главное меню", new BackToMainMenuAction(navigator))
                 .build();
     }
 
@@ -85,7 +90,7 @@ public class ConsoleMenuFactory implements IMenuFactory {
         }
         builder.addItem("Список свободных мест в сервисных гаражах", new GetFreeSpotsAction(service))
                 .addItem("Количество свободных мест на сервисе на любую дату в будущем", new GetNumberOfFreeSpotsByDateAction(service))
-                .addItem("Назад в главное меню", new BackToMainMenuAction());
+                .addItem("Назад в главное меню", new BackToMainMenuAction(navigator));
         return builder.build();
     }
 
@@ -96,7 +101,7 @@ public class ConsoleMenuFactory implements IMenuFactory {
                 .addItem("Найти ближайшую свободную дату", new GetClosestDateAction(service))
                 .addSubMenu("Экспорт данных", createExportMenu())
                 .addSubMenu("Импорт данных", createImportMenu())
-                .addItem("Назад в главное меню", new BackToMainMenuAction())
+                .addItem("Назад в главное меню", new BackToMainMenuAction(navigator))
                 .build();
     }
 
@@ -107,7 +112,7 @@ public class ConsoleMenuFactory implements IMenuFactory {
                 .addItem("Экспортировать данные о заказах", new CsvExportOrdersAction(service))
                 .addItem("Экспортировать данные о мастерах", new CsvExportMasterAction(service))
                 .addItem("Экспортировать данные о гаражных местах", new CsvExportGarageSpotsAction(service))
-                .addItem("Назад в главное меню", new BackToMainMenuAction())
+                .addItem("Назад в главное меню", new BackToMainMenuAction(navigator))
                 .build();
     }
 
@@ -119,7 +124,7 @@ public class ConsoleMenuFactory implements IMenuFactory {
                 .addItem("Импортировать данные о заказах", new CsvImportOrdersAction(service))
                 .addItem("Импортировать данные о мастерах", new CsvImportMastersAction(service))
                 .addItem("Импортировать данные о гаражных местах", new CsvImportGarageSpotsAction(service))
-                .addItem("Назад в главное меню", new BackToMainMenuAction())
+                .addItem("Назад в главное меню", new BackToMainMenuAction(navigator))
                 .build();
     }
 }

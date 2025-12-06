@@ -1,7 +1,8 @@
 package config;
 
+import config.annotation.Component;
 import config.annotation.ConfigProperty;
-
+@Component
 public class AppConfig {
     public AppConfig() {
         ConfigLoader.load(this);

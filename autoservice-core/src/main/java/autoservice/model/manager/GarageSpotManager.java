@@ -2,11 +2,13 @@ package autoservice.model.manager;
 
 import autoservice.model.entities.GarageSpot;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import config.annotation.Component;
 
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+@Component
 public class GarageSpotManager {
     private List<GarageSpot> garageSpots;
 
@@ -15,9 +17,22 @@ public class GarageSpotManager {
     public GarageSpotManager(List<GarageSpot> garageSpots) {
         this.garageSpots = garageSpots;
     }
-    public GarageSpotManager() {}
+    public GarageSpotManager() {
+        this.garageSpots = new ArrayList<>();
+    }
     //////////////
 
+    public void updateGlobalId() {
+        long max=-1;
+        for (var v: garageSpots) {
+            if (v.getId()>max){
+                max=v.getId();
+            }
+        }
+        if (max!=-1){
+            GarageSpot.updateGlobalId(max);
+        }
+    }
 
     public long addGarageSpot(double size, boolean hasLift, boolean hasPit){
         if (size<8){
@@ -27,6 +42,7 @@ public class GarageSpotManager {
         garageSpots.add(garageSpot);
         return garageSpot.getId();
     }
+
     public long addGarageSpot(long id, double size, boolean hasLift, boolean hasPit){
         GarageSpot garageSpot = new GarageSpot(id, size, hasLift, hasPit);
         garageSpots.add(garageSpot);

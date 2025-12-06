@@ -1,4 +1,4 @@
-package config.annotation;
+package config.enums;
 
 public enum ConfigPropertyType {
     STRING,
