@@ -11,7 +11,7 @@ public class GarageSpot {
     private double size;
     private boolean hasLift;
     private boolean hasPit;
-    private TreeSet<TimeSlot> calendar;
+    private transient TreeSet<TimeSlot> calendar;
 
 
     public long getId() {

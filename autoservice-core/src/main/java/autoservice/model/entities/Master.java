@@ -9,7 +9,7 @@ public class Master {
     private long id;
     private String name;
     private BigDecimal salary;
-    private TreeSet<TimeSlot> calendar;
+    private transient TreeSet<TimeSlot> calendar;
 
     public Master() {
     }
