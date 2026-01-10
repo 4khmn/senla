@@ -14,8 +14,7 @@
     <modules>
         <module>autoservice-core</module>
         <module>autoservice-config</module>
-        <module>Task-9</module>
-        <module>Task-10</module>
+
     </modules>
 
     <properties>

@@ -1,6 +1,7 @@
 package autoservice.ui.actions.garageSpots;
 
 import autoservice.model.AutoService;
+import autoservice.model.exceptions.DBException;
 import autoservice.ui.actions.IAction;
 
 import java.util.Scanner;
@@ -50,8 +51,12 @@ public class AddGarageSpotAction implements IAction {
             }
         }
 
-
-        service.addGarageSpot(size, hasLift, hasPit);
+        try {
+            service.addGarageSpot(size, hasLift, hasPit);
+        }
+        catch (DBException e) {
+            System.out.println(e.getMessage());
+        }
         System.out.println("Гаражное место добавлено!");
         System.out.println("Всего доступных гаражных мест: " + service.getGarageSpotsCount());
     }

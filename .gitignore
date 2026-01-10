@@ -4,4 +4,4 @@
 bin/
 out/
 
-ignore.me
+autoservice-core/src/main/resources/secrets.properties

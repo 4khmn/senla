@@ -1,6 +1,7 @@
 package autoservice.ui.actions.orders;
 
 import autoservice.model.AutoService;
+import autoservice.model.exceptions.DBException;
 import autoservice.ui.actions.IAction;
 
 import java.math.BigDecimal;
@@ -42,7 +43,12 @@ public class AddOrderAction implements IAction {
             try {
                 System.out.print("Введите стоимость услуги: ");
                 BigDecimal price = sc.nextBigDecimal();
-                service.addOrder(desc, duration, price);
+                try {
+                    service.addOrder(desc, duration, price);
+                }
+                catch (DBException e){
+                    System.out.println(e.getMessage());
+                }
                 break;
             }
             catch(Exception e){

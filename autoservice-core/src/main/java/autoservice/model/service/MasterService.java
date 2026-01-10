@@ -1,9 +1,10 @@
-package autoservice.model.manager;
+package autoservice.model.service;
 
-import autoservice.model.entities.GarageSpot;
 import autoservice.model.entities.Master;
 import autoservice.model.entities.Order;
 import autoservice.model.enums.MastersSortEnum;
+import autoservice.model.repository.MasterDAO;
+import autoservice.model.repository.OrderDAO;
 import config.annotation.Component;
 
 import java.math.BigDecimal;
@@ -15,45 +16,24 @@ import java.util.List;
 
 import static java.lang.Math.abs;
 @Component
-public class MasterManager {
-    private List<Master> masters;
+public class MasterService {
+    private final MasterDAO masterDAO = new MasterDAO();
+    private final OrderDAO orderDAO = new OrderDAO();
 
-
-
-    public MasterManager(List<Master> masters) {
-        this.masters = masters;
+    public MasterService() {
     }
-    ///////
-    public MasterManager() {
-        this.masters = new ArrayList<>();
-    }
-    ///////
 
-
-    public void updateGlobalId() {
-        long max=-1;
-        for (var v: masters) {
-            if (v.getId()>max){
-                max=v.getId();
-            }
-        }
-        if (max!=-1){
-            Master.updateGlobalId(max);
-        }
-    }
     //4
     public List<Master> mastersSort(MastersSortEnum decision){
-        List<Master> sortedMasters = masters;
+        List<Master> sortedMasters;
         switch (decision){
             case BY_NAME:
                 //по алфавиту
-                sortedMasters = sortedMasters.stream()
-                        .sorted(Comparator.comparing(Master::getName))
-                        .toList();
+                sortedMasters = masterDAO.mastersSortByName();
                 break;
             case BY_EMPLOYMENT:
                 //по занятости
-                sortedMasters = sortedMasters.stream()
+                sortedMasters = getMasters().stream()
                         .sorted((master1, master2) -> {
                             int freeMaster1HoursToday = getFreeMasterHoursToday(master1);
                             int freeMaster2HoursToday = getFreeMasterHoursToday(master2);
@@ -86,53 +66,41 @@ public class MasterManager {
     }
 
     public List<Master> getMasters() {
+        List<Master> masters = masterDAO.findAll();
+        for (var master: masters) {
+            master.setCalendar(
+                    orderDAO.findTimeSlotsByMaster(master.getId())
+            );
+        }
         return masters;
     }
 
     public long addMaster(String name, BigDecimal salary){
         Master master = new Master(name, salary);
-        masters.add(master);
+        masterDAO.save(master);
         return master.getId();
-    }
-    public long addMaster(long id, String name, BigDecimal salary){
-        Master master = new Master(id, name, salary);
-        masters.add(master);
-        return master.getId();
-    }
-    public MasterManager cloneManager() throws CloneNotSupportedException {
-        List<Master> copy = new ArrayList<>();
-        for (Master master : masters) {
-            copy.add((Master)master.clone());
-        }
-        return new MasterManager(copy);
-    }
-    public void replaceData(MasterManager other) {
-        this.masters = other.masters;
     }
 
-    public boolean deleteMaster(long id){
-        for(var v: masters){
-            if (v.getId()==id){
-                masters.remove(v);
-                return true;
-            }
-        }
-        return false;
+    public void deleteMaster(long id){
+        masterDAO.delete(id);
+    }
+
+    public void deleteAll(){
+        masterDAO.deleteAll();
+    }
+
+    public void update(Master master){
+        masterDAO.update(master);
     }
 
     public Master getMasterById(long id){
-        for (var v: masters){
-            if (v.getId()==id){
-                return v;
-            }
+        Master master = masterDAO.findById(id);
+        if (master!=null) {
+            master.setCalendar(
+                    orderDAO.findTimeSlotsByMaster(id)
+            );
         }
-        return null;
-    }
-    @Override
-    public String toString() {
-        return "MasterManager{" +
-                "masters=" + masters +
-                '}';
+        return master;
     }
 
     private int getFreeMasterHoursToday(Master master){

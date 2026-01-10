@@ -3,6 +3,7 @@ package autoservice.ui.actions.masters;
 import autoservice.model.AutoService;
 import autoservice.model.entities.Master;
 import autoservice.model.entities.Order;
+import autoservice.model.exceptions.DBException;
 import autoservice.ui.actions.IAction;
 
 import java.util.Scanner;
@@ -29,8 +30,13 @@ public class GetMasterByOrderAction implements IAction {
         long orderId = sc.nextInt();
         Order order = service.getOrderById(orderId);
         if (order != null) {
-            Master masterByOrder = service.getMasterByOrder(order);
-            System.out.println(masterByOrder);
+            try {
+                Master masterByOrder = service.getMasterByOrder(order);
+                System.out.println(masterByOrder);
+            }
+            catch (DBException e) {
+                System.out.println(e.getMessage());
+            }
         }
         else{
             System.out.println("Id заказа введено не верно");

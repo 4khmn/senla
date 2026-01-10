@@ -14,9 +14,9 @@ import autoservice.model.io.imports.CsvImportService;
 import autoservice.model.io.exports.GarageSpotsCsvExport;
 import autoservice.model.io.exports.MastersCsvExport;
 import autoservice.model.io.exports.OrdersCsvExport;
-import autoservice.model.manager.GarageSpotManager;
-import autoservice.model.manager.MasterManager;
-import autoservice.model.manager.OrderManager;
+import autoservice.model.service.GarageSpotService;
+import autoservice.model.service.MasterService;
+import autoservice.model.service.OrderService;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import config.annotation.Component;
@@ -33,10 +33,9 @@ import static java.lang.Math.min;
 @JsonAutoDetect
 public class AutoService {
 
-
-    private GarageSpotManager garageManager;
-    private OrderManager orderManager;
-    private MasterManager masterManager;
+    private GarageSpotService garageManager;
+    private OrderService orderManager;
+    private MasterService masterManager;
 
     @JsonIgnore
     private CsvImportService importService;
@@ -53,13 +52,13 @@ public class AutoService {
 
 
     @Inject
-    public AutoService(GarageSpotManager garageManager,
-                        OrderManager orderManager,
-                        MasterManager masterManager,
-                        CsvImportService importService,
-                        GarageSpotsCsvExport garageSpotsCsvExport,
-                        MastersCsvExport mastersCsvExport,
-                        OrdersCsvExport ordersCsvExport) {
+    public AutoService(GarageSpotService garageManager,
+                       OrderService orderManager,
+                       MasterService masterManager,
+                       CsvImportService importService,
+                       GarageSpotsCsvExport garageSpotsCsvExport,
+                       MastersCsvExport mastersCsvExport,
+                       OrdersCsvExport ordersCsvExport) {
         this.garageManager = garageManager;
         this.orderManager = orderManager;
         this.masterManager = masterManager;
@@ -67,16 +66,6 @@ public class AutoService {
         this.garageSpotsCsvExport = garageSpotsCsvExport;
         this.mastersCsvExport = mastersCsvExport;
         this.ordersCsvExport = ordersCsvExport;
-    }
-
-
-    @Override
-    public String toString() {
-        return "autoservice.model.AutoService{" +
-                "garageManager=" + garageManager +
-                ", orderManager=" + orderManager +
-                ", masterManager=" + masterManager +
-                '}';
     }
 
     //4 список свободных мест в сервисных гаражах
@@ -168,8 +157,8 @@ public class AutoService {
         return masterManager.addMaster(name, salary);
     }
 
-    public boolean deleteMaster(long id){
-        return masterManager.deleteMaster(id);
+    public void deleteMaster(long id){
+        masterManager.deleteMaster(id);
     }
     //model.GarageSpot
     public long addGarageSpot(double size, boolean hasLift, boolean hasPit) {
@@ -177,17 +166,18 @@ public class AutoService {
     }
 
 
-    public boolean deleteGarageSpot(long id){
-        return garageManager.deleteGarageSpot(id);
+    public void deleteGarageSpot(long id){
+        garageManager.deleteGarageSpot(id);
     }
 
-    public MasterManager getMasterManager(){
+    //for serialization
+    public MasterService getMasterManager(){
         return masterManager;
     }
-    public OrderManager getOrderManager() {
+    public OrderService getOrderManager() {
         return orderManager;
     }
-    public GarageSpotManager getGarageManager(){
+    public GarageSpotService getGarageManager(){
         return garageManager;
     }
 
@@ -204,18 +194,17 @@ public class AutoService {
     //model.Order
     //запись на конкретное время (-1 - записаться не удалось)
     public long addOrderAtCurrentTime(LocalDateTime date, String description, int durationInHours, BigDecimal price){
-        for (var v: garageManager.getGarageSpots()){
-            if (v.isAvailable(date, date.plusHours(durationInHours))){
-                for (var x: masterManager.getMasters()){
-                    if (x.isAvailable(date, date.plusHours(durationInHours))){
-                        v.addBusyTime(date, date.plusHours(durationInHours));
-                        x.addBusyTime(date, date.plusHours(durationInHours));
-                        return orderManager.addOrder(description, x, v, date, date.plusHours(durationInHours), price);
+        for (var garageSpot: garageManager.getGarageSpots()){
+            if (garageSpot.isAvailable(date, date.plusHours(durationInHours))){
+                for (var master: masterManager.getMasters()){
+                    if (master.isAvailable(date, date.plusHours(durationInHours))){
+                        garageSpot.addBusyTime(date, date.plusHours(durationInHours));
+                        master.addBusyTime(date, date.plusHours(durationInHours));
+                        return orderManager.addOrder(description, master, garageSpot, date, date.plusHours(durationInHours), price);
                     }
                 }
             }
         }
-        System.out.println("Нельзя добавить в данное время.");
         return -1;
     }
     @JsonIgnore
@@ -261,7 +250,7 @@ public class AutoService {
         return orderManager.addOrder(description, selectedMaster, selectedSpot, bestStartTime, endTime, price);
     }
 
-    public boolean deleteOrder(long id){
+    public void deleteOrder(long id){
         Order order = orderManager.getOrderById(id);
         if (order!= null){
             LocalDateTime startTime = order.getStartTime();
@@ -269,12 +258,12 @@ public class AutoService {
 
             order.getMaster().freeTimeSlot(startTime, endTime);
             order.getGarageSpot().freeTimeSlot(startTime, endTime);
-            return orderManager.deleteOrder(id);
+            orderManager.deleteOrder(id);
         }
-        return false;
     }
 
     public boolean closeOrder(long id){
+
         Order order = orderManager.getOrderById(id);
         if (order!= null){
             LocalDateTime startTime = order.getStartTime();
@@ -335,9 +324,4 @@ public class AutoService {
     public void exportOrders() throws IOException {
         ordersCsvExport.export();
     }
-
-
-
-
-
 }

@@ -3,6 +3,7 @@ package autoservice.ui.actions.orders;
 import autoservice.model.AutoService;
 import autoservice.model.entities.Order;
 import autoservice.model.enums.OrdersSortEnum;
+import autoservice.model.exceptions.DBException;
 import autoservice.ui.actions.IAction;
 
 import java.util.List;
@@ -42,11 +43,16 @@ public class OrdersSortAction implements IAction {
                 }
             };
         }
-        List<Order> orders = service.ordersSort(sortType);
+        try {
+            List<Order> orders = service.ordersSort(sortType);
 
-        System.out.println("Списко заказов: ");
-        for (var v : orders) {
-            System.out.println(v);
+            System.out.println("Списко заказов: ");
+            for (var v : orders) {
+                System.out.println(v);
+            }
+        }
+        catch (DBException ex) {
+            System.out.println(ex.getMessage());
         }
     }
 }

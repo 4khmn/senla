@@ -38,7 +38,7 @@ public class MenuController {
                 running = navigator.navigate(choice);
             }
             catch(Exception e){
-                System.out.println("Неверный выбор!");
+                System.out.println("Глобальная обработка: Неверный выбор!");
                 sc.next();
             }
         }

@@ -4,10 +4,10 @@ package autoservice.model.entities;
 
 import java.time.LocalDateTime;
 import java.util.TreeSet;
-public class GarageSpot {
-    private static long global_id=1; // for serial primary key
-    private long id;
+public class GarageSpot implements Identifiable{
 
+
+    private Long id;
     private double size;
     private boolean hasLift;
     private boolean hasPit;
@@ -16,6 +16,10 @@ public class GarageSpot {
 
     public long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setCalendar(TreeSet<TimeSlot> calendar) {
@@ -27,25 +31,16 @@ public class GarageSpot {
     }
 
     public GarageSpot() {
+        this.calendar = new TreeSet<>();
     }
 
     public GarageSpot(double size, boolean hasLift, boolean hasPit) {
-        this.id = global_id++;
 
         this.size = size;
         this.hasLift = hasLift;
         this.hasPit = hasPit;
         this.calendar = new TreeSet<>();
     }
-    public GarageSpot(long id, double size, boolean hasLift, boolean hasPit) {
-        this.id = id;
-
-        this.size = size;
-        this.hasLift = hasLift;
-        this.hasPit = hasPit;
-        this.calendar = new TreeSet<>();
-    }
-
 
     public double getSize() {
         return size;
@@ -111,12 +106,9 @@ public class GarageSpot {
         return true;
     }
 
-    public static void updateGlobalId(long maxId) {
-        if (maxId >= global_id) {
-            global_id = maxId + 1;
-        }
-    }
+
     public TreeSet<TimeSlot> getCalendar() {
+        if (calendar == null) calendar = new TreeSet<>();
         return calendar;
     }
 
@@ -161,10 +153,4 @@ public class GarageSpot {
         }
     }
 
-    @Override
-    public GarageSpot clone() {
-        GarageSpot copy = new GarageSpot(id, size, hasLift, hasPit);
-        copy.calendar = new TreeSet<>(calendar);
-        return copy;
-    }
 }

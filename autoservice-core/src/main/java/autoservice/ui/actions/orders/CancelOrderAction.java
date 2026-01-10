@@ -1,6 +1,7 @@
 package autoservice.ui.actions.orders;
 
 import autoservice.model.AutoService;
+import autoservice.model.exceptions.DBException;
 import autoservice.ui.actions.IAction;
 
 import java.util.Scanner;
@@ -21,10 +22,15 @@ public class CancelOrderAction implements IAction {
         Scanner sc = new Scanner(System.in);
         System.out.print("Введите id заказа, которое вы хотите отменить: ");
         long id = sc.nextLong();
-        if (service.cancelOrder(id)){
-            System.out.println("Заказ успешно удален!");
-        } else{
-            System.out.println("Заказа с данным id не найдено");
+        try {
+            if (service.cancelOrder(id)) {
+                System.out.println("Заказ успешно удален!");
+            } else {
+                System.out.println("Заказа с данным id не найдено");
+            }
+        }
+        catch (DBException e) {
+            System.out.println(e.getMessage());
         }
     }
 }

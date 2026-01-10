@@ -1,6 +1,7 @@
 package autoservice.ui.actions.orders;
 
 import autoservice.model.AutoService;
+import autoservice.model.exceptions.DBException;
 import autoservice.ui.actions.IAction;
 
 import java.math.BigDecimal;
@@ -70,13 +71,17 @@ public class AddOrderAtCurrentTimeAction implements IAction {
             try {
                 System.out.print("Введите стоимость услуги: ");
                 BigDecimal price = sc.nextBigDecimal();
-                service.addOrder(desc, duration, price);
-                long idOfOrder = service.addOrderAtCurrentTime(date, desc, duration, price);
-                if (idOfOrder!=-1){
-                    System.out.println("Заказ успешно добавлен.");
+                try {
+                    long idOfOrder = service.addOrderAtCurrentTime(date, desc, duration, price);
+                    if (idOfOrder!=-1){
+                        System.out.println("Заказ успешно добавлен.");
+                    }
+                    else{
+                        System.out.println("В данное время заказ добавить нельзя. ");
+                    }
                 }
-                else{
-                    System.out.println("В данное время заказ добавить нельзя. ");
+                catch(DBException e){
+                    System.out.println(e.getMessage());
                 }
                 break;
             }

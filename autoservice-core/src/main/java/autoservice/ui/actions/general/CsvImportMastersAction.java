@@ -2,6 +2,7 @@ package autoservice.ui.actions.general;
 
 import autoservice.model.AutoService;
 import autoservice.model.exceptions.CsvParsingException;
+import autoservice.model.exceptions.DBException;
 import autoservice.model.exceptions.ImportException;
 import autoservice.ui.actions.IAction;
 
@@ -26,6 +27,8 @@ public class CsvImportMastersAction implements IAction {
         } catch(IOException e){
             System.out.println("Файл не найден. Создайте файл по пути <resources/data/masters.csv>");
         } catch(CsvParsingException e){
+            System.out.println(e.getMessage());
+        } catch (DBException e){
             System.out.println(e.getMessage());
         }
     }

@@ -1,6 +1,7 @@
 package autoservice.ui.actions.garageSpots;
 
 import autoservice.model.AutoService;
+import autoservice.model.exceptions.DBException;
 import autoservice.ui.actions.IAction;
 
 import java.time.LocalDateTime;
@@ -45,11 +46,16 @@ public class GetNumberOfFreeSpotsByDateAction implements IAction {
                 System.out.println("Неверный ввод даты, попробуйте еще раз!");
             }
         }
-        int freeSpotsByDate = service.getNumberOfFreeSpotsByDate(date);
-        if (freeSpotsByDate>0) {
-            System.out.println("Всего свободных мест сейчас: " + freeSpotsByDate);
-        } else{
-            System.out.println("Свободных мест в это время нету.");
+        try {
+            int freeSpotsByDate = service.getNumberOfFreeSpotsByDate(date);
+            if (freeSpotsByDate > 0) {
+                System.out.println("Всего свободных мест сейчас: " + freeSpotsByDate);
+            } else {
+                System.out.println("Свободных мест в это время нету.");
+            }
+        }
+        catch (DBException e){
+            System.out.println(e.getMessage());
         }
     }
 }

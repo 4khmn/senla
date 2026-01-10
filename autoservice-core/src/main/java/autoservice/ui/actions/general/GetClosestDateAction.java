@@ -1,6 +1,7 @@
 package autoservice.ui.actions.general;
 
 import autoservice.model.AutoService;
+import autoservice.model.exceptions.DBException;
 import autoservice.ui.actions.IAction;
 
 import java.time.LocalDateTime;
@@ -23,8 +24,13 @@ public class GetClosestDateAction implements IAction {
         System.out.print("Введите продолжительность заказа в часах: ");
         int duration = sc.nextInt();
         if (duration>0){
-            LocalDateTime closestDate = service.getClosestDate(duration);
-            System.out.println("Ближайшее свобожное время: " + closestDate);
+            try {
+                LocalDateTime closestDate = service.getClosestDate(duration);
+                System.out.println("Ближайшее свобожное время: " + closestDate);
+            }
+            catch(DBException e){
+                System.out.println(e.getMessage());
+            }
         }
         else{
             System.out.println("Длительность введена некорректно");
