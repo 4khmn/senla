@@ -11,6 +11,7 @@ import autoservice.model.exceptions.ImportException;
 import autoservice.model.repository.DBConnection;
 import autoservice.model.repository.OrderDAO;
 import config.annotation.Component;
+import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -20,6 +21,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 @Component
+@Slf4j
 public class OrderService {
     private OrderDAO orderDAO = new  OrderDAO();
 
@@ -29,6 +31,7 @@ public class OrderService {
 
     //4 список заказов
     public List<Order> ordersSort(OrdersSortEnum decision) {
+        log.info("Sorting orders by decision={}", decision);
         List<Order> sortedOrders;
         switch (decision) {
             case BY_CREATION_DATE:
@@ -49,13 +52,16 @@ public class OrderService {
                 break;
             default:
                 //error
+                log.error("Invalid decision={}", decision);
                 throw new IllegalArgumentException("Неизвестный тип: " + decision);
         }
+        log.info("Orders successfully sorted by decision={}", decision);
         return sortedOrders;
     }
 
     //4
     public List<Order> activeOrdersSort(ActiveOrdersSortEnum decision) {
+        log.info("Sorting active orders by decision={}", decision);
         List<Order> sortedOrders;
         switch (decision) {
             case BY_CREATION_DATE:
@@ -72,8 +78,10 @@ public class OrderService {
                 break;
             default:
                 //error
+                log.error("Invalid decision={}", decision);
                 throw new IllegalArgumentException("Неизвестный тип: " + decision);
         }
+        log.info("Active orders successfully sorted by decision={}", decision);
         return sortedOrders;
     }
 
@@ -84,6 +92,7 @@ public class OrderService {
 
     //4
     public List<Order> ordersSortByTimeFrame(LocalDateTime start, LocalDateTime end, OrdersSortByTimeFrameEnum decision) {
+        log.info("Sorting orders by time frame by decision={}", decision);
         List<Order> ordersAtCurrentTime;
         switch (decision) {
             case BY_CREATION_DATE:
@@ -100,8 +109,10 @@ public class OrderService {
                 break;
             default:
                 //error
+                log.error("Invalid decision={}", decision);
                 throw new IllegalArgumentException("Неизвестный тип: " + decision);
         }
+        log.info("Orders successfully sorted by time frame [{} - {}] by decision={}", start, end, decision);
         return ordersAtCurrentTime;
     }
 
@@ -146,6 +157,7 @@ public class OrderService {
     }
 
     public boolean closeOrder(long id){
+        log.info("Closing order with id={}", id);
         boolean closed = false;
         Order byId = orderDAO.findById(id);
         if (byId != null){
@@ -153,10 +165,12 @@ public class OrderService {
             update(byId);
             closed = true;
         }
+        log.info("Order with id={} successfully closed", id);
         return closed;
     }
 
     public boolean cancelOrder(long id){
+        log.info("Canceling order with id={}", id);
         boolean canceled = false;
         Order byId = orderDAO.findById(id);
         if (byId != null){
@@ -164,6 +178,7 @@ public class OrderService {
             update(byId);
             canceled = true;
         }
+        log.info("Order with id={} successfully cancelled", id);
         return canceled;
     }
     public long findOrderByTimeByCurrentMaster(Master master, LocalDateTime date){
@@ -177,6 +192,7 @@ public class OrderService {
     }
 
     public boolean shiftOrder(long id, int durationToShiftInHours) {
+        log.info("Shifting order with id={}", id);
         Connection connection = null;
         try {
             connection = DBConnection.getInstance().getConnection();
@@ -242,6 +258,7 @@ public class OrderService {
                 update(order);
             }
             connection.commit();
+            log.info("Order with id={} successfully shifted", id);
             return true;
 
         } catch (Exception e) {
@@ -252,6 +269,7 @@ public class OrderService {
                     throw new RuntimeException(ex);
                 }
             }
+            log.error("Error shifting order  with id={}", id, e);
             throw new RuntimeException("Перенос заказа не удался: " + e.getMessage());
 
         } finally {

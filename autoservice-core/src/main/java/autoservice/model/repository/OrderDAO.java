@@ -6,13 +6,14 @@ import autoservice.model.entities.TimeSlot;
 import autoservice.model.enums.OrderSortField;
 import autoservice.model.enums.OrderStatus;
 import autoservice.model.exceptions.DBException;
+import lombok.extern.slf4j.Slf4j;
 
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
-
+@Slf4j
 public class OrderDAO extends GenericDAO<Order> {
     @Override
     public Order mapResultSetToEntity(ResultSet rs) throws SQLException {
@@ -84,6 +85,7 @@ public class OrderDAO extends GenericDAO<Order> {
                 list.add(mapResultSetToEntity(rs));
             }
         } catch (SQLException e) {
+            log.error("Error getting all orders from database ", getTableName(), e);
             throw new DBException("Error finding all entities", e);
         }
         return list;
@@ -109,6 +111,7 @@ public class OrderDAO extends GenericDAO<Order> {
                 }
             }
         } catch (SQLException e) {
+            log.error("Error getting time slots by garage spot from database {}", getTableName(), e);
             throw new DBException("Error finding time slots by garageSpot with id="+garageSpotId, e);
         }
 
@@ -137,6 +140,7 @@ public class OrderDAO extends GenericDAO<Order> {
                 }
             }
         } catch (SQLException e) {
+            log.error("Error getting time slots by master from database {}", getTableName(), e);
             throw new DBException("Error finding time slots by master with id="+masterId, e);
         }
 
@@ -144,16 +148,19 @@ public class OrderDAO extends GenericDAO<Order> {
     }
 
     public Order getOrderByMaster(Master master){
+        log.info("Getting orders by master with id {}", master.getId());
         String sql = "SELECT * FROM orders WHERE master_id = ? LIMIT 1";
         try(PreparedStatement ps = connection.prepareStatement(sql)){
             ps.setLong(1, master.getId());
             try(ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     Order order = mapResultSetToEntity(rs);
+                    log.info("Order successfully founded with id={}", order.getId());
                     return order;
                 }
             }
         } catch (SQLException e) {
+            log.error("Error getting orders by master with id={} from database {}", master.getId(), getTableName(), e);
             throw new DBException("Error getting order by master with id="+master.getId(), e);
         }
         return null;
@@ -197,6 +204,7 @@ public class OrderDAO extends GenericDAO<Order> {
             }
 
         } catch (SQLException e) {
+            log.error("Error getting orders by sorting from database {}", getTableName(), e);
             throw new DBException("Error getting sorted orders", e);
         }
 
@@ -233,6 +241,7 @@ public class OrderDAO extends GenericDAO<Order> {
             }
 
         } catch (SQLException e) {
+            log.error("Error getting orders by sorting from database {}", getTableName(), e);
             throw new DBException("Error getting sorted by time frame orders", e);
         }
 

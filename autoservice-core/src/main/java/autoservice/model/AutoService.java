@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import config.annotation.Component;
 import config.annotation.Inject;
+import lombok.extern.slf4j.Slf4j;
 
 
 import java.io.IOException;
@@ -31,6 +32,7 @@ import java.util.*;
 import static java.lang.Math.min;
 @Component
 @JsonAutoDetect
+@Slf4j
 public class AutoService {
 
     private GarageSpotService garageManager;
@@ -105,7 +107,9 @@ public class AutoService {
     }
 
     //4 количество свободных мест на сервисе на любую дату в будующем
+    //проверить что дата реально в будующем
     public int getNumberOfFreeSpotsByDate(LocalDateTime date){
+        log.info("Fetching free spots count by date {}", date);
         int spotsCount=0;
         int mastersCount=0;
         for (var v: garageManager.getGarageSpots()){
@@ -118,11 +122,13 @@ public class AutoService {
                 mastersCount+=1;
             }
         }
+        log.info("Number of free spots by date {}", min(spotsCount, mastersCount));
         return min(mastersCount, spotsCount);
     }
 
     //4 ближайшая свободная дата
     public LocalDateTime getClosestDate(int durationInHours) {
+        log.info("Fetching closest date by duration {}", durationInHours);
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime bestStartTime = null;
         Master selectedMaster = null;
@@ -142,11 +148,13 @@ public class AutoService {
             }
         }
         if (bestStartTime == null) {
+            log.error("Error while fetching closest date by duration {}", durationInHours);
             throw new RuntimeException("No available time slot found");
         }
         LocalDateTime endTime = bestStartTime.plusHours(durationInHours);
         selectedSpot.addBusyTime(bestStartTime, endTime);
         selectedMaster.addBusyTime(bestStartTime, endTime);
+        log.info("Closest date with duration={} successfully found", durationInHours);
         return bestStartTime;
     }
 

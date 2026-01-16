@@ -6,6 +6,7 @@ import autoservice.model.enums.MastersSortEnum;
 import autoservice.model.repository.MasterDAO;
 import autoservice.model.repository.OrderDAO;
 import config.annotation.Component;
+import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
 import java.time.Duration;
@@ -16,6 +17,7 @@ import java.util.List;
 
 import static java.lang.Math.abs;
 @Component
+@Slf4j
 public class MasterService {
     private final MasterDAO masterDAO = new MasterDAO();
     private final OrderDAO orderDAO = new OrderDAO();
@@ -25,6 +27,7 @@ public class MasterService {
 
     //4
     public List<Master> mastersSort(MastersSortEnum decision){
+        log.info("Sorting masters by decision={}", decision);
         List<Master> sortedMasters;
         switch (decision){
             case BY_NAME:
@@ -56,13 +59,18 @@ public class MasterService {
                 break;
             default:
                 //error
+                log.error("Invalid decision={}", decision);
                 throw new IllegalArgumentException("Неизвестный тип: " + decision);
         }
+        log.info("Masters successfully sorted by decision={}", decision);
         return sortedMasters;
     }
     //4
     public Master getMasterByOrder(Order order){
-        return order.getMaster();
+        log.info("Getting master by order ith id{}", order.getId());
+        Master master = order.getMaster();
+        log.info("Master successfully found by order with master_id={}", master.getId());
+        return master;
     }
 
     public List<Master> getMasters() {

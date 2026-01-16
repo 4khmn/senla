@@ -1,0 +1,280 @@
+[17:17:15.184] [main] INFO  config.DIContainer - Creating instance of GarageSpotService
+[17:17:15.186] [main] INFO  config.DIContainer - Creating instance of MasterService
+[17:17:15.186] [main] INFO  config.DIContainer - Creating instance of OrderService
+[17:17:15.196] [main] INFO  config.DIContainer - Creating instance of CsvImportService
+[17:17:15.347] [main] INFO  config.DIContainer - Creating instance of SerializationService
+[17:17:15.348] [main] INFO  config.DIContainer - Creating instance of GarageSpotsCsvExport
+[17:17:15.348] [main] INFO  config.DIContainer - Creating instance of MastersCsvExport
+[17:17:15.348] [main] INFO  config.DIContainer - Creating instance of OrdersCsvExport
+[17:17:15.362] [main] INFO  config.DIContainer - Creating instance of AutoService
+[17:17:15.363] [main] INFO  config.DIContainer - Creating instance of Navigator
+[17:17:15.363] [main] INFO  config.DIContainer - Creating instance of AppConfig
+[17:17:15.364] [main] INFO  config.DIContainer - Creating instance of ConsoleMenuFactory
+[17:17:15.366] [main] INFO  config.DIContainer - Creating instance of MenuController
+[17:17:24.718] [main] INFO  autoservice.model.service.GarageSpotService - Fetching free garage spots
+[17:17:24.720] [main] INFO  autoservice.model.service.GarageSpotService - Free garage spots successfully found
+[17:18:00.403] [main] INFO  config.DIContainer - Creating instance of GarageSpotService
+[17:18:00.406] [main] INFO  config.DIContainer - Creating instance of MasterService
+[17:18:00.406] [main] INFO  config.DIContainer - Creating instance of OrderService
+[17:18:00.416] [main] INFO  config.DIContainer - Creating instance of CsvImportService
+[17:18:00.558] [main] INFO  config.DIContainer - Creating instance of SerializationService
+[17:18:00.559] [main] INFO  config.DIContainer - Creating instance of GarageSpotsCsvExport
+[17:18:00.559] [main] INFO  config.DIContainer - Creating instance of MastersCsvExport
+[17:18:00.559] [main] INFO  config.DIContainer - Creating instance of OrdersCsvExport
+[17:18:00.574] [main] INFO  config.DIContainer - Creating instance of AutoService
+[17:18:00.575] [main] INFO  config.DIContainer - Creating instance of Navigator
+[17:18:00.576] [main] INFO  config.DIContainer - Creating instance of AppConfig
+[17:18:00.577] [main] INFO  config.DIContainer - Creating instance of ConsoleMenuFactory
+[17:18:00.579] [main] INFO  config.DIContainer - Creating instance of MenuController
+[17:18:08.868] [main] INFO  autoservice.model.repository.GenericDAO - Updating entity Order to database
+[17:18:08.876] [main] INFO  autoservice.model.repository.GenericDAO - Entity Order updated successfully to database with id=55
+[17:18:08.876] [main] INFO  autoservice.model.repository.GenericDAO - Updating entity Order to database
+[17:18:08.877] [main] INFO  autoservice.model.repository.GenericDAO - Entity Order updated successfully to database with id=56
+[17:19:05.676] [main] INFO  autoservice.model.service.OrderService - Sorting orders by decision=BY_CREATION_DATE
+[17:19:05.680] [main] INFO  autoservice.model.service.OrderService - Orders successfully sorted by decision=BY_CREATION_DATE
+[17:19:42.442] [main] INFO  config.DIContainer - Creating instance of GarageSpotService
+[17:19:42.444] [main] INFO  config.DIContainer - Creating instance of MasterService
+[17:19:42.444] [main] INFO  config.DIContainer - Creating instance of OrderService
+[17:19:42.454] [main] INFO  config.DIContainer - Creating instance of CsvImportService
+[17:19:42.602] [main] INFO  config.DIContainer - Creating instance of SerializationService
+[17:19:42.602] [main] INFO  config.DIContainer - Creating instance of GarageSpotsCsvExport
+[17:19:42.602] [main] INFO  config.DIContainer - Creating instance of MastersCsvExport
+[17:19:42.603] [main] INFO  config.DIContainer - Creating instance of OrdersCsvExport
+[17:19:42.614] [main] INFO  config.DIContainer - Creating instance of AutoService
+[17:19:42.615] [main] INFO  config.DIContainer - Creating instance of Navigator
+[17:19:42.615] [main] INFO  config.DIContainer - Creating instance of AppConfig
+[17:19:42.616] [main] INFO  config.DIContainer - Creating instance of ConsoleMenuFactory
+[17:19:42.618] [main] INFO  config.DIContainer - Creating instance of MenuController
+[17:19:48.917] [main] INFO  autoservice.model.repository.GenericDAO - Updating entity Order to database
+[17:19:48.922] [main] INFO  autoservice.model.repository.GenericDAO - Entity Order updated successfully to database with id=55
+[17:19:48.922] [main] INFO  autoservice.model.repository.GenericDAO - Updating entity Order to database
+[17:19:48.923] [main] INFO  autoservice.model.repository.GenericDAO - Entity Order updated successfully to database with id=56
+[17:21:07.777] [main] INFO  config.DIContainer - Creating instance of GarageSpotService
+[17:21:07.779] [main] INFO  config.DIContainer - Creating instance of MasterService
+[17:21:07.779] [main] INFO  config.DIContainer - Creating instance of OrderService
+[17:21:07.790] [main] INFO  config.DIContainer - Creating instance of CsvImportService
+[17:21:07.940] [main] INFO  config.DIContainer - Creating instance of SerializationService
+[17:21:07.941] [main] INFO  config.DIContainer - Creating instance of GarageSpotsCsvExport
+[17:21:07.941] [main] INFO  config.DIContainer - Creating instance of MastersCsvExport
+[17:21:07.941] [main] INFO  config.DIContainer - Creating instance of OrdersCsvExport
+[17:21:07.953] [main] INFO  config.DIContainer - Creating instance of AutoService
+[17:21:07.953] [main] INFO  config.DIContainer - Creating instance of Navigator
+[17:21:07.954] [main] INFO  config.DIContainer - Creating instance of AppConfig
+[17:21:07.954] [main] INFO  config.DIContainer - Creating instance of ConsoleMenuFactory
+[17:21:07.956] [main] INFO  config.DIContainer - Creating instance of MenuController
+[17:21:12.027] [main] INFO  autoservice.model.service.OrderService - Sorting orders by decision=BY_CREATION_DATE
+[17:21:12.032] [main] INFO  autoservice.model.service.OrderService - Orders successfully sorted by decision=BY_CREATION_DATE
+[17:22:26.607] [main] INFO  autoservice.model.service.OrderService - Sorting orders by decision=BY_END_DATE
+[17:22:26.608] [main] INFO  autoservice.model.service.OrderService - Orders successfully sorted by decision=BY_END_DATE
+[17:22:32.693] [main] INFO  autoservice.model.service.OrderService - Sorting orders by decision=BY_PRICE
+[17:22:32.695] [main] INFO  autoservice.model.service.OrderService - Orders successfully sorted by decision=BY_PRICE
+[17:22:53.043] [main] INFO  config.DIContainer - Creating instance of GarageSpotService
+[17:22:53.046] [main] INFO  config.DIContainer - Creating instance of MasterService
+[17:22:53.046] [main] INFO  config.DIContainer - Creating instance of OrderService
+[17:22:53.055] [main] INFO  config.DIContainer - Creating instance of CsvImportService
+[17:22:53.200] [main] INFO  config.DIContainer - Creating instance of SerializationService
+[17:22:53.201] [main] INFO  config.DIContainer - Creating instance of GarageSpotsCsvExport
+[17:22:53.201] [main] INFO  config.DIContainer - Creating instance of MastersCsvExport
+[17:22:53.202] [main] INFO  config.DIContainer - Creating instance of OrdersCsvExport
+[17:22:53.214] [main] INFO  config.DIContainer - Creating instance of AutoService
+[17:22:53.214] [main] INFO  config.DIContainer - Creating instance of Navigator
+[17:22:53.214] [main] INFO  config.DIContainer - Creating instance of AppConfig
+[17:22:53.215] [main] INFO  config.DIContainer - Creating instance of ConsoleMenuFactory
+[17:22:53.217] [main] INFO  config.DIContainer - Creating instance of MenuController
+[17:22:56.767] [main] INFO  autoservice.model.service.OrderService - Sorting orders by decision=BY_CREATION_DATE
+[17:22:56.771] [main] INFO  autoservice.model.service.OrderService - Orders successfully sorted by decision=BY_CREATION_DATE
+[17:24:34.354] [main] INFO  config.DIContainer - Creating instance of GarageSpotService
+[17:24:34.357] [main] INFO  config.DIContainer - Creating instance of MasterService
+[17:24:34.357] [main] INFO  config.DIContainer - Creating instance of OrderService
+[17:24:34.365] [main] INFO  config.DIContainer - Creating instance of CsvImportService
+[17:24:34.505] [main] INFO  config.DIContainer - Creating instance of SerializationService
+[17:24:34.506] [main] INFO  config.DIContainer - Creating instance of GarageSpotsCsvExport
+[17:24:34.506] [main] INFO  config.DIContainer - Creating instance of MastersCsvExport
+[17:24:34.507] [main] INFO  config.DIContainer - Creating instance of OrdersCsvExport
+[17:24:34.520] [main] INFO  config.DIContainer - Creating instance of AutoService
+[17:24:34.520] [main] INFO  config.DIContainer - Creating instance of Navigator
+[17:24:34.521] [main] INFO  config.DIContainer - Creating instance of AppConfig
+[17:24:34.522] [main] INFO  config.DIContainer - Creating instance of ConsoleMenuFactory
+[17:24:34.525] [main] INFO  config.DIContainer - Creating instance of MenuController
+[17:24:42.149] [main] INFO  autoservice.model.service.OrderService - Sorting orders by decision=BY_CREATION_DATE
+[17:24:42.153] [main] INFO  autoservice.model.service.OrderService - Orders successfully sorted by decision=BY_CREATION_DATE
+[17:24:59.393] [main] INFO  autoservice.model.service.OrderService - Sorting active orders by decision=BY_CREATION_DATE
+[17:24:59.395] [main] INFO  autoservice.model.service.OrderService - Active orders successfully sorted by decision=BY_CREATION_DATE
+[17:28:37.969] [main] INFO  config.DIContainer - Creating instance of GarageSpotService
+[17:28:37.971] [main] INFO  config.DIContainer - Creating instance of MasterService
+[17:28:37.971] [main] INFO  config.DIContainer - Creating instance of OrderService
+[17:28:37.980] [main] INFO  config.DIContainer - Creating instance of CsvImportService
+[17:28:38.129] [main] INFO  config.DIContainer - Creating instance of SerializationService
+[17:28:38.129] [main] INFO  config.DIContainer - Creating instance of GarageSpotsCsvExport
+[17:28:38.130] [main] INFO  config.DIContainer - Creating instance of MastersCsvExport
+[17:28:38.130] [main] INFO  config.DIContainer - Creating instance of OrdersCsvExport
+[17:28:38.142] [main] INFO  config.DIContainer - Creating instance of AutoService
+[17:28:38.143] [main] INFO  config.DIContainer - Creating instance of Navigator
+[17:28:38.143] [main] INFO  config.DIContainer - Creating instance of AppConfig
+[17:28:38.144] [main] INFO  config.DIContainer - Creating instance of ConsoleMenuFactory
+[17:28:38.146] [main] INFO  config.DIContainer - Creating instance of MenuController
+[17:28:43.533] [main] INFO  autoservice.model.service.OrderService - Sorting active orders by decision=BY_CREATION_DATE
+[17:28:43.538] [main] INFO  autoservice.model.service.OrderService - Active orders successfully sorted by decision=BY_CREATION_DATE
+[17:29:37.204] [main] INFO  autoservice.model.service.OrderService - Sorting orders by decision=BY_CREATION_DATE
+[17:29:37.205] [main] INFO  autoservice.model.service.OrderService - Orders successfully sorted by decision=BY_CREATION_DATE
+[17:30:14.292] [main] INFO  config.DIContainer - Creating instance of GarageSpotService
+[17:30:14.295] [main] INFO  config.DIContainer - Creating instance of MasterService
+[17:30:14.295] [main] INFO  config.DIContainer - Creating instance of OrderService
+[17:30:14.306] [main] INFO  config.DIContainer - Creating instance of CsvImportService
+[17:30:14.464] [main] INFO  config.DIContainer - Creating instance of SerializationService
+[17:30:14.464] [main] INFO  config.DIContainer - Creating instance of GarageSpotsCsvExport
+[17:30:14.465] [main] INFO  config.DIContainer - Creating instance of MastersCsvExport
+[17:30:14.465] [main] INFO  config.DIContainer - Creating instance of OrdersCsvExport
+[17:30:14.478] [main] INFO  config.DIContainer - Creating instance of AutoService
+[17:30:14.478] [main] INFO  config.DIContainer - Creating instance of Navigator
+[17:30:14.479] [main] INFO  config.DIContainer - Creating instance of AppConfig
+[17:30:14.479] [main] INFO  config.DIContainer - Creating instance of ConsoleMenuFactory
+[17:30:14.481] [main] INFO  config.DIContainer - Creating instance of MenuController
+[17:30:32.678] [main] INFO  autoservice.model.service.MasterService - Fetching all masters
+[17:30:32.706] [main] INFO  autoservice.model.service.MasterService - All masters successfully found
+[17:30:35.987] [main] INFO  autoservice.model.service.MasterService - Sorting masters by decision=BY_NAME
+[17:30:35.992] [main] INFO  autoservice.model.service.MasterService - Masters successfully sorted by decision=BY_NAME
+[17:30:42.460] [main] INFO  autoservice.model.service.MasterService - Fetching all masters
+[17:30:42.463] [main] INFO  autoservice.model.service.MasterService - All masters successfully found
+[17:31:05.712] [main] INFO  autoservice.model.service.MasterService - Fetching all masters
+[17:31:05.714] [main] INFO  autoservice.model.service.MasterService - All masters successfully found
+[17:31:07.500] [main] INFO  autoservice.model.service.MasterService - Getting master by order=id - 55, description - 1, created at - 2026-01-10T01:28:30.990686, master id - 1, garage spot id - 70, start time - 2026-01-10T01:28:30.985688, end time - 2026-01-10T02:28:30.985688, status - closed, price - 1000.00
+[17:31:07.502] [main] INFO  autoservice.model.service.MasterService - Master successfully found by order with master_id=1
+[17:32:14.364] [main] INFO  config.DIContainer - Creating instance of GarageSpotService
+[17:32:14.366] [main] INFO  config.DIContainer - Creating instance of MasterService
+[17:32:14.367] [main] INFO  config.DIContainer - Creating instance of OrderService
+[17:32:14.376] [main] INFO  config.DIContainer - Creating instance of CsvImportService
+[17:32:14.517] [main] INFO  config.DIContainer - Creating instance of SerializationService
+[17:32:14.517] [main] INFO  config.DIContainer - Creating instance of GarageSpotsCsvExport
+[17:32:14.517] [main] INFO  config.DIContainer - Creating instance of MastersCsvExport
+[17:32:14.518] [main] INFO  config.DIContainer - Creating instance of OrdersCsvExport
+[17:32:14.531] [main] INFO  config.DIContainer - Creating instance of AutoService
+[17:32:14.532] [main] INFO  config.DIContainer - Creating instance of Navigator
+[17:32:14.532] [main] INFO  config.DIContainer - Creating instance of AppConfig
+[17:32:14.533] [main] INFO  config.DIContainer - Creating instance of ConsoleMenuFactory
+[17:32:14.536] [main] INFO  config.DIContainer - Creating instance of MenuController
+[17:32:20.168] [main] INFO  autoservice.model.service.MasterService - Fetching all masters
+[17:32:20.196] [main] INFO  autoservice.model.service.MasterService - All masters successfully found
+[17:32:22.084] [main] INFO  autoservice.model.service.MasterService - Getting master by order ith id55
+[17:32:22.084] [main] INFO  autoservice.model.service.MasterService - Master successfully found by order with master_id=1
+[17:32:37.345] [main] INFO  autoservice.model.repository.OrderDAO - Getting orders by master with id 1
+[17:32:37.346] [main] INFO  autoservice.model.repository.OrderDAO - Order successfully founded with id=55
+[17:33:10.142] [main] INFO  autoservice.model.service.OrderService - Sorting orders by time frame by decision=BY_CREATION_DATE
+[17:33:10.144] [main] INFO  autoservice.model.service.OrderService - Orders successfully sorted by time frame [2016-01-01T00:00 - 3000-10-10T10:00] by decision=BY_CREATION_DATE
+[17:33:51.993] [main] INFO  autoservice.model.service.MasterService - Fetching all masters
+[17:33:51.995] [main] INFO  autoservice.model.service.MasterService - All masters successfully found
+[17:34:27.561] [main] INFO  config.DIContainer - Creating instance of GarageSpotService
+[17:34:27.564] [main] INFO  config.DIContainer - Creating instance of MasterService
+[17:34:27.565] [main] INFO  config.DIContainer - Creating instance of OrderService
+[17:34:27.573] [main] INFO  config.DIContainer - Creating instance of CsvImportService
+[17:34:27.730] [main] INFO  config.DIContainer - Creating instance of SerializationService
+[17:34:27.730] [main] INFO  config.DIContainer - Creating instance of GarageSpotsCsvExport
+[17:34:27.731] [main] INFO  config.DIContainer - Creating instance of MastersCsvExport
+[17:34:27.731] [main] INFO  config.DIContainer - Creating instance of OrdersCsvExport
+[17:34:27.747] [main] INFO  config.DIContainer - Creating instance of AutoService
+[17:34:27.747] [main] INFO  config.DIContainer - Creating instance of Navigator
+[17:34:27.748] [main] INFO  config.DIContainer - Creating instance of AppConfig
+[17:34:27.748] [main] INFO  config.DIContainer - Creating instance of ConsoleMenuFactory
+[17:34:27.751] [main] INFO  config.DIContainer - Creating instance of MenuController
+[17:34:53.771] [main] INFO  autoservice.model.service.MasterService - Fetching all masters
+[17:34:53.784] [main] INFO  autoservice.model.service.MasterService - All masters successfully found
+[17:36:17.222] [main] INFO  config.DIContainer - Creating instance of GarageSpotService
+[17:36:17.224] [main] INFO  config.DIContainer - Creating instance of MasterService
+[17:36:17.224] [main] INFO  config.DIContainer - Creating instance of OrderService
+[17:36:17.234] [main] INFO  config.DIContainer - Creating instance of CsvImportService
+[17:36:17.386] [main] INFO  config.DIContainer - Creating instance of SerializationService
+[17:36:17.387] [main] INFO  config.DIContainer - Creating instance of GarageSpotsCsvExport
+[17:36:17.387] [main] INFO  config.DIContainer - Creating instance of MastersCsvExport
+[17:36:17.387] [main] INFO  config.DIContainer - Creating instance of OrdersCsvExport
+[17:36:17.404] [main] INFO  config.DIContainer - Creating instance of AutoService
+[17:36:17.404] [main] INFO  config.DIContainer - Creating instance of Navigator
+[17:36:17.404] [main] INFO  config.DIContainer - Creating instance of AppConfig
+[17:36:17.405] [main] INFO  config.DIContainer - Creating instance of ConsoleMenuFactory
+[17:36:17.407] [main] INFO  config.DIContainer - Creating instance of MenuController
+[17:36:23.650] [main] INFO  autoservice.model.AutoService - Fetching free spots count by date 3000-10-10T10:00
+[17:36:23.653] [main] INFO  autoservice.model.service.MasterService - Fetching all masters
+[17:36:23.666] [main] INFO  autoservice.model.service.MasterService - All masters successfully found
+[17:36:23.667] [main] INFO  autoservice.model.AutoService - Number of free spots by date 4
+[17:36:57.943] [main] INFO  autoservice.model.AutoService - Fetching free spots count by date 1000-10-10T10:00
+[17:36:57.945] [main] INFO  autoservice.model.service.MasterService - Fetching all masters
+[17:36:57.947] [main] INFO  autoservice.model.service.MasterService - All masters successfully found
+[17:36:57.947] [main] INFO  autoservice.model.AutoService - Number of free spots by date 4
+[17:37:53.274] [main] INFO  config.DIContainer - Creating instance of GarageSpotService
+[17:37:53.276] [main] INFO  config.DIContainer - Creating instance of MasterService
+[17:37:53.276] [main] INFO  config.DIContainer - Creating instance of OrderService
+[17:37:53.284] [main] INFO  config.DIContainer - Creating instance of CsvImportService
+[17:37:53.429] [main] INFO  config.DIContainer - Creating instance of SerializationService
+[17:37:53.429] [main] INFO  config.DIContainer - Creating instance of GarageSpotsCsvExport
+[17:37:53.430] [main] INFO  config.DIContainer - Creating instance of MastersCsvExport
+[17:37:53.430] [main] INFO  config.DIContainer - Creating instance of OrdersCsvExport
+[17:37:53.444] [main] INFO  config.DIContainer - Creating instance of AutoService
+[17:37:53.445] [main] INFO  config.DIContainer - Creating instance of Navigator
+[17:37:53.445] [main] INFO  config.DIContainer - Creating instance of AppConfig
+[17:37:53.446] [main] INFO  config.DIContainer - Creating instance of ConsoleMenuFactory
+[17:37:53.448] [main] INFO  config.DIContainer - Creating instance of MenuController
+[17:38:21.202] [main] INFO  autoservice.model.service.MasterService - Fetching all masters
+[17:38:21.230] [main] INFO  autoservice.model.service.MasterService - All masters successfully found
+[17:38:25.275] [main] INFO  autoservice.model.service.MasterService - Fetching all masters
+[17:38:25.277] [main] INFO  autoservice.model.service.MasterService - All masters successfully found
+[17:38:25.277] [main] INFO  autoservice.model.service.MasterService - Fetching all masters
+[17:38:25.278] [main] INFO  autoservice.model.service.MasterService - All masters successfully found
+[17:38:25.279] [main] INFO  autoservice.model.service.MasterService - Fetching all masters
+[17:38:25.280] [main] INFO  autoservice.model.service.MasterService - All masters successfully found
+[17:38:25.280] [main] INFO  autoservice.model.service.MasterService - Fetching all masters
+[17:38:25.281] [main] INFO  autoservice.model.service.MasterService - All masters successfully found
+[17:39:27.775] [main] INFO  config.DIContainer - Creating instance of GarageSpotService
+[17:39:27.778] [main] INFO  config.DIContainer - Creating instance of MasterService
+[17:39:27.778] [main] INFO  config.DIContainer - Creating instance of OrderService
+[17:39:27.786] [main] INFO  config.DIContainer - Creating instance of CsvImportService
+[17:39:27.933] [main] INFO  config.DIContainer - Creating instance of SerializationService
+[17:39:27.934] [main] INFO  config.DIContainer - Creating instance of GarageSpotsCsvExport
+[17:39:27.934] [main] INFO  config.DIContainer - Creating instance of MastersCsvExport
+[17:39:27.934] [main] INFO  config.DIContainer - Creating instance of OrdersCsvExport
+[17:39:27.948] [main] INFO  config.DIContainer - Creating instance of AutoService
+[17:39:27.948] [main] INFO  config.DIContainer - Creating instance of Navigator
+[17:39:27.949] [main] INFO  config.DIContainer - Creating instance of AppConfig
+[17:39:27.949] [main] INFO  config.DIContainer - Creating instance of ConsoleMenuFactory
+[17:39:27.952] [main] INFO  config.DIContainer - Creating instance of MenuController
+[17:41:23.622] [main] INFO  config.DIContainer - Creating instance of GarageSpotService
+[17:41:23.624] [main] INFO  config.DIContainer - Creating instance of MasterService
+[17:41:23.624] [main] INFO  config.DIContainer - Creating instance of OrderService
+[17:41:23.634] [main] INFO  config.DIContainer - Creating instance of CsvImportService
+[17:41:23.786] [main] INFO  config.DIContainer - Creating instance of SerializationService
+[17:41:23.786] [main] INFO  config.DIContainer - Creating instance of GarageSpotsCsvExport
+[17:41:23.787] [main] INFO  config.DIContainer - Creating instance of MastersCsvExport
+[17:41:23.787] [main] INFO  config.DIContainer - Creating instance of OrdersCsvExport
+[17:41:23.799] [main] INFO  config.DIContainer - Creating instance of AutoService
+[17:41:23.799] [main] INFO  config.DIContainer - Creating instance of Navigator
+[17:41:23.800] [main] INFO  config.DIContainer - Creating instance of AppConfig
+[17:41:23.800] [main] INFO  config.DIContainer - Creating instance of ConsoleMenuFactory
+[17:41:23.802] [main] INFO  config.DIContainer - Creating instance of MenuController
+[17:41:26.545] [main] INFO  autoservice.model.AutoService - Fetching closest date by duration 10
+[17:41:26.556] [main] INFO  autoservice.model.AutoService - Closest date with duration=10 successfully found
+[17:42:51.221] [main] INFO  autoservice.model.repository.GenericDAO - Deleting entity with id=55 from database orders
+[17:42:51.221] [main] INFO  autoservice.model.repository.GenericDAO - Entity with id=55 deleted successfully from database orders
+[17:43:07.772] [main] INFO  autoservice.model.service.OrderService - Canceling order with id=56
+[17:43:07.773] [main] INFO  autoservice.model.service.OrderService - Order with id=56 successfully cancelled
+[17:45:39.825] [main] INFO  autoservice.model.io.imports.CsvImportService - Import garage spots started
+[17:45:39.829] [main] ERROR autoservice.model.io.imports.CsvImportService - Invalid garage spot file line: 71,21,true,truee
+[17:45:39.830] [main] ERROR autoservice.model.io.imports.CsvImportService - Import garage spots failed
+autoservice.model.exceptions.CsvParsingException: Ошибка в строке (line - 71,21,true,truee)
+Illegal boolean value: truee
+	at autoservice.model.io.imports.CsvImportService.importGarageSpots(CsvImportService.java:168)
+	at autoservice.model.AutoService.importGarageSpots(AutoService.java:319)
+	at autoservice.ui.actions.general.CsvImportGarageSpotsAction.execute(CsvImportGarageSpotsAction.java:20)
+	at autoservice.ui.menu.MenuItem.doAction(MenuItem.java:30)
+	at autoservice.ui.menu.Navigator.navigate(Navigator.java:41)
+	at autoservice.ui.controller.MenuController.run(MenuController.java:38)
+	at autoservice.AutoServiceRunner.main(AutoServiceRunner.java:36)
+[17:45:58.962] [main] INFO  autoservice.model.io.imports.CsvImportService - Import masters started
+[17:45:58.968] [main] INFO  autoservice.model.io.imports.CsvImportService - Import masters finished successfully
+[17:46:00.766] [main] INFO  autoservice.model.io.imports.CsvImportService - Import orders started
+[17:46:00.771] [main] INFO  autoservice.model.repository.GenericDAO - Saving entity Order to database
+[17:46:00.776] [main] INFO  autoservice.model.repository.GenericDAO - Entity autoservice.model.entities.Order saved successfully to database with id=57
+[17:46:00.780] [main] INFO  autoservice.model.io.imports.CsvImportService - Import orders finished successfully
+[17:46:11.483] [main] INFO  autoservice.model.io.exports.CsvExport - Start exporting data to orders.csv
+[17:46:11.489] [main] INFO  autoservice.model.io.exports.CsvExport - Data successfully exported to orders.csv
+[17:46:12.794] [main] INFO  autoservice.model.io.exports.CsvExport - Start exporting data to masters.csv
+[17:46:12.797] [main] INFO  autoservice.model.io.exports.CsvExport - Data successfully exported to masters.csv
+[17:46:14.382] [main] INFO  autoservice.model.io.exports.CsvExport - Start exporting data to garageSpots.csv
+[17:46:14.385] [main] INFO  autoservice.model.io.exports.CsvExport - Data successfully exported to garageSpots.csv

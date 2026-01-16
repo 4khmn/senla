@@ -24,7 +24,7 @@ public class CancelOrderAction implements IAction {
         long id = sc.nextLong();
         try {
             if (service.cancelOrder(id)) {
-                System.out.println("Заказ успешно удален!");
+                System.out.println("Заказ успешно от отменен!");
             } else {
                 System.out.println("Заказа с данным id не найдено");
             }

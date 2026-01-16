@@ -26,7 +26,7 @@ public class GetClosestDateAction implements IAction {
         if (duration>0){
             try {
                 LocalDateTime closestDate = service.getClosestDate(duration);
-                System.out.println("Ближайшее свобожное время: " + closestDate);
+                System.out.println("Ближайшее свободное время: " + closestDate);
             }
             catch(DBException e){
                 System.out.println(e.getMessage());

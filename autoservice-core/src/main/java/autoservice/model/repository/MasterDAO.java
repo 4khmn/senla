@@ -2,13 +2,14 @@ package autoservice.model.repository;
 
 import autoservice.model.entities.Master;
 import autoservice.model.exceptions.DBException;
+import lombok.extern.slf4j.Slf4j;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
+@Slf4j
 public class MasterDAO extends GenericDAO<Master>{
     @Override
     public Master mapResultSetToEntity(ResultSet rs) throws SQLException {
@@ -47,7 +48,6 @@ public class MasterDAO extends GenericDAO<Master>{
         return "UPDATE master SET name=?, salary=? WHERE id=?";
     }
 
-
     public List<Master> mastersSortByName(){
         List<Master> sortedMasters = new ArrayList<>();
         String sql = "SELECT * FROM master ORDER BY name";
@@ -58,6 +58,7 @@ public class MasterDAO extends GenericDAO<Master>{
             }
 
         } catch (SQLException e) {
+            log.error("Error getting sorted masters by name", e);
             throw new DBException("Error getting sorted masters by name", e);
         }
         return sortedMasters;

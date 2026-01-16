@@ -49,7 +49,7 @@ public class GetNumberOfFreeSpotsByDateAction implements IAction {
         try {
             int freeSpotsByDate = service.getNumberOfFreeSpotsByDate(date);
             if (freeSpotsByDate > 0) {
-                System.out.println("Всего свободных мест сейчас: " + freeSpotsByDate);
+                System.out.println("Всего свободных мест а выбранное время: " + freeSpotsByDate);
             } else {
                 System.out.println("Свободных мест в это время нету.");
             }
