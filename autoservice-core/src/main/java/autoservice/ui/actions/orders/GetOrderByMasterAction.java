@@ -29,12 +29,10 @@ public class GetOrderByMasterAction implements IAction {
             try {
                 Order orderByMaster = service.getOrderByMaster(master);
                 System.out.println(orderByMaster);
-            }
-            catch (DBException e) {
+            } catch (DBException e) {
                 System.out.println(e.getMessage());
             }
-        }
-        else{
+        } else {
             System.out.println("Id мастера введено не верно.");
         }
     }

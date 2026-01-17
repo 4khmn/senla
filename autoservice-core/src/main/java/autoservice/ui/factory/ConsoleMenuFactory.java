@@ -1,5 +1,24 @@
 package autoservice.ui.factory;
 
+
+import autoservice.ui.actions.general.BackToMainMenuAction;
+import autoservice.ui.actions.general.CsvImportMastersAction;
+import autoservice.ui.actions.general.CsvImportOrdersAction;
+import autoservice.ui.actions.general.CsvExportOrdersAction;
+import autoservice.ui.actions.general.CsvExportGarageSpotsAction;
+import autoservice.ui.actions.general.CsvImportGarageSpotsAction;
+import autoservice.ui.actions.general.CsvExportMasterAction;
+import autoservice.ui.actions.general.GetClosestDateAction;
+import autoservice.ui.actions.orders.AddOrderAction;
+import autoservice.ui.actions.orders.ActiveOrdersSortAction;
+import autoservice.ui.actions.orders.GetOrderByMasterAction;
+import autoservice.ui.actions.orders.CancelOrderAction;
+import autoservice.ui.actions.orders.OrdersSortByTimeFrameAction;
+import autoservice.ui.actions.orders.OrdersSortAction;
+import autoservice.ui.actions.orders.ShiftOrderAction;
+import autoservice.ui.actions.orders.AddOrderAtCurrentTimeAction;
+import autoservice.ui.actions.orders.CloseOrderAction;
+import autoservice.ui.actions.orders.DeleteOrderAction;
 import autoservice.ui.menu.Navigator;
 import config.AppConfig;
 import autoservice.model.AutoService;
@@ -7,15 +26,12 @@ import autoservice.ui.actions.garageSpots.AddGarageSpotAction;
 import autoservice.ui.actions.garageSpots.DeleteGarageSpotAction;
 import autoservice.ui.actions.garageSpots.GetFreeSpotsAction;
 import autoservice.ui.actions.garageSpots.GetNumberOfFreeSpotsByDateAction;
-import autoservice.ui.actions.general.*;
 import autoservice.ui.actions.masters.AddMasterAction;
 import autoservice.ui.actions.masters.DeleteMasterAction;
 import autoservice.ui.actions.masters.GetMasterByOrderAction;
 import autoservice.ui.actions.masters.MastersSortAction;
-import autoservice.ui.actions.orders.*;
 import autoservice.ui.menu.Menu;
 import autoservice.ui.menu.MenuBuilder;
-import config.ConfigLoader;
 import config.annotation.Component;
 import config.annotation.Inject;
 @Component
@@ -71,7 +87,7 @@ public class ConsoleMenuFactory implements IMenuFactory {
     public Menu createMasterMenu() {
         return new MenuBuilder()
                 .setName("Меню мастеров")
-                .addItem("Добавить мастера" , new AddMasterAction(service))
+                .addItem("Добавить мастера", new AddMasterAction(service))
                 .addItem("Удалить мастера", new DeleteMasterAction(service))
                 .addItem("Получить мастера, выполняющий конкретный заказ", new GetMasterByOrderAction(service))
                 .addItem("Список авто-мастеров", new MastersSortAction(service))

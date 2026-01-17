@@ -28,10 +28,8 @@ public class CloseOrderAction implements IAction {
             } else {
                 System.out.println("Заказа с данным id не найдено");
             }
-        }
-        catch (DBException e) {
+        } catch (DBException e) {
             System.out.println(e.getMessage());
         }
-
     }
 }

@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 @Slf4j
-public class MasterDAO extends GenericDAO<Master>{
+public class MasterDAO extends GenericDAO<Master> {
     @Override
     public Master mapResultSetToEntity(ResultSet rs) throws SQLException {
         Master m = new Master();
@@ -48,12 +48,12 @@ public class MasterDAO extends GenericDAO<Master>{
         return "UPDATE master SET name=?, salary=? WHERE id=?";
     }
 
-    public List<Master> mastersSortByName(){
+    public List<Master> mastersSortByName() {
         List<Master> sortedMasters = new ArrayList<>();
         String sql = "SELECT * FROM master ORDER BY name";
-        try(PreparedStatement ps = connection.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery()){
-            while(rs.next()){
+        try (PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
                 sortedMasters.add(mapResultSetToEntity(rs));
             }
 

@@ -28,8 +28,7 @@ public class GetFreeSpotsAction implements IAction {
             for (var v : freeSpots) {
                 System.out.println(v);
             }
-        }
-        catch (DBException e){
+        } catch (DBException e) {
             System.out.println(e.getMessage());
         }
     }

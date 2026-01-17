@@ -35,8 +35,7 @@ public class DeleteGarageSpotAction implements IAction {
             } else {
                 System.out.println("Гаражного места с данным id не найдено");
             }
-        }
-        catch (DBException e) {
+        } catch (DBException e) {
             System.out.println(e.getMessage());
         }
     }

@@ -27,7 +27,7 @@ public class AddOrderAtCurrentTimeAction implements IAction {
         int month;
         int year;
         LocalDateTime date;
-        while(true) {
+        while (true) {
             System.out.println("Введите интересующую вас дату в формате <hh.dd.mm.yyyy>: ");
             String inputDate = sc.nextLine();
             String[] split = inputDate.split("\\.");
@@ -37,10 +37,10 @@ public class AddOrderAtCurrentTimeAction implements IAction {
                 day = Integer.parseInt(split[1]);
                 month = Integer.parseInt(split[2]);
                 year = Integer.parseInt(split[3]);
-                try{
+                try {
                     date = LocalDateTime.of(year, month, day, hour, 0);
                     break;
-                } catch(Exception e){
+                } catch (Exception e) {
                     System.out.println("Неверный ввод даты, попробуйте еще раз!");
                 }
             } else {
@@ -51,41 +51,36 @@ public class AddOrderAtCurrentTimeAction implements IAction {
         System.out.print("Введите описание заказа: ");
         String desc = sc.nextLine();
         int duration = 0;
-        while(true) {
+        while (true) {
             try {
                 System.out.print("Введите длительность заказа в часах: ");
                 duration = sc.nextInt();
-                if (duration>0){
+                if (duration > 0) {
                     break;
-                }
-                else{
+                } else {
                     System.out.println("Минимальная длительность заказа: 1");
                 }
-            }
-            catch(Exception e){
+            } catch (Exception e) {
                 System.out.println("Ошибка ввода!");
                 sc.next();
             }
         }
-        while(true) {
+        while (true) {
             try {
                 System.out.print("Введите стоимость услуги: ");
                 BigDecimal price = sc.nextBigDecimal();
                 try {
                     long idOfOrder = service.addOrderAtCurrentTime(date, desc, duration, price);
-                    if (idOfOrder!=-1){
+                    if (idOfOrder != -1) {
                         System.out.println("Заказ успешно добавлен.");
-                    }
-                    else{
+                    } else {
                         System.out.println("В данное время заказ добавить нельзя. ");
                     }
-                }
-                catch(DBException e){
+                } catch (DBException e) {
                     System.out.println(e.getMessage());
                 }
                 break;
-            }
-            catch(Exception e){
+            } catch (Exception e) {
                 System.out.println("Ошибка ввода!");
                 sc.next();
             }

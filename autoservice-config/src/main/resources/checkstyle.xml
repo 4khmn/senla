@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC
+        "-//Puppy Crawl//DTD Check Configuration 1.2//EN"
+        "http://www.puppycrawl.com/dtds/configuration_1_2.dtd">
+
+<module name="Checker">
+    <module name="JavadocPackage">
+        <property name="allowLegacy" value="true"/>
+    </module>
+
+    <!-- Проверки на наличие новой строки в конце файла -->
+    <module name="NewlineAtEndOfFile"/>
+
+    <!-- Проверки на пустые строки после объявлений классов, интерфейсов, и т.д. -->
+    <module name="RegexpMultiline">
+        <property name="format" value="^([^\n ]+ )*(class|interface|enum) [^{]*\{\n[^\n}]"/>
+        <property name="message" value="Leave empty row after class/interface/enum definition!"/>
+        <property name="severity" value="error"/>
+        <property name="fileExtensions" value="java"/>
+    </module>
+
+    <module name="TreeWalker">
+        <!-- Проверки на Javadoc для методов и переменных -->
+        <module name="JavadocMethod"/>
+        <module name="JavadocType"/>
+        <module name="JavadocVariable"/>
+        <module name="JavadocStyle"/>
+
+        <!-- Проверки на имена переменных, методов, классов -->
+        <module name="ConstantName"/>
+        <module name="MethodName"/>
+        <module name="LocalVariableName"/>
+        <module name="MemberName"/>
+        <module name="PackageName"/>
+        <module name="ParameterName"/>
+        <module name="TypeName"/>
+
+        <!-- Проверки на импорты -->
+        <module name="AvoidStarImport"/>
+        <module name="RedundantImport"/>
+        <module name="UnusedImports"/>
+
+        <!-- Проверки на использование пробелов -->
+        <module name="WhitespaceAround"/>
+        <module name="NoWhitespaceAfter"/>
+        <module name="NoWhitespaceBefore"/>
+
+        <!-- Проверки на модификаторы -->
+        <module name="ModifierOrder"/>
+        <module name="RedundantModifier"/>
+
+        <!-- Проверки на пустые блоки -->
+        <module name="EmptyBlock"/>
+        <module name="NeedBraces"/>
+        <module name="LeftCurly"/>
+        <module name="RightCurly"/>
+    </module>
+
+    <module name="SuppressionFilter">
+        <property name="file" value="autoservice-config/src/main/resources/suppressions.xml"/>
+    </module>
+</module>

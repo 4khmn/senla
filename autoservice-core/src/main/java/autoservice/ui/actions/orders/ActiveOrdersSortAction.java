@@ -41,19 +41,17 @@ public class ActiveOrdersSortAction implements IAction {
                 }
             };
         }
-        try{
+        try {
             List<Order> orders = service.activeOrdersSort(sortType);
             if (orders.isEmpty()) {
                 System.out.println("В настоящий момент заказы не выполняются.");
-            }
-            else {
+            } else {
                 System.out.println("Списко заказов: ");
                 for (var v : orders) {
                     System.out.println(v);
                 }
             }
-        }
-        catch (DBException e){
+        } catch (DBException e) {
             System.out.println(e.getMessage());
         }
     }

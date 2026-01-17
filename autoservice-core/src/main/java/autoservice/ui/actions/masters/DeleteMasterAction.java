@@ -22,14 +22,11 @@ public class DeleteMasterAction implements IAction {
         Scanner sc = new Scanner(System.in);
         System.out.print("Введите id мастера, которого вы хотите удалить: ");
         long id = sc.nextLong();
-        try{
+        try {
             service.deleteMaster(id);
             System.out.println("Мастер успешно удален!");
-        }
-        catch (DBException e){
+        } catch (DBException e) {
             System.out.println("Мастера с данным ID не найдено!");
         }
-
-
     }
 }

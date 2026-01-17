@@ -17,7 +17,9 @@ import config.annotation.Component;
 import config.annotation.Inject;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -165,7 +167,7 @@ public class CsvImportService {
                             hasPit = booleanParser(split[3]);
                         } catch (Exception e) {
                             log.error("Invalid garage spot file line: {}", line);
-                            throw new CsvParsingException("Ошибка в строке (line - " + line + ")\n"+e.getMessage());
+                            throw new CsvParsingException("Ошибка в строке (line - " + line + ")\n" + e.getMessage());
                         }
                         if (size < 8) {
                             log.error("Invalid garage spot size in line: {}", line);
@@ -263,7 +265,7 @@ public class CsvImportService {
                             price = new BigDecimal(split[7]);
                         } catch (Exception e) {
                             log.error("Invalid orders file line: {}", line);
-                            throw new CsvParsingException("Ошибка в строке (line - " + line + ")\n"+e.getMessage());
+                            throw new CsvParsingException("Ошибка в строке (line - " + line + ")\n" + e.getMessage());
                         }
 
                         //если такой ордер уже есть - меняем его поля
@@ -274,10 +276,10 @@ public class CsvImportService {
                             order.setDescription(description);
                             Master master = masterService.getMasterById(masterId);
                             GarageSpot garageSpot = garageSpotService.getGarageSpotById(garageId);
-                            if (master.getId()==order.getMasterId()){
+                            if (master.getId() == order.getMasterId()) {
                                 master = order.getMaster();
                             }
-                            if (garageSpot.getId()==order.getGarageSpotId()){
+                            if (garageSpot.getId() == order.getGarageSpotId()) {
                                 garageSpot = order.getGarageSpot();
                             }
                             if (master != null && garageSpot != null) {
@@ -291,9 +293,8 @@ public class CsvImportService {
                                     master.addBusyTime(startTime, endTime);
                                     garageSpot.addBusyTime(startTime, endTime);
                                     orderService.update(order);
-                                }
-                                //невозможно добавить по новому мастеру или гаражу, возвращаем изначальное значение
-                                else {
+                                } else {
+                                    //невозможно добавить по новому мастеру или гаражу, возвращаем изначальное значение
                                     order.getMaster().addBusyTime(order.getStartTime(), order.getEndTime());
                                     order.getGarageSpot().addBusyTime(order.getStartTime(), order.getEndTime());
                                     log.error("Impossible to add due masters or garage spot schedule, line: {}", line);
@@ -304,9 +305,8 @@ public class CsvImportService {
                                 log.error("Invalid master or garage spot, line: {}", line);
                                 throw new ImportException("Невалидный мастер или гараж (line - " + line + ")");
                             }
-                        }
-                        //новый заказ
-                        else {
+                        } else {
+                            //новый заказ
                             if (masterService.getMasterById(masterId) != null && garageSpotService.getGarageSpotById(garageId) != null) {
                                 Master master = masterService.getMasterById(masterId);
                                 GarageSpot garageSpot = garageSpotService.getGarageSpotById(garageId);
@@ -351,14 +351,12 @@ public class CsvImportService {
         }
     }
 
-    public boolean booleanParser(String value){
+    public boolean booleanParser(String value) {
         if (value.equals("true")) {
             return true;
-        }
-        else if (value.equals("false")) {
+        } else if (value.equals("false")) {
             return false;
-        }
-        else{
+        } else {
             throw new CsvParsingException("Illegal boolean value: " + value);
         }
     }

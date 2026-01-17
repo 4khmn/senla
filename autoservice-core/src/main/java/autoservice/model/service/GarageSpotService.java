@@ -1,9 +1,7 @@
 package autoservice.model.service;
 
 import autoservice.model.entities.GarageSpot;
-import autoservice.model.exceptions.DBException;
 import autoservice.model.repository.GarageSpotDAO;
-import autoservice.model.repository.MasterDAO;
 import autoservice.model.repository.OrderDAO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import config.annotation.Component;

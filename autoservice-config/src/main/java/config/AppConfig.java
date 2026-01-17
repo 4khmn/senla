@@ -17,7 +17,13 @@ public class AppConfig {
 
 
 
-    public boolean isGarageSpotAllowToAddRemove() { return allowGarageSpotAddRemove; }
-    public boolean isOrderAllowToShiftTime() { return allowOrderShiftTime; }
-    public boolean isOrderAllowToDelete() { return allowOrderDelete; }
+    public boolean isGarageSpotAllowToAddRemove() {
+        return allowGarageSpotAddRemove;
+    }
+    public boolean isOrderAllowToShiftTime() {
+        return allowOrderShiftTime;
+    }
+    public boolean isOrderAllowToDelete() {
+        return allowOrderDelete;
+    }
 }

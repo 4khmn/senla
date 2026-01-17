@@ -4,7 +4,7 @@ package autoservice.model.entities;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.TreeSet;
-public class Master implements Identifiable{
+public class Master implements Identifiable {
     private Long id;
 
 
@@ -59,10 +59,10 @@ public class Master implements Identifiable{
         return true;
     }
 
-    public void freeAllSchedule(){
+    public void freeAllSchedule() {
         this.calendar = new TreeSet<>();
     }
-    public void freeTimeSlot(LocalDateTime start, LocalDateTime end){
+    public void freeTimeSlot(LocalDateTime start, LocalDateTime end) {
         calendar.remove(new TimeSlot(start, end));
     }
 

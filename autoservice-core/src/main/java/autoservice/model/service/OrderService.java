@@ -7,7 +7,6 @@ import autoservice.model.enums.ActiveOrdersSortEnum;
 import autoservice.model.enums.OrderStatus;
 import autoservice.model.enums.OrdersSortByTimeFrameEnum;
 import autoservice.model.enums.OrdersSortEnum;
-import autoservice.model.exceptions.ImportException;
 import autoservice.model.repository.DBConnection;
 import autoservice.model.repository.OrderDAO;
 import config.annotation.Component;
@@ -18,7 +17,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.List;
 
 @Component
 @Slf4j
@@ -26,7 +25,7 @@ public class OrderService {
     private OrderDAO orderDAO = new  OrderDAO();
 
 
-    public OrderService() {}
+    public OrderService() { }
 
 
     //4 список заказов
@@ -86,7 +85,7 @@ public class OrderService {
     }
 
     //4
-    public Order getOrderByMaster(Master master){
+    public Order getOrderByMaster(Master master) {
         return orderDAO.getOrderByMaster(master);
     }
 
@@ -126,18 +125,18 @@ public class OrderService {
     }
 
 
-    public void update(Order order){
+    public void update(Order order) {
         orderDAO.update(order);
     }
 
-    public void deleteOrder(long id){
+    public void deleteOrder(long id) {
         orderDAO.delete(id);
     }
 
     public List<Order> getOrders() {
         List<Order> orders = orderDAO.findAll();
-        for (var order: orders){
-            if (order.getEndTime().isBefore(LocalDateTime.now())){
+        for (var order: orders) {
+            if (order.getEndTime().isBefore(LocalDateTime.now())) {
                 order.setOrderStatus(OrderStatus.CLOSED);
                 update(order);
             }
@@ -145,7 +144,7 @@ public class OrderService {
         return orders;
     }
 
-    public Order getOrderById(long id){
+    public Order getOrderById(long id) {
         Order order = orderDAO.findById(id);
         if (order != null) {
             if (order.getEndTime().isBefore(LocalDateTime.now())) {
@@ -156,11 +155,11 @@ public class OrderService {
         return order;
     }
 
-    public boolean closeOrder(long id){
+    public boolean closeOrder(long id) {
         log.info("Closing order with id={}", id);
         boolean closed = false;
         Order byId = orderDAO.findById(id);
-        if (byId != null){
+        if (byId != null) {
             byId.setOrderStatus(OrderStatus.CLOSED);
             update(byId);
             closed = true;
@@ -169,11 +168,11 @@ public class OrderService {
         return closed;
     }
 
-    public boolean cancelOrder(long id){
+    public boolean cancelOrder(long id) {
         log.info("Canceling order with id={}", id);
         boolean canceled = false;
         Order byId = orderDAO.findById(id);
-        if (byId != null){
+        if (byId != null) {
             byId.setOrderStatus(OrderStatus.CANCELLED);
             update(byId);
             canceled = true;
@@ -181,10 +180,10 @@ public class OrderService {
         log.info("Order with id={} successfully cancelled", id);
         return canceled;
     }
-    public long findOrderByTimeByCurrentMaster(Master master, LocalDateTime date){
+    public long findOrderByTimeByCurrentMaster(Master master, LocalDateTime date) {
         List<Order> orders = orderDAO.findAll();
-        for (var v: orders){
-            if (v.getMaster().equals(master) && v.getStartTime().isEqual(date)){
+        for (var v: orders) {
+            if (v.getMaster().equals(master) && v.getStartTime().isEqual(date)) {
                 return v.getId();
             }
         }

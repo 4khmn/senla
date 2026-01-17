@@ -21,7 +21,7 @@ public abstract class CsvExport {
     public void export() throws IOException {
         log.info("Start exporting data to {}", fileName);
         File dataDir = new File("data");
-        if (!dataDir.exists()){
+        if (!dataDir.exists()) {
             dataDir.mkdirs();
         }
 

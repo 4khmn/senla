@@ -19,7 +19,7 @@ public class CsvExportGarageSpotsAction implements IAction {
             System.out.println("Данные успешно экспортированы! Они лежат по пути  <data/garageSpots.csv>");
         } catch (IOException e) {
             System.out.println("Файл не найден.");
-        } catch (DBException e){
+        } catch (DBException e) {
             System.out.println(e.getMessage());
         }
     }

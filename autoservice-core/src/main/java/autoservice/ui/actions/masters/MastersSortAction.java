@@ -46,8 +46,7 @@ public class MastersSortAction implements IAction {
             for (var v : masters) {
                 System.out.println(v);
             }
-        }
-        catch (DBException e) {
+        } catch (DBException e) {
             System.out.println(e.getMessage());
         }
     }

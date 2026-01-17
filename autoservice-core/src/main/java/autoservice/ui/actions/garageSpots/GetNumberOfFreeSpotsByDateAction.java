@@ -26,7 +26,7 @@ public class GetNumberOfFreeSpotsByDateAction implements IAction {
         int month;
         int year;
         LocalDateTime date;
-        while(true) {
+        while (true) {
             System.out.println("Введите интересующую вас дату в формате <hh.dd.mm.yyyy>: ");
             String inputDate = sc.nextLine();
             String[] split = inputDate.split("\\.");
@@ -36,10 +36,10 @@ public class GetNumberOfFreeSpotsByDateAction implements IAction {
                 day = Integer.parseInt(split[1]);
                 month = Integer.parseInt(split[2]);
                 year = Integer.parseInt(split[3]);
-                try{
+                try {
                     date = LocalDateTime.of(year, month, day, hour, 0);
                     break;
-                } catch(Exception e){
+                } catch (Exception e) {
                     System.out.println("Неверный ввод даты, попробуйте еще раз!");
                 }
             } else {
@@ -53,8 +53,7 @@ public class GetNumberOfFreeSpotsByDateAction implements IAction {
             } else {
                 System.out.println("Свободных мест в это время нету.");
             }
-        }
-        catch (DBException e){
+        } catch (DBException e) {
             System.out.println(e.getMessage());
         }
     }

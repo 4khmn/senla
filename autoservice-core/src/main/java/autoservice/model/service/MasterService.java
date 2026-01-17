@@ -11,8 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 import static java.lang.Math.abs;
@@ -26,10 +24,10 @@ public class MasterService {
     }
 
     //4
-    public List<Master> mastersSort(MastersSortEnum decision){
+    public List<Master> mastersSort(MastersSortEnum decision) {
         log.info("Sorting masters by decision={}", decision);
         List<Master> sortedMasters;
-        switch (decision){
+        switch (decision) {
             case BY_NAME:
                 //по алфавиту
                 sortedMasters = masterDAO.mastersSortByName();
@@ -66,7 +64,7 @@ public class MasterService {
         return sortedMasters;
     }
     //4
-    public Master getMasterByOrder(Order order){
+    public Master getMasterByOrder(Order order) {
         log.info("Getting master by order ith id{}", order.getId());
         Master master = order.getMaster();
         log.info("Master successfully found by order with master_id={}", master.getId());
@@ -83,27 +81,27 @@ public class MasterService {
         return masters;
     }
 
-    public long addMaster(String name, BigDecimal salary){
+    public long addMaster(String name, BigDecimal salary) {
         Master master = new Master(name, salary);
         masterDAO.save(master);
         return master.getId();
     }
 
-    public void deleteMaster(long id){
+    public void deleteMaster(long id) {
         masterDAO.delete(id);
     }
 
-    public void deleteAll(){
+    public void deleteAll() {
         masterDAO.deleteAll();
     }
 
-    public void update(Master master){
+    public void update(Master master) {
         masterDAO.update(master);
     }
 
-    public Master getMasterById(long id){
+    public Master getMasterById(long id) {
         Master master = masterDAO.findById(id);
-        if (master!=null) {
+        if (master != null) {
             master.setCalendar(
                     orderDAO.findTimeSlotsByMaster(id)
             );
@@ -111,30 +109,28 @@ public class MasterService {
         return master;
     }
 
-    private int getFreeMasterHoursToday(Master master){
+    private int getFreeMasterHoursToday(Master master) {
         int freeMasterHoursToday = 24;
         int today = LocalDateTime.now().getDayOfMonth();
-        for (var v: master.getCalendar()){
-            if (v.getStart().getDayOfMonth()==today && v.getEnd().getDayOfMonth() == today){
+        for (var v: master.getCalendar()) {
+            if (v.getStart().getDayOfMonth() == today && v.getEnd().getDayOfMonth() == today) {
                 long duration = abs(Duration.between(v.getStart(), v.getEnd()).toHours());
                 freeMasterHoursToday -= duration;
-            }
-            else if(v.getStart().getDayOfMonth()==today){
+            } else if (v.getStart().getDayOfMonth() == today) {
                 long duration = abs(Duration.between(v.getStart(),
                         LocalDateTime.of( v.getStart().getYear(),
                                 v.getStart().getMonth(),
-                                v.getStart().getDayOfMonth()+1,
+                                v.getStart().getDayOfMonth() + 1,
                                 0,
                                 0)).toHours());
-                freeMasterHoursToday-=duration;
-            }
-            else if (v.getEnd().getDayOfMonth() == today){
+                freeMasterHoursToday -= duration;
+            } else if (v.getEnd().getDayOfMonth() == today) {
                 long duration = abs(Duration.between(LocalDateTime.of( v.getEnd().getYear(),
                                 v.getEnd().getMonth(),
                                 v.getEnd().getDayOfMonth(),
                                 0,
                                 0), v.getEnd()).toHours());
-                freeMasterHoursToday-=duration;
+                freeMasterHoursToday -= duration;
             }
         }
         return freeMasterHoursToday;

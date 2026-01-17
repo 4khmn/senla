@@ -4,7 +4,7 @@ package autoservice.model.entities;
 
 import java.time.LocalDateTime;
 import java.util.TreeSet;
-public class GarageSpot implements Identifiable{
+public class GarageSpot implements Identifiable {
 
 
     private Long id;
@@ -77,18 +77,18 @@ public class GarageSpot implements Identifiable{
         return "id - " + id + ", size - " + size + ", hasList - " + hasLift + ", hasPit - " + hasPit;
     }
 
-    public void freeAllSchedule(){
+    public void freeAllSchedule() {
         this.calendar = new TreeSet<>();
     }
-    public void freeTimeSlot(LocalDateTime start, LocalDateTime end){
+    public void freeTimeSlot(LocalDateTime start, LocalDateTime end) {
         calendar.remove(new TimeSlot(start, end));
     }
 
-    public LocalDateTime getNextAvailableTime(int duration){
+    public LocalDateTime getNextAvailableTime(int duration) {
         LocalDateTime currentTime = LocalDateTime.now();
-        for (var v: calendar){
-            if (v.getStart().isAfter(currentTime)){
-                if (currentTime.plusHours(duration).isBefore(v.getStart())){
+        for (var v: calendar) {
+            if (v.getStart().isAfter(currentTime)) {
+                if (currentTime.plusHours(duration).isBefore(v.getStart())) {
                     return currentTime;
                 }
             }
@@ -112,7 +112,7 @@ public class GarageSpot implements Identifiable{
         return calendar;
     }
 
-    public boolean scheduleIsEmpty(){
+    public boolean scheduleIsEmpty() {
         return calendar.isEmpty();
     }
 
@@ -139,14 +139,14 @@ public class GarageSpot implements Identifiable{
             LocalDateTime candidateEnd = candidateStart.plusHours(durationInHours);
 
             if (next == null || candidateEnd.isBefore(next.getStart())) {
-                if (candidateStart.isAfter(from)){
+                if (candidateStart.isAfter(from)) {
                     return candidateStart;
-                } else{
+                } else {
                     return from;
                 }
             }
         }
-        if(calendar.last().getEnd().isAfter(from)) {
+        if (calendar.last().getEnd().isAfter(from)) {
             return calendar.last().getEnd();
         } else {
             return from;

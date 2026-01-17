@@ -19,14 +19,13 @@ public class AddMasterAction implements IAction {
         Scanner sc = new Scanner(System.in);
         System.out.print("Введите имя мастера: ");
         String name = sc.nextLine();
-        while(true) {
+        while (true) {
             System.out.print("Введите его зарплату: ");
             try {
                 BigDecimal salary = sc.nextBigDecimal();
                 try {
                     service.addMaster(name, salary);
-                }
-                catch (DBException e) {
+                } catch (DBException e) {
                     System.out.println(e.getMessage());
                 }
                 break;

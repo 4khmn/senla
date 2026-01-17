@@ -278,3 +278,29 @@ Illegal boolean value: truee
 [17:46:12.797] [main] INFO  autoservice.model.io.exports.CsvExport - Data successfully exported to masters.csv
 [17:46:14.382] [main] INFO  autoservice.model.io.exports.CsvExport - Start exporting data to garageSpots.csv
 [17:46:14.385] [main] INFO  autoservice.model.io.exports.CsvExport - Data successfully exported to garageSpots.csv
+[17:21:52.854] [main] INFO  config.DIContainer - Creating instance of GarageSpotService
+[17:21:52.858] [main] INFO  config.DIContainer - Creating instance of MasterService
+[17:21:52.858] [main] INFO  config.DIContainer - Creating instance of OrderService
+[17:21:52.868] [main] INFO  config.DIContainer - Creating instance of CsvImportService
+[17:21:53.060] [main] INFO  config.DIContainer - Creating instance of SerializationService
+[17:21:53.061] [main] INFO  config.DIContainer - Creating instance of GarageSpotsCsvExport
+[17:21:53.061] [main] INFO  config.DIContainer - Creating instance of MastersCsvExport
+[17:21:53.061] [main] INFO  config.DIContainer - Creating instance of OrdersCsvExport
+[17:21:53.074] [main] INFO  config.DIContainer - Creating instance of AutoService
+[17:21:53.074] [main] INFO  config.DIContainer - Creating instance of Navigator
+[17:21:53.075] [main] INFO  config.DIContainer - Creating instance of AppConfig
+[17:21:53.076] [main] INFO  config.DIContainer - Creating instance of ConsoleMenuFactory
+[17:21:53.078] [main] INFO  config.DIContainer - Creating instance of MenuController
+[23:35:32.840] [main] INFO  config.DIContainer - Creating instance of GarageSpotService
+[23:35:32.843] [main] INFO  config.DIContainer - Creating instance of MasterService
+[23:35:32.843] [main] INFO  config.DIContainer - Creating instance of OrderService
+[23:35:32.851] [main] INFO  config.DIContainer - Creating instance of CsvImportService
+[23:35:33.006] [main] INFO  config.DIContainer - Creating instance of SerializationService
+[23:35:33.008] [main] INFO  config.DIContainer - Creating instance of GarageSpotsCsvExport
+[23:35:33.008] [main] INFO  config.DIContainer - Creating instance of MastersCsvExport
+[23:35:33.008] [main] INFO  config.DIContainer - Creating instance of OrdersCsvExport
+[23:35:33.020] [main] INFO  config.DIContainer - Creating instance of AutoService
+[23:35:33.020] [main] INFO  config.DIContainer - Creating instance of Navigator
+[23:35:33.021] [main] INFO  config.DIContainer - Creating instance of AppConfig
+[23:35:33.022] [main] INFO  config.DIContainer - Creating instance of ConsoleMenuFactory
+[23:35:33.025] [main] INFO  config.DIContainer - Creating instance of MenuController

@@ -25,8 +25,7 @@ public class DeleteOrderAction implements IAction {
         try {
             service.deleteOrder(id);
             System.out.println("Заказ успешно удален!");
-        }
-        catch (DBException e) {
+        } catch (DBException e) {
             System.out.println("Заказа с данным id не найдено");
         }
     }

@@ -1,6 +1,0 @@
-CREATE TABLE garage_spot (
-    id BIGSERIAL PRIMARY KEY,
-    size DOUBLE PRECISION NOT NULL,
-    has_lift BOOLEAN NOT NULL,
-    has_pit BOOLEAN NOT NULL
-);

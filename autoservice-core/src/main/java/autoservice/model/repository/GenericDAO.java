@@ -4,7 +4,10 @@ import autoservice.model.entities.Identifiable;
 import autoservice.model.exceptions.DBException;
 import lombok.extern.slf4j.Slf4j;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 @Slf4j
@@ -39,20 +42,19 @@ public abstract class GenericDAO<T extends Identifiable> {
             }
         } catch (SQLException e) {
             log.error("Error while saving entity {} to database", entity.getClass().getSimpleName(), e);
-            throw new DBException("Error saving entity with id="+entity.getId(), e);
+            throw new DBException("Error saving entity with id=" + entity.getId(), e);
         }
         log.info("Entity {} saved successfully to database with id={}", entity.getClass().getName(), entity.getId());
     }
 
     public void update(T entity) {
         String sql = getUpdateSQL();
-        try(PreparedStatement ps = connection.prepareStatement(sql)){
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
             setPreparedStatementForUpdate(ps, entity);
             ps.executeUpdate();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             log.error("Error while updating entity {} to database", entity.getClass().getSimpleName(), e);
-            throw new DBException("Error updating entity with id="+entity.getId(), e);
+            throw new DBException("Error updating entity with id=" + entity.getId(), e);
         }
     }
 
@@ -66,12 +68,12 @@ public abstract class GenericDAO<T extends Identifiable> {
             ps.executeUpdate();
         } catch (SQLException e) {
             log.error("Error while deleting entity with id={} from database {}", id, getTableName(), e);
-            throw new DBException("Error deleting entity with id="+id, e);
+            throw new DBException("Error deleting entity with id=" + id, e);
         }
         log.info("Entity with id={} deleted successfully from database {}", id, getTableName());
     }
 
-    public void deleteAll(){
+    public void deleteAll() {
         String sql = "DELETE FROM " + getTableName();
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.executeUpdate();
@@ -92,7 +94,7 @@ public abstract class GenericDAO<T extends Identifiable> {
             }
         } catch (SQLException e) {
             log.error("Error while finding entity with id={} from database {}", id, getTableName(), e);
-            throw new DBException("Error finding entity with id="+id, e);
+            throw new DBException("Error finding entity with id=" + id, e);
         }
         return null;
     }

@@ -14,8 +14,6 @@ import autoservice.ui.menu.Navigator;
 import config.AppConfig;
 import config.DIContainer;
 
-import java.io.IOException;
-
 public class AutoServiceRunner {
     public static void main(String[] args) {
         DIContainer context = new DIContainer(

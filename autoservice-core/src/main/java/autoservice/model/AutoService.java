@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.List;
 
 import static java.lang.Math.min;
 @Component
@@ -72,54 +72,54 @@ public class AutoService {
 
     //4 список свободных мест в сервисных гаражах
     @JsonIgnore
-    public List<GarageSpot> getFreeSpots(){
+    public List<GarageSpot> getFreeSpots() {
         return garageManager.getFreeSpots();
     }
 
     //4 список заказов
-    public List<Order> ordersSort(OrdersSortEnum decision){
+    public List<Order> ordersSort(OrdersSortEnum decision) {
         return orderManager.ordersSort(decision);
     }
 
     //4 список авто-мастеров
-    public List<Master> mastersSort(MastersSortEnum decision){
+    public List<Master> mastersSort(MastersSortEnum decision) {
         return masterManager.mastersSort(decision);
     }
 
     //4 список текущих выполняемых заказов
-    public List<Order> activeOrdersSort(ActiveOrdersSortEnum decision){
+    public List<Order> activeOrdersSort(ActiveOrdersSortEnum decision) {
         return orderManager.activeOrdersSort(decision);
     }
 
     //4 заказ, выполняемый конкретным мастером
-    public Order getOrderByMaster(Master master){
+    public Order getOrderByMaster(Master master) {
         return orderManager.getOrderByMaster(master);
     }
 
     //4 мастер, выполняющий конкретный заказ
-    public Master getMasterByOrder(Order order){
+    public Master getMasterByOrder(Order order) {
         return masterManager.getMasterByOrder(order);
     }
 
     //4 заказы (выполненные/удаленные/отмененные) за промежуток времени
-    public List<Order> ordersSortByTimeFrame(LocalDateTime start, LocalDateTime end, OrdersSortByTimeFrameEnum type){
+    public List<Order> ordersSortByTimeFrame(LocalDateTime start, LocalDateTime end, OrdersSortByTimeFrameEnum type) {
         return orderManager.ordersSortByTimeFrame(start, end, type);
     }
 
     //4 количество свободных мест на сервисе на любую дату в будующем
     //проверить что дата реально в будующем
-    public int getNumberOfFreeSpotsByDate(LocalDateTime date){
+    public int getNumberOfFreeSpotsByDate(LocalDateTime date) {
         log.info("Fetching free spots count by date {}", date);
-        int spotsCount=0;
-        int mastersCount=0;
-        for (var v: garageManager.getGarageSpots()){
-            if (v.isAvailable(date, date.plusMinutes(1))){
-                spotsCount+=1;
+        int spotsCount = 0;
+        int mastersCount = 0;
+        for (var v: garageManager.getGarageSpots()) {
+            if (v.isAvailable(date, date.plusMinutes(1))) {
+                spotsCount += 1;
             }
         }
-        for (var v: masterManager.getMasters()){
-            if (v.isAvailable(date, date.plusMinutes(1))){
-                mastersCount+=1;
+        for (var v: masterManager.getMasters()) {
+            if (v.isAvailable(date, date.plusMinutes(1))) {
+                mastersCount += 1;
             }
         }
         log.info("Number of free spots by date {}", min(spotsCount, mastersCount));
@@ -161,11 +161,11 @@ public class AutoService {
 
 
     //model.Master
-    public long addMaster(String name, BigDecimal salary){
+    public long addMaster(String name, BigDecimal salary) {
         return masterManager.addMaster(name, salary);
     }
 
-    public void deleteMaster(long id){
+    public void deleteMaster(long id) {
         masterManager.deleteMaster(id);
     }
     //model.GarageSpot
@@ -174,38 +174,38 @@ public class AutoService {
     }
 
 
-    public void deleteGarageSpot(long id){
+    public void deleteGarageSpot(long id) {
         garageManager.deleteGarageSpot(id);
     }
 
     //for serialization
-    public MasterService getMasterManager(){
+    public MasterService getMasterManager() {
         return masterManager;
     }
     public OrderService getOrderManager() {
         return orderManager;
     }
-    public GarageSpotService getGarageManager(){
+    public GarageSpotService getGarageManager() {
         return garageManager;
     }
 
-    public Master getMasterById(long id){
+    public Master getMasterById(long id) {
         return masterManager.getMasterById(id);
     }
-    public Order getOrderById(long id){
+    public Order getOrderById(long id) {
         return orderManager.getOrderById(id);
     }
-    public GarageSpot getGarageSpotById(long id){
+    public GarageSpot getGarageSpotById(long id) {
         return garageManager.getGarageSpotById(id);
     }
 
     //model.Order
     //запись на конкретное время (-1 - записаться не удалось)
-    public long addOrderAtCurrentTime(LocalDateTime date, String description, int durationInHours, BigDecimal price){
-        for (var garageSpot: garageManager.getGarageSpots()){
-            if (garageSpot.isAvailable(date, date.plusHours(durationInHours))){
-                for (var master: masterManager.getMasters()){
-                    if (master.isAvailable(date, date.plusHours(durationInHours))){
+    public long addOrderAtCurrentTime(LocalDateTime date, String description, int durationInHours, BigDecimal price) {
+        for (var garageSpot: garageManager.getGarageSpots()) {
+            if (garageSpot.isAvailable(date, date.plusHours(durationInHours))) {
+                for (var master: masterManager.getMasters()) {
+                    if (master.isAvailable(date, date.plusHours(durationInHours))) {
                         garageSpot.addBusyTime(date, date.plusHours(durationInHours));
                         master.addBusyTime(date, date.plusHours(durationInHours));
                         return orderManager.addOrder(description, master, garageSpot, date, date.plusHours(durationInHours), price);
@@ -216,15 +216,15 @@ public class AutoService {
         return -1;
     }
     @JsonIgnore
-    public int getMastersCount(){
+    public int getMastersCount() {
         return masterManager.getMasters().size();
     }
     @JsonIgnore
-    public int getGarageSpotsCount(){
+    public int getGarageSpotsCount() {
         return garageManager.getGarageSpots().size();
     }
     @JsonIgnore
-    public int getOrdersCount(){
+    public int getOrdersCount() {
         return orderManager.getOrders().size();
     }
 
@@ -258,9 +258,9 @@ public class AutoService {
         return orderManager.addOrder(description, selectedMaster, selectedSpot, bestStartTime, endTime, price);
     }
 
-    public void deleteOrder(long id){
+    public void deleteOrder(long id) {
         Order order = orderManager.getOrderById(id);
-        if (order!= null){
+        if (order != null) {
             LocalDateTime startTime = order.getStartTime();
             LocalDateTime endTime = order.getEndTime();
 
@@ -270,10 +270,10 @@ public class AutoService {
         }
     }
 
-    public boolean closeOrder(long id){
+    public boolean closeOrder(long id) {
 
         Order order = orderManager.getOrderById(id);
-        if (order!= null){
+        if (order != null) {
             LocalDateTime startTime = order.getStartTime();
             LocalDateTime endTime = order.getEndTime();
 
@@ -301,11 +301,11 @@ public class AutoService {
         return false;
     }
 
-    public boolean shiftOrder(long id, int durationToShiftInHours){
-        for (var v: masterManager.getMasters()){
+    public boolean shiftOrder(long id, int durationToShiftInHours) {
+        for (var v: masterManager.getMasters()) {
             v.freeAllSchedule();
         }
-        for (var v: garageManager.getGarageSpots()){
+        for (var v: garageManager.getGarageSpots()) {
             v.freeAllSchedule();
         }
         return orderManager.shiftOrder(id, durationToShiftInHours);

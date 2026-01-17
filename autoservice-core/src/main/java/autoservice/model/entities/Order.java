@@ -1,6 +1,5 @@
 package autoservice.model.entities;
 
-import autoservice.model.AutoService;
 import autoservice.model.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -8,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-public class Order implements Comparable<Order>, Identifiable{
+public class Order implements Comparable<Order>, Identifiable {
 
     private Long id;
 
@@ -98,8 +97,7 @@ public class Order implements Comparable<Order>, Identifiable{
             this.endTime = endTime;
             this.price = price;
             this.createdAt = LocalDateTime.now();
-        }
-        else{
+        } else {
             throw new IllegalArgumentException("Invalid time settings: start time must be before end time");
         }
     }
@@ -160,7 +158,7 @@ public class Order implements Comparable<Order>, Identifiable{
 
     @Override
     public String toString() {
-        return "id - " + id + ", description - " +description + ", created at - " + createdAt +
+        return "id - " + id + ", description - " + description + ", created at - " + createdAt +
                 ", master id - " + master.getId() + ", garage spot id - " + garageSpot.getId() + ", start time - " + startTime +
                 ", end time - " + endTime + ", status - " + orderStatus.name().toLowerCase() + ", price - " + price;
     }

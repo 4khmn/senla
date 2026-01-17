@@ -21,7 +21,7 @@ public class GetMasterByOrderAction implements IAction {
             System.out.println("В авто-сервисе нету мастеров.");
             return;
         }
-        if (service.getOrdersCount()==0){
+        if (service.getOrdersCount() == 0) {
             System.out.println("Список заказов пуст.");
             return;
         }
@@ -33,12 +33,10 @@ public class GetMasterByOrderAction implements IAction {
             try {
                 Master masterByOrder = service.getMasterByOrder(order);
                 System.out.println(masterByOrder);
-            }
-            catch (DBException e) {
+            } catch (DBException e) {
                 System.out.println(e.getMessage());
             }
-        }
-        else{
+        } else {
             System.out.println("Id заказа введено не верно");
         }
     }

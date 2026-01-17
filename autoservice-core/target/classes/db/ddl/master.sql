@@ -1,5 +1,0 @@
-CREATE TABLE master (
-    id BIGSERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    salary NUMERIC(10,2) NOT NULL
-);

@@ -19,20 +19,18 @@ public class AddGarageSpotAction implements IAction {
         double size;
         boolean hasLift;
         boolean hasPit;
-        while(true) {
+        while (true) {
             System.out.println("Введите размер места в метрах квадратных");
             size = sc.nextDouble();
-            if (size<8.00){
+            if (size < 8.00) {
                 System.out.println("Минимальный резмер места - 8");
                 sc.nextLine();
-            }
-            else{
+            } else {
                 break;
             }
-        }
-        while(true) {
+        } while (true) {
             System.out.println("есть ли подъемник?");
-            try{
+            try {
                 hasLift = sc.nextBoolean();
                 break;
             } catch (Exception e) {
@@ -40,9 +38,9 @@ public class AddGarageSpotAction implements IAction {
                 sc.next();
             }
         }
-        while(true) {
+        while (true) {
             System.out.println("есть ли яма?");
-            try{
+            try {
                 hasPit = sc.nextBoolean();
                 break;
             } catch (Exception e) {
@@ -53,8 +51,7 @@ public class AddGarageSpotAction implements IAction {
 
         try {
             service.addGarageSpot(size, hasLift, hasPit);
-        }
-        catch (DBException e) {
+        } catch (DBException e) {
             System.out.println(e.getMessage());
         }
         System.out.println("Гаражное место добавлено!");

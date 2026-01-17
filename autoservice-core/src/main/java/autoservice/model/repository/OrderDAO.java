@@ -8,7 +8,10 @@ import autoservice.model.enums.OrderStatus;
 import autoservice.model.exceptions.DBException;
 import lombok.extern.slf4j.Slf4j;
 
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -102,7 +105,7 @@ public class OrderDAO extends GenericDAO<Order> {
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setLong(1, garageSpotId);
-            try(ResultSet rs = ps.executeQuery()) {
+            try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     slots.add(new TimeSlot(
                             rs.getTimestamp("start_time").toLocalDateTime(),
@@ -112,7 +115,7 @@ public class OrderDAO extends GenericDAO<Order> {
             }
         } catch (SQLException e) {
             log.error("Error getting time slots by garage spot from database {}", getTableName(), e);
-            throw new DBException("Error finding time slots by garageSpot with id="+garageSpotId, e);
+            throw new DBException("Error finding time slots by garageSpot with id=" + garageSpotId, e);
         }
 
         return slots;
@@ -130,7 +133,7 @@ public class OrderDAO extends GenericDAO<Order> {
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setLong(1, masterId);
-            try(ResultSet rs = ps.executeQuery()) {
+            try (ResultSet rs = ps.executeQuery()) {
 
                 while (rs.next()) {
                     slots.add(new TimeSlot(
@@ -141,18 +144,18 @@ public class OrderDAO extends GenericDAO<Order> {
             }
         } catch (SQLException e) {
             log.error("Error getting time slots by master from database {}", getTableName(), e);
-            throw new DBException("Error finding time slots by master with id="+masterId, e);
+            throw new DBException("Error finding time slots by master with id=" + masterId, e);
         }
 
         return slots;
     }
 
-    public Order getOrderByMaster(Master master){
+    public Order getOrderByMaster(Master master) {
         log.info("Getting orders by master with id {}", master.getId());
         String sql = "SELECT * FROM orders WHERE master_id = ? LIMIT 1";
-        try(PreparedStatement ps = connection.prepareStatement(sql)){
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setLong(1, master.getId());
-            try(ResultSet rs = ps.executeQuery()) {
+            try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     Order order = mapResultSetToEntity(rs);
                     log.info("Order successfully founded with id={}", order.getId());
@@ -161,7 +164,7 @@ public class OrderDAO extends GenericDAO<Order> {
             }
         } catch (SQLException e) {
             log.error("Error getting orders by master with id={} from database {}", master.getId(), getTableName(), e);
-            throw new DBException("Error getting order by master with id="+master.getId(), e);
+            throw new DBException("Error getting order by master with id=" + master.getId(), e);
         }
         return null;
     }
@@ -197,7 +200,7 @@ public class OrderDAO extends GenericDAO<Order> {
                 "ORDER BY " + sortField.getColumn();
 
         try (PreparedStatement ps = connection.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery()){
+            ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 sortedOrders.add(mapResultSetToEntity(rs));
@@ -233,7 +236,7 @@ public class OrderDAO extends GenericDAO<Order> {
             ps.setTimestamp(1, Timestamp.valueOf(start));
             ps.setTimestamp(2, Timestamp.valueOf(end));
 
-            try(ResultSet rs = ps.executeQuery()) {
+            try (ResultSet rs = ps.executeQuery()) {
 
                 while (rs.next()) {
                     sortedOrders.add(mapResultSetToEntity(rs));
