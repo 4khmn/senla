@@ -1,6 +1,7 @@
 package autoservice.ui.actions.garageSpots;
 
 import autoservice.model.AutoService;
+import autoservice.model.exceptions.DBException;
 import autoservice.ui.actions.IAction;
 
 import java.time.LocalDateTime;
@@ -25,7 +26,7 @@ public class GetNumberOfFreeSpotsByDateAction implements IAction {
         int month;
         int year;
         LocalDateTime date;
-        while(true) {
+        while (true) {
             System.out.println("Введите интересующую вас дату в формате <hh.dd.mm.yyyy>: ");
             String inputDate = sc.nextLine();
             String[] split = inputDate.split("\\.");
@@ -35,21 +36,25 @@ public class GetNumberOfFreeSpotsByDateAction implements IAction {
                 day = Integer.parseInt(split[1]);
                 month = Integer.parseInt(split[2]);
                 year = Integer.parseInt(split[3]);
-                try{
+                try {
                     date = LocalDateTime.of(year, month, day, hour, 0);
                     break;
-                } catch(Exception e){
+                } catch (Exception e) {
                     System.out.println("Неверный ввод даты, попробуйте еще раз!");
                 }
             } else {
                 System.out.println("Неверный ввод даты, попробуйте еще раз!");
             }
         }
-        int freeSpotsByDate = service.getNumberOfFreeSpotsByDate(date);
-        if (freeSpotsByDate>0) {
-            System.out.println("Всего свободных мест сейчас: " + freeSpotsByDate);
-        } else{
-            System.out.println("Свободных мест в это время нету.");
+        try {
+            int freeSpotsByDate = service.getNumberOfFreeSpotsByDate(date);
+            if (freeSpotsByDate > 0) {
+                System.out.println("Всего свободных мест а выбранное время: " + freeSpotsByDate);
+            } else {
+                System.out.println("Свободных мест в это время нету.");
+            }
+        } catch (DBException e) {
+            System.out.println(e.getMessage());
         }
     }
 }

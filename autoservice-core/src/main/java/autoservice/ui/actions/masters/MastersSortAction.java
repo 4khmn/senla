@@ -3,6 +3,7 @@ package autoservice.ui.actions.masters;
 import autoservice.model.AutoService;
 import autoservice.model.entities.Master;
 import autoservice.model.enums.MastersSortEnum;
+import autoservice.model.exceptions.DBException;
 import autoservice.ui.actions.IAction;
 
 import java.util.List;
@@ -38,11 +39,15 @@ public class MastersSortAction implements IAction {
                 }
             };
         }
-        List<Master> masters = service.mastersSort(sortType);
+        try {
+            List<Master> masters = service.mastersSort(sortType);
 
-        System.out.println("Списко заказов: ");
-        for (var v : masters) {
-            System.out.println(v);
+            System.out.println("Списко заказов: ");
+            for (var v : masters) {
+                System.out.println(v);
+            }
+        } catch (DBException e) {
+            System.out.println(e.getMessage());
         }
     }
 }

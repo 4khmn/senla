@@ -1,6 +1,7 @@
 package autoservice.ui.actions.masters;
 
 import autoservice.model.AutoService;
+import autoservice.model.exceptions.DBException;
 import autoservice.ui.actions.IAction;
 
 import java.math.BigDecimal;
@@ -18,11 +19,15 @@ public class AddMasterAction implements IAction {
         Scanner sc = new Scanner(System.in);
         System.out.print("Введите имя мастера: ");
         String name = sc.nextLine();
-        while(true) {
+        while (true) {
             System.out.print("Введите его зарплату: ");
             try {
                 BigDecimal salary = sc.nextBigDecimal();
-                service.addMaster(name, salary);
+                try {
+                    service.addMaster(name, salary);
+                } catch (DBException e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
             } catch (Exception e) {
                 System.out.println("неверный ввод");

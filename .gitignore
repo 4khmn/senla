@@ -1,7 +1,11 @@
-*.iml
+# Maven
+target/
+
+# IntelliJ
 .idea/
+*.iml
 
 bin/
 out/
 
-ignore.me
+autoservice-core/src/main/resources/secrets.properties

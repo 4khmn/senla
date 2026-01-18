@@ -12,7 +12,7 @@ public class ConfigLoader {
         Class<?> clazz = obj.getClass();
 
         try (InputStream is = obj.getClass().getClassLoader().getResourceAsStream("autoservice.properties")) {
-            if (is == null){
+            if (is == null) {
                 throw new RuntimeException("Не найден autoservice.properties");
             }
 
@@ -21,13 +21,13 @@ public class ConfigLoader {
 
             for (Field field : clazz.getDeclaredFields()) {
                 ConfigProperty annotation = field.getAnnotation(ConfigProperty.class);
-                if (annotation == null){
+                if (annotation == null) {
                     continue;
                 }
 
                 String key = annotation.propertyName();
                 String value = props.getProperty(key);
-                if (value == null){
+                if (value == null) {
                     continue;
                 }
 

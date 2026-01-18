@@ -8,7 +8,6 @@ import autoservice.ui.menu.Navigator;
 import config.annotation.Component;
 import config.annotation.Inject;
 
-import java.io.IOException;
 import java.util.Scanner;
 @Component
 public class MenuController {
@@ -36,9 +35,8 @@ public class MenuController {
             try {
                 int choice = sc.nextInt();
                 running = navigator.navigate(choice);
-            }
-            catch(Exception e){
-                System.out.println("Неверный выбор!");
+            } catch (Exception e) {
+                System.out.println("Глобальная обработка: Неверный выбор!");
                 sc.next();
             }
         }
@@ -48,7 +46,6 @@ public class MenuController {
         } catch (Exception e) {
             System.out.println("Ошибка сохранения: " + e.getMessage());
         }
-
         System.out.println("Программа завершена.");
     }
 

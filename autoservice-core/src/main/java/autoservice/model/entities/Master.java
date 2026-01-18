@@ -4,22 +4,18 @@ package autoservice.model.entities;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.TreeSet;
-public class Master {
-    private static long global_id=1; // for serial primary key
-    private long id;
+public class Master implements Identifiable {
+    private Long id;
+
+
     private String name;
     private BigDecimal salary;
-    private TreeSet<TimeSlot> calendar;
+    private transient TreeSet<TimeSlot> calendar;
 
     public Master() {
+        this.calendar = new TreeSet<>();
     }
 
-    public Master(long id, String name, BigDecimal salary, TreeSet<TimeSlot> calendar) {
-        this.id = id;
-        this.name = name;
-        this.salary = salary;
-        this.calendar = calendar;
-    }
 
     public void setId(long id) {
         this.id = id;
@@ -32,26 +28,12 @@ public class Master {
     public Master(String name, BigDecimal salary) {
         this.name = name;
         this.salary = salary;
-        this.id = global_id++;
         this.calendar = new TreeSet<>();
     }
 
-    public Master(long id, String name, BigDecimal salary) {
-        this.name = name;
-        this.salary = salary;
+
+    public void setId(Long id) {
         this.id = id;
-        this.calendar = new TreeSet<>();
-    }
-    public static void updateGlobalId(long maxId) {
-        if (maxId >= global_id) {
-            global_id = maxId + 1;
-        }
-    }
-    @Override
-    public Master clone() {
-        Master copy = new Master(id, name, salary);
-        copy.calendar = new TreeSet<>(calendar);
-        return copy;
     }
 
     public void setSalary(BigDecimal salary) {
@@ -77,10 +59,10 @@ public class Master {
         return true;
     }
 
-    public void freeAllSchedule(){
+    public void freeAllSchedule() {
         this.calendar = new TreeSet<>();
     }
-    public void freeTimeSlot(LocalDateTime start, LocalDateTime end){
+    public void freeTimeSlot(LocalDateTime start, LocalDateTime end) {
         calendar.remove(new TimeSlot(start, end));
     }
 
@@ -95,6 +77,7 @@ public class Master {
 
 
     public TreeSet<TimeSlot> getCalendar() {
+        if (calendar == null) calendar = new TreeSet<>();
         return calendar;
     }
 

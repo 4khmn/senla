@@ -6,7 +6,7 @@ import config.annotation.Component;
 public class Navigator {
     private Menu currentMenu;
     private Menu mainMenu;
-    private Navigator() {}
+    private Navigator() { }
 
     public void setCurrentMenu(Menu menu) {
         if (mainMenu == null) mainMenu = menu;
@@ -19,7 +19,7 @@ public class Navigator {
 
     public void printMenu() {
         System.out.println("\n=== " + currentMenu.getName() + " ===");
-        if (currentMenu.getHint()!=null) {
+        if (currentMenu.getHint() != null) {
             System.out.println(currentMenu.getHint());
         }
 
@@ -37,17 +37,14 @@ public class Navigator {
         MenuItem[] items = currentMenu.getItems();
         if (choice > 0 && choice <= items.length) {
             MenuItem item = items[choice - 1];
-            if (item.getAction()!=null){
+            if (item.getAction() != null) {
                 item.doAction();
-            }
-            else if (item.getNextMenu() != null) {
+            } else if (item.getNextMenu() != null) {
                 currentMenu = item.getNextMenu();
-            }
-            else{
+            } else {
                 System.out.println("Ошибка");
             }
-        }
-        else {
+        } else {
             System.out.println("Неверный выбор!");
         }
         return true;

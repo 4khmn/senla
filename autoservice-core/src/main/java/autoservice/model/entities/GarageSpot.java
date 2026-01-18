@@ -4,18 +4,22 @@ package autoservice.model.entities;
 
 import java.time.LocalDateTime;
 import java.util.TreeSet;
-public class GarageSpot {
-    private static long global_id=1; // for serial primary key
-    private long id;
+public class GarageSpot implements Identifiable {
 
+
+    private Long id;
     private double size;
     private boolean hasLift;
     private boolean hasPit;
-    private TreeSet<TimeSlot> calendar;
+    private transient TreeSet<TimeSlot> calendar;
 
 
     public long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setCalendar(TreeSet<TimeSlot> calendar) {
@@ -27,25 +31,16 @@ public class GarageSpot {
     }
 
     public GarageSpot() {
+        this.calendar = new TreeSet<>();
     }
 
     public GarageSpot(double size, boolean hasLift, boolean hasPit) {
-        this.id = global_id++;
 
         this.size = size;
         this.hasLift = hasLift;
         this.hasPit = hasPit;
         this.calendar = new TreeSet<>();
     }
-    public GarageSpot(long id, double size, boolean hasLift, boolean hasPit) {
-        this.id = id;
-
-        this.size = size;
-        this.hasLift = hasLift;
-        this.hasPit = hasPit;
-        this.calendar = new TreeSet<>();
-    }
-
 
     public double getSize() {
         return size;
@@ -82,18 +77,18 @@ public class GarageSpot {
         return "id - " + id + ", size - " + size + ", hasList - " + hasLift + ", hasPit - " + hasPit;
     }
 
-    public void freeAllSchedule(){
+    public void freeAllSchedule() {
         this.calendar = new TreeSet<>();
     }
-    public void freeTimeSlot(LocalDateTime start, LocalDateTime end){
+    public void freeTimeSlot(LocalDateTime start, LocalDateTime end) {
         calendar.remove(new TimeSlot(start, end));
     }
 
-    public LocalDateTime getNextAvailableTime(int duration){
+    public LocalDateTime getNextAvailableTime(int duration) {
         LocalDateTime currentTime = LocalDateTime.now();
-        for (var v: calendar){
-            if (v.getStart().isAfter(currentTime)){
-                if (currentTime.plusHours(duration).isBefore(v.getStart())){
+        for (var v: calendar) {
+            if (v.getStart().isAfter(currentTime)) {
+                if (currentTime.plusHours(duration).isBefore(v.getStart())) {
                     return currentTime;
                 }
             }
@@ -111,16 +106,13 @@ public class GarageSpot {
         return true;
     }
 
-    public static void updateGlobalId(long maxId) {
-        if (maxId >= global_id) {
-            global_id = maxId + 1;
-        }
-    }
+
     public TreeSet<TimeSlot> getCalendar() {
+        if (calendar == null) calendar = new TreeSet<>();
         return calendar;
     }
 
-    public boolean scheduleIsEmpty(){
+    public boolean scheduleIsEmpty() {
         return calendar.isEmpty();
     }
 
@@ -147,24 +139,18 @@ public class GarageSpot {
             LocalDateTime candidateEnd = candidateStart.plusHours(durationInHours);
 
             if (next == null || candidateEnd.isBefore(next.getStart())) {
-                if (candidateStart.isAfter(from)){
+                if (candidateStart.isAfter(from)) {
                     return candidateStart;
-                } else{
+                } else {
                     return from;
                 }
             }
         }
-        if(calendar.last().getEnd().isAfter(from)) {
+        if (calendar.last().getEnd().isAfter(from)) {
             return calendar.last().getEnd();
         } else {
             return from;
         }
     }
 
-    @Override
-    public GarageSpot clone() {
-        GarageSpot copy = new GarageSpot(id, size, hasLift, hasPit);
-        copy.calendar = new TreeSet<>(calendar);
-        return copy;
-    }
 }

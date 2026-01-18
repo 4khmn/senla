@@ -21,14 +21,18 @@ public class ShiftOrderAction implements IAction {
         Scanner sc = new Scanner(System.in);
         System.out.print("Введите id заказа, которое вы хотите продлить: ");
         long id = sc.nextLong();
-        while(true) {
+        while (true) {
             System.out.print("Введите длительность в часах (на сколько часов продлить заказ): ");
             int durationInHours = sc.nextInt();
             if (durationInHours > 0) {
-                if (service.shiftOrder(id, durationInHours)) {
-                    System.out.println("Заказ успешно сдвинут.");
-                } else {
-                    System.out.println("Id заказа введено не верно.");
+                try {
+                    if (service.shiftOrder(id, durationInHours)) {
+                        System.out.println("Заказ успешно сдвинут.");
+                    } else {
+                        System.out.println("Id заказа введено не верно.");
+                    }
+                } catch (RuntimeException e) {
+                    System.out.println(e.getMessage());
                 }
                 break;
             } else {

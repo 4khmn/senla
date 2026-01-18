@@ -86,7 +86,7 @@ public class DIContainer {
 
     private Object resolveDependency(Class<?> type) {
         Object dep = components.get(type);
-        if (dep != null){
+        if (dep != null) {
             return dep;
         }
         throw new RuntimeException("No bean found for " + type.getName());

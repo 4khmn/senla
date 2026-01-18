@@ -3,6 +3,7 @@ package autoservice.ui.actions.orders;
 import autoservice.model.AutoService;
 import autoservice.model.entities.Order;
 import autoservice.model.enums.ActiveOrdersSortEnum;
+import autoservice.model.exceptions.DBException;
 import autoservice.ui.actions.IAction;
 
 import java.util.List;
@@ -40,12 +41,18 @@ public class ActiveOrdersSortAction implements IAction {
                 }
             };
         }
-        List<Order> orders = service.activeOrdersSort(sortType);
-
-        System.out.println("Списко заказов: ");
-        for (var v : orders) {
-            System.out.println(v);
+        try {
+            List<Order> orders = service.activeOrdersSort(sortType);
+            if (orders.isEmpty()) {
+                System.out.println("В настоящий момент заказы не выполняются.");
+            } else {
+                System.out.println("Списко заказов: ");
+                for (var v : orders) {
+                    System.out.println(v);
+                }
+            }
+        } catch (DBException e) {
+            System.out.println(e.getMessage());
         }
-
     }
 }

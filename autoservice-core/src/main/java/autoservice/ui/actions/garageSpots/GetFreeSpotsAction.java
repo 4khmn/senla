@@ -2,6 +2,7 @@ package autoservice.ui.actions.garageSpots;
 
 import autoservice.model.AutoService;
 import autoservice.model.entities.GarageSpot;
+import autoservice.model.exceptions.DBException;
 import autoservice.ui.actions.IAction;
 
 import java.util.List;
@@ -20,11 +21,15 @@ public class GetFreeSpotsAction implements IAction {
             System.out.println("В авто-сервисе нету гаражных мест.");
             return;
         }
-        List<GarageSpot> freeSpots = service.getFreeSpots();
+        try {
+            List<GarageSpot> freeSpots = service.getFreeSpots();
 
-        System.out.println("Список свободных мест:");
-        for (var v : freeSpots) {
-            System.out.println(v);
+            System.out.println("Список свободных мест:");
+            for (var v : freeSpots) {
+                System.out.println(v);
+            }
+        } catch (DBException e) {
+            System.out.println(e.getMessage());
         }
     }
 }

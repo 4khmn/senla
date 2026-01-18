@@ -1,6 +1,7 @@
 package autoservice.ui.actions.garageSpots;
 
 import autoservice.model.AutoService;
+import autoservice.model.exceptions.DBException;
 import autoservice.ui.actions.IAction;
 
 import java.util.Scanner;
@@ -23,15 +24,19 @@ public class DeleteGarageSpotAction implements IAction {
         Scanner sc = new Scanner(System.in);
         System.out.print("Введите id гаражного места, которое вы хотите удалить: ");
         long id = sc.nextLong();
-        if (service.getGarageSpotById(id) != null) {
-            if (service.getGarageSpotById(id).scheduleIsEmpty() == true) {
-                service.deleteGarageSpot(id);
-                System.out.println("Гаражное место успешно удалено!");
+        try {
+            if (service.getGarageSpotById(id) != null) {
+                if (service.getGarageSpotById(id).scheduleIsEmpty() == true) {
+                    service.deleteGarageSpot(id);
+                    System.out.println("Гаражное место успешно удалено!");
+                } else {
+                    System.out.println("Это место еще обслуживает заказы!");
+                }
             } else {
-                System.out.println("Это место еще обслуживает заказы!");
+                System.out.println("Гаражного места с данным id не найдено");
             }
-        } else {
-            System.out.println("Гаражного места с данным id не найдено");
+        } catch (DBException e) {
+            System.out.println(e.getMessage());
         }
     }
 }

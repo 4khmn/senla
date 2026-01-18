@@ -1,10 +1,12 @@
 package autoservice.model.io.exports;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-
+@Slf4j
 public abstract class CsvExport {
     protected final String header;
     protected final String fileName;
@@ -17,8 +19,9 @@ public abstract class CsvExport {
     protected abstract String formatEntity(Object entity);
 
     public void export() throws IOException {
+        log.info("Start exporting data to {}", fileName);
         File dataDir = new File("data");
-        if (!dataDir.exists()){
+        if (!dataDir.exists()) {
             dataDir.mkdirs();
         }
 
@@ -31,6 +34,7 @@ public abstract class CsvExport {
                 writer.newLine();
             }
         }
+        log.info("Data successfully exported to {}", fileName);
     }
 
     protected abstract Iterable<?> getEntities();

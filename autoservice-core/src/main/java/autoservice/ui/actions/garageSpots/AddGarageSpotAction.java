@@ -1,6 +1,7 @@
 package autoservice.ui.actions.garageSpots;
 
 import autoservice.model.AutoService;
+import autoservice.model.exceptions.DBException;
 import autoservice.ui.actions.IAction;
 
 import java.util.Scanner;
@@ -18,20 +19,18 @@ public class AddGarageSpotAction implements IAction {
         double size;
         boolean hasLift;
         boolean hasPit;
-        while(true) {
+        while (true) {
             System.out.println("Введите размер места в метрах квадратных");
             size = sc.nextDouble();
-            if (size<8.00){
+            if (size < 8.00) {
                 System.out.println("Минимальный резмер места - 8");
                 sc.nextLine();
-            }
-            else{
+            } else {
                 break;
             }
-        }
-        while(true) {
+        } while (true) {
             System.out.println("есть ли подъемник?");
-            try{
+            try {
                 hasLift = sc.nextBoolean();
                 break;
             } catch (Exception e) {
@@ -39,9 +38,9 @@ public class AddGarageSpotAction implements IAction {
                 sc.next();
             }
         }
-        while(true) {
+        while (true) {
             System.out.println("есть ли яма?");
-            try{
+            try {
                 hasPit = sc.nextBoolean();
                 break;
             } catch (Exception e) {
@@ -50,8 +49,11 @@ public class AddGarageSpotAction implements IAction {
             }
         }
 
-
-        service.addGarageSpot(size, hasLift, hasPit);
+        try {
+            service.addGarageSpot(size, hasLift, hasPit);
+        } catch (DBException e) {
+            System.out.println(e.getMessage());
+        }
         System.out.println("Гаражное место добавлено!");
         System.out.println("Всего доступных гаражных мест: " + service.getGarageSpotsCount());
     }

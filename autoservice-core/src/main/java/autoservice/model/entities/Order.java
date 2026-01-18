@@ -1,6 +1,5 @@
 package autoservice.model.entities;
 
-import autoservice.model.AutoService;
 import autoservice.model.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -8,10 +7,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-public class Order implements Comparable<Order> {
-    private static long global_id=1; // for serial primary key
+public class Order implements Comparable<Order>, Identifiable {
 
-    private long id;
+    private Long id;
+
 
     private String description;
 
@@ -64,6 +63,10 @@ public class Order implements Comparable<Order> {
     }
 
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
 
 
     public long getId() {
@@ -87,7 +90,6 @@ public class Order implements Comparable<Order> {
                  LocalDateTime endTime,
                  BigDecimal price) {
         if (startTime.isBefore(endTime)) {
-            this.id = global_id++;
             this.description = description;
             this.master = master;
             this.garageSpot = garageSpot;
@@ -95,52 +97,11 @@ public class Order implements Comparable<Order> {
             this.endTime = endTime;
             this.price = price;
             this.createdAt = LocalDateTime.now();
-        }
-        else{
+        } else {
             throw new IllegalArgumentException("Invalid time settings: start time must be before end time");
         }
     }
-    public Order(long id,
-                 String description,
-                 Master master,
-                 GarageSpot garageSpot,
-                 LocalDateTime startTime,
-                 LocalDateTime endTime,
-                 BigDecimal price) {
-        if (startTime.isBefore(endTime)) {
-            this.id = id;
-            this.description = description;
-            this.master = master;
-            this.garageSpot = garageSpot;
-            this.startTime = startTime;
-            this.endTime = endTime;
-            this.price = price;
-            this.createdAt = LocalDateTime.now();
-        }
-        else{
-            throw new IllegalArgumentException("Invalid time settings: start time must be before end time");
-        }
-    }
-    public static void updateGlobalId(long maxId) {
-        if (maxId >= global_id) {
-            global_id = maxId + 1;
-        }
-    }
-    @Override
-    public Order clone() {
-        Order copy = new Order(
-                this.id,
-                this.description,
-                this.master,
-                this.garageSpot,
-                this.startTime,
-                this.endTime,
-                this.price
-        );
-        copy.setCreatedAt(this.createdAt);
-        copy.setOrderStatus(this.orderStatus);
-        return copy;
-    }
+
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
@@ -197,7 +158,7 @@ public class Order implements Comparable<Order> {
 
     @Override
     public String toString() {
-        return "id - " + id + ", description - " +description + ", created at - " + createdAt +
+        return "id - " + id + ", description - " + description + ", created at - " + createdAt +
                 ", master id - " + master.getId() + ", garage spot id - " + garageSpot.getId() + ", start time - " + startTime +
                 ", end time - " + endTime + ", status - " + orderStatus.name().toLowerCase() + ", price - " + price;
     }
@@ -212,5 +173,20 @@ public class Order implements Comparable<Order> {
             cmp = Long.compare(this.id, other.id); // или hashCode(), если нет id
         }
         return cmp;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        if (getClass() != o.getClass()) return false;
+
+        Order order = (Order) o;
+        return id == order.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Long.hashCode(id);
     }
 }

@@ -3,6 +3,7 @@ package autoservice.ui.actions.orders;
 import autoservice.model.AutoService;
 import autoservice.model.entities.Order;
 import autoservice.model.enums.OrdersSortByTimeFrameEnum;
+import autoservice.model.exceptions.DBException;
 import autoservice.ui.actions.IAction;
 
 import java.time.LocalDateTime;
@@ -93,15 +94,18 @@ public class OrdersSortByTimeFrameAction implements IAction {
                 }
             };
         }
-        List<Order> orders = service.ordersSortByTimeFrame(startDate, endDate, sortType);
-        if (orders.size()==0){
-            System.out.println("За выбранное время заказов нету.");
-        }
-        else {
-            System.out.println("Списко заказов: ");
-            for (var v : orders) {
-                System.out.println(v);
+        try {
+            List<Order> orders = service.ordersSortByTimeFrame(startDate, endDate, sortType);
+            if (orders.size() == 0) {
+                System.out.println("За выбранное время заказов нету.");
+            } else {
+                System.out.println("Списко заказов: ");
+                for (var v : orders) {
+                    System.out.println(v);
+                }
             }
+        } catch (DBException ex) {
+            System.out.println(ex.getMessage());
         }
     }
 }
