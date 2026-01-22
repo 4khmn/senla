@@ -304,3 +304,16 @@ Illegal boolean value: truee
 [23:35:33.021] [main] INFO  config.DIContainer - Creating instance of AppConfig
 [23:35:33.022] [main] INFO  config.DIContainer - Creating instance of ConsoleMenuFactory
 [23:35:33.025] [main] INFO  config.DIContainer - Creating instance of MenuController
+[19:21:33.419] [main] INFO  config.DIContainer - Creating instance of GarageSpotService
+[19:21:33.423] [main] INFO  config.DIContainer - Creating instance of MasterService
+[19:21:33.424] [main] INFO  config.DIContainer - Creating instance of OrderService
+[19:21:33.434] [main] INFO  config.DIContainer - Creating instance of CsvImportService
+[19:21:33.652] [main] INFO  config.DIContainer - Creating instance of SerializationService
+[19:21:33.653] [main] INFO  config.DIContainer - Creating instance of GarageSpotsCsvExport
+[19:21:33.653] [main] INFO  config.DIContainer - Creating instance of MastersCsvExport
+[19:21:33.654] [main] INFO  config.DIContainer - Creating instance of OrdersCsvExport
+[19:21:33.662] [main] INFO  config.DIContainer - Creating instance of AutoService
+[19:21:33.662] [main] INFO  config.DIContainer - Creating instance of Navigator
+[19:21:33.663] [main] INFO  config.DIContainer - Creating instance of AppConfig
+[19:21:33.664] [main] INFO  config.DIContainer - Creating instance of ConsoleMenuFactory
+[19:21:33.666] [main] INFO  config.DIContainer - Creating instance of MenuController
