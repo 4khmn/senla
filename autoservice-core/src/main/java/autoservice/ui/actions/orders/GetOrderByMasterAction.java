@@ -31,6 +31,8 @@ public class GetOrderByMasterAction implements IAction {
                 System.out.println(orderByMaster);
             } catch (DBException e) {
                 System.out.println(e.getMessage());
+            }  catch (Exception e) {
+                System.out.println(e.getMessage());
             }
         } else {
             System.out.println("Id мастера введено не верно.");

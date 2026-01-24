@@ -27,6 +27,8 @@ public class DeleteMasterAction implements IAction {
             System.out.println("Мастер успешно удален!");
         } catch (DBException e) {
             System.out.println("Мастера с данным ID не найдено!");
+        }  catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 }

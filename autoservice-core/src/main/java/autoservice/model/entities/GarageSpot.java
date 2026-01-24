@@ -2,15 +2,33 @@ package autoservice.model.entities;
 
 
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Column;
+import javax.persistence.Transient;
 import java.time.LocalDateTime;
 import java.util.TreeSet;
+@Entity
+@Table(name = "garage_spot")
 public class GarageSpot implements Identifiable {
 
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "size")
     private double size;
+
+    @Column(name = "has_lift")
     private boolean hasLift;
+
+    @Column(name = "has_pit")
     private boolean hasPit;
+
+    @Transient
     private transient TreeSet<TimeSlot> calendar;
 
 
