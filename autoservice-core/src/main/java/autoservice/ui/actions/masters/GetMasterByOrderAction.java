@@ -35,6 +35,8 @@ public class GetMasterByOrderAction implements IAction {
                 System.out.println(masterByOrder);
             } catch (DBException e) {
                 System.out.println(e.getMessage());
+            }  catch (Exception e) {
+                System.out.println(e.getMessage());
             }
         } else {
             System.out.println("Id заказа введено не верно");

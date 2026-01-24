@@ -29,6 +29,8 @@ public class GetClosestDateAction implements IAction {
                 System.out.println("Ближайшее свободное время: " + closestDate);
             } catch (DBException e) {
                 System.out.println(e.getMessage());
+            }  catch (Exception e) {
+                System.out.println(e.getMessage());
             }
         } else {
             System.out.println("Длительность введена некорректно");

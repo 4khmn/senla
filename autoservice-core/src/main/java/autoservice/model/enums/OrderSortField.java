@@ -2,17 +2,17 @@ package autoservice.model.enums;
 
 public enum OrderSortField {
     PRICE("price"),
-    START_TIME("start_time"),
-    END_TIME("end_time"),
-    CREATED_AT("created_at");
+    START_TIME("startTime"),
+    END_TIME("endTime"),
+    CREATED_AT("createdAt");
 
-    private final String column;
+    private final String fieldName;
 
-    OrderSortField(String column) {
-        this.column = column;
+    OrderSortField(String fieldName) {
+        this.fieldName = fieldName;
     }
 
-    public String getColumn() {
-        return column;
+    public String getFieldName() {
+        return fieldName;
     }
 }

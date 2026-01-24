@@ -106,6 +106,8 @@ public class OrdersSortByTimeFrameAction implements IAction {
             }
         } catch (DBException ex) {
             System.out.println(ex.getMessage());
+        }  catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 }

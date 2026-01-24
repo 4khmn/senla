@@ -33,6 +33,8 @@ public class ShiftOrderAction implements IAction {
                     }
                 } catch (RuntimeException e) {
                     System.out.println(e.getMessage());
+                }  catch (Exception e) {
+                    System.out.println(e.getMessage());
                 }
                 break;
             } else {

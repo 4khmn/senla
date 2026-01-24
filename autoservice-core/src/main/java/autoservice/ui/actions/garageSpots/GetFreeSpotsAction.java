@@ -30,6 +30,8 @@ public class GetFreeSpotsAction implements IAction {
             }
         } catch (DBException e) {
             System.out.println(e.getMessage());
+        }  catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 }

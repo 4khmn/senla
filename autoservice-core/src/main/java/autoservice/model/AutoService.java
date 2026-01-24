@@ -216,16 +216,16 @@ public class AutoService {
         return -1;
     }
     @JsonIgnore
-    public int getMastersCount() {
-        return masterManager.getMasters().size();
+    public Long getMastersCount() {
+        return masterManager.getMastersCount();
     }
     @JsonIgnore
-    public int getGarageSpotsCount() {
-        return garageManager.getGarageSpots().size();
+    public Long getGarageSpotsCount() {
+        return garageManager.getGarageSpotsCount();
     }
     @JsonIgnore
-    public int getOrdersCount() {
-        return orderManager.getOrders().size();
+    public Long getOrdersCount() {
+        return orderManager.getOrdersCount();
     }
 
     //сама записывает на ближайшее время

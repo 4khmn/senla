@@ -3,32 +3,71 @@ package autoservice.model.entities;
 import autoservice.model.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
 
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Column;
+import javax.persistence.ManyToOne;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.Enumerated;
+import javax.persistence.EnumType;
+import javax.persistence.PrePersist;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+@Getter
+@Setter
+@Entity
+@Table(name = "orders")
 public class Order implements Comparable<Order>, Identifiable {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
+    @Column(name = "description")
     private String description;
 
-
     @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "master_id")
     private Master master;
 
     @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "garage_spot_id")
     private GarageSpot garageSpot;
 
-    @JsonProperty("masterId")
-    public Long getMasterId() {
-        return master != null ? master.getId() : null;
+    @Column(name = "start_time")
+    private LocalDateTime startTime;
+
+    @Column(name = "end_time")
+    private LocalDateTime endTime;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "order_status")
+    private OrderStatus orderStatus;
+
+    @Column(name = "price")
+    private BigDecimal price;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    public void prePersist() {
+        if (orderStatus == null) {
+            orderStatus = OrderStatus.OPEN;
+        }
     }
 
-    @JsonProperty("garageSpotId")
-    public Long getGarageSpotId() {
-        return garageSpot != null ? garageSpot.getId() : null;
+
+    public Order() {
     }
 
     @JsonProperty("masterId")
@@ -51,16 +90,17 @@ public class Order implements Comparable<Order>, Identifiable {
         }
     }
 
-
-    private LocalDateTime startTime;
-
-    private LocalDateTime endTime;
-    private OrderStatus orderStatus = OrderStatus.OPEN;
-    private BigDecimal price;
-    private LocalDateTime createdAt;
-
-    public Order() {
+    @JsonProperty("masterId")
+    public Long getMasterId() {
+        return master != null ? master.getId() : null;
     }
+
+    @JsonProperty("garageSpotId")
+    public Long getGarageSpotId() {
+        return garageSpot != null ? garageSpot.getId() : null;
+    }
+
+
 
 
     public void setId(long id) {
@@ -73,15 +113,6 @@ public class Order implements Comparable<Order>, Identifiable {
         return id;
     }
 
-    public BigDecimal getPrice() {
-        return price;
-    }
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
 
     public Order(String description,
                  Master master,
@@ -103,58 +134,8 @@ public class Order implements Comparable<Order>, Identifiable {
     }
 
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Master getMaster() {
-        return master;
-    }
-
-    public void setMaster(Master master) {
-        this.master = master;
-    }
-
-    public GarageSpot getGarageSpot() {
-        return garageSpot;
-    }
-
-    public void setGarageSpot(GarageSpot garageSpot) {
-        this.garageSpot = garageSpot;
-    }
-
-    public void setOrderStatus(OrderStatus orderStatus) {
-        this.orderStatus = orderStatus;
-    }
 
 
-    public OrderStatus getOrderStatus() {
-        return orderStatus;
-    }
-
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
-    }
-
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
-    }
-
-    public LocalDateTime getStartTime() {
-        return startTime;
-    }
-
-    public LocalDateTime getEndTime() {
-        return endTime;
-    }
-
-    public String getDescription() {
-        return description;
-    }
 
     @Override
     public String toString() {
