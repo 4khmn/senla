@@ -78,6 +78,8 @@ public class AddOrderAtCurrentTimeAction implements IAction {
                     }
                 } catch (DBException e) {
                     System.out.println(e.getMessage());
+                }  catch (Exception e) {
+                    System.out.println(e.getMessage());
                 }
                 break;
             } catch (Exception e) {

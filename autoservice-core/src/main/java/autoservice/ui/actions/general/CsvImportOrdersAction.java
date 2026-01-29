@@ -29,6 +29,8 @@ public class CsvImportOrdersAction implements IAction {
             System.out.println(e.getMessage());
         } catch (DBException e) {
             System.out.println(e.getMessage());
+        }  catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 }

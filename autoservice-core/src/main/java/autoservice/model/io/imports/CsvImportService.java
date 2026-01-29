@@ -1,7 +1,6 @@
 package autoservice.model.io.imports;
 
-import autoservice.model.exceptions.DBException;
-import autoservice.model.repository.DBConnection;
+import autoservice.model.utils.HibernateUtil;
 import config.AppConfig;
 import autoservice.model.entities.GarageSpot;
 import autoservice.model.entities.Master;
@@ -16,13 +15,13 @@ import autoservice.model.service.OrderService;
 import config.annotation.Component;
 import config.annotation.Inject;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 @Slf4j
 @Component
@@ -47,12 +46,10 @@ public class CsvImportService {
 
     public boolean importMasters() throws ImportException, CsvParsingException {
         log.info("Import masters started");
-        Connection connection = null;
+        Session session = HibernateUtil.getSession();
+        Transaction transaction = null;
         try {
-            connection = DBConnection.getInstance().getConnection();
-            connection.setAutoCommit(false); // начало транзакции
-
-
+            transaction = session.beginTransaction();
             try (InputStream input = getClass().getClassLoader()
                     .getResourceAsStream("data/masters.csv")) {
                 if (input == null) {
@@ -88,50 +85,37 @@ public class CsvImportService {
                             log.error("Invalid master file line: {}", line);
                             throw new CsvParsingException("Ошибка в строке (line - " + line + ")");
                         }
-                        if (masterService.getMasterById(id) != null) {
-                            Master master = masterService.getMasterById(id);
+                        Master master = masterService.getMasterById(id);
+                        if (master != null) {
                             master.setName(name);
                             master.setSalary(salary);
-                            masterService.update(master);
                         } else {
-                            masterService.addMaster(name, salary);
+                            masterService.addMasterFromImport(name, salary);
                         }
                     }
                 }
             }
 
-            connection.commit();
+            transaction.commit();
             log.info("Import masters finished successfully");
             return true;
 
         } catch (Exception e) {
-            if (connection != null) {
-                try {
-                    connection.rollback();
-                } catch (SQLException ex) {
-                    throw new DBException(ex.getMessage());
-                }
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
             }
             log.error("Import masters failed", e);
             throw new ImportException("Импорт не выполнен: " + e.getMessage());
 
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.setAutoCommit(true);
-                } catch (SQLException e) {
-                    throw new DBException(e.getMessage());
-                }
-            }
         }
     }
 
     public boolean importGarageSpots() throws ImportException, CsvParsingException, IllegalGarageSpotSize {
         log.info("Import garage spots started");
-        Connection connection = null;
+        Session session = HibernateUtil.getSession();
+        Transaction transaction = null;
         try {
-            connection = DBConnection.getInstance().getConnection();
-            connection.setAutoCommit(false); // начало транзакции
+            transaction = session.beginTransaction();
 
             try (InputStream input = getClass().getClassLoader()
                     .getResourceAsStream("data/garageSpots.csv")) {
@@ -173,15 +157,14 @@ public class CsvImportService {
                             log.error("Invalid garage spot size in line: {}", line);
                             throw new IllegalGarageSpotSize("Минимальный размер гаража - 8 (line - " + line + ")");
                         } else {
-                            if (garageSpotService.getGarageSpotById(id) != null) {
-                                GarageSpot garageSpot = garageSpotService.getGarageSpotById(id);
+                            GarageSpot garageSpot = garageSpotService.getGarageSpotById(id);
+                            if (garageSpot != null) {
                                 garageSpot.setSize(size);
                                 garageSpot.setHasLift(hasLift);
                                 garageSpot.setHasPit(hasPit);
-                                garageSpotService.update(garageSpot);
                             } else {
                                 if (appConfig.isGarageSpotAllowToAddRemove()) {
-                                    garageSpotService.addGarageSpot(size, hasLift, hasPit);
+                                    garageSpotService.addGarageSpotFromImport(size, hasLift, hasPit);
                                 } else {
                                     log.error("Immpossible to add due properties file permission");
                                     throw new CsvParsingException("невозможно добавить из за properties (line - " + line + ")");
@@ -191,38 +174,26 @@ public class CsvImportService {
                     }
                 }
             }
-            connection.commit();
+            transaction.commit();
             log.info("Import garage spots finished successfully");
             return true;
         } catch (Exception e) {
-            if (connection != null) {
-                try {
-                    connection.rollback();
-                } catch (SQLException ex) {
-                    throw new DBException(ex.getMessage());
-                }
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
             }
             log.error("Import garage spots failed", e);
             throw new ImportException("Импорт не выполнен: " + e.getMessage());
 
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.setAutoCommit(true);
-                } catch (SQLException e) {
-                    throw new DBException(e.getMessage());
-                }
-            }
         }
     }
 
 
     public boolean importOrders() throws ImportException, CsvParsingException {
         log.info("Import orders started");
-        Connection connection = null;
+        Session session = HibernateUtil.getSession();
+        Transaction transaction = null;
         try {
-            connection = DBConnection.getInstance().getConnection();
-            connection.setAutoCommit(false); // начало транзакции
+            transaction = session.beginTransaction();
             try (InputStream input = getClass().getClassLoader()
                     .getResourceAsStream("data/orders.csv")) {
                 if (input == null) {
@@ -269,8 +240,8 @@ public class CsvImportService {
                         }
 
                         //если такой ордер уже есть - меняем его поля
-                        if (orderService.getOrderById(id) != null) {
-                            Order order = orderService.getOrderById(id);
+                        Order order = orderService.getOrderById(id);
+                        if (order != null) {
                             order.setOrderStatus(orderStatus);
                             order.setPrice(price);
                             order.setDescription(description);
@@ -292,7 +263,6 @@ public class CsvImportService {
                                     order.setEndTime(endTime);
                                     master.addBusyTime(startTime, endTime);
                                     garageSpot.addBusyTime(startTime, endTime);
-                                    orderService.update(order);
                                 } else {
                                     //невозможно добавить по новому мастеру или гаражу, возвращаем изначальное значение
                                     order.getMaster().addBusyTime(order.getStartTime(), order.getEndTime());
@@ -307,11 +277,11 @@ public class CsvImportService {
                             }
                         } else {
                             //новый заказ
-                            if (masterService.getMasterById(masterId) != null && garageSpotService.getGarageSpotById(garageId) != null) {
-                                Master master = masterService.getMasterById(masterId);
-                                GarageSpot garageSpot = garageSpotService.getGarageSpotById(garageId);
+                            Master master = masterService.getMasterById(masterId);
+                            GarageSpot garageSpot = garageSpotService.getGarageSpotById(garageId);
+                            if (master != null && garageSpot != null) {
                                 if (master.isAvailable(startTime, endTime) && garageSpot.isAvailable(startTime, endTime)) {
-                                    orderService.addOrder(description, master, garageSpot, startTime, endTime, price);
+                                    orderService.addOrderFromImport(description, master, garageSpot, startTime, endTime, price);
                                 } else {
                                     //нельзя из за расписания мастера или гаража
                                     log.error("Impossible to add due master or garage spot schedule, line: {}", line);
@@ -326,28 +296,15 @@ public class CsvImportService {
                     }
                 }
             }
-            connection.commit();
+            transaction.commit();
             log.info("Import orders finished successfully");
             return true;
         } catch (Exception e) {
-            if (connection != null) {
-                try {
-                    connection.rollback();
-                } catch (SQLException ex) {
-                    throw new DBException(ex.getMessage());
-                }
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
             }
             log.error("Import orders failed", e);
             throw new ImportException("Импорт не выполнен: " + e.getMessage());
-
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.setAutoCommit(true);
-                } catch (SQLException e) {
-                    throw new DBException(e.getMessage());
-                }
-            }
         }
     }
 

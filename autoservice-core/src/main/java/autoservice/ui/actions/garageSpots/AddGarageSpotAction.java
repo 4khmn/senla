@@ -53,6 +53,8 @@ public class AddGarageSpotAction implements IAction {
             service.addGarageSpot(size, hasLift, hasPit);
         } catch (DBException e) {
             System.out.println(e.getMessage());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
         System.out.println("Гаражное место добавлено!");
         System.out.println("Всего доступных гаражных мест: " + service.getGarageSpotsCount());

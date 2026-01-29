@@ -21,6 +21,8 @@ public class CsvExportMasterAction implements IAction {
             System.out.println("Файл не найден.");
         } catch (DBException e) {
             System.out.println(e.getMessage());
+        }  catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 }

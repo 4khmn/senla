@@ -46,7 +46,7 @@ public class OrdersSortAction implements IAction {
         try {
             List<Order> orders = service.ordersSort(sortType);
             if (orders.isEmpty()) {
-                System.out.println("Активных заказов не найдено.");
+                System.out.println("Заказов не найдено.");
             } else {
                 System.out.println("Списко заказов: ");
                 for (var v : orders) {
@@ -55,6 +55,8 @@ public class OrdersSortAction implements IAction {
             }
         } catch (DBException ex) {
             System.out.println(ex.getMessage());
+        }  catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 }

@@ -5,6 +5,9 @@ import autoservice.model.io.exports.MastersCsvExport;
 import autoservice.model.io.exports.OrdersCsvExport;
 import autoservice.model.io.imports.CsvImportService;
 import autoservice.model.io.serialization.SerializationService;
+import autoservice.model.repository.GarageSpotDAO;
+import autoservice.model.repository.MasterDAO;
+import autoservice.model.repository.OrderDAO;
 import autoservice.model.service.GarageSpotService;
 import autoservice.model.service.MasterService;
 import autoservice.model.service.OrderService;
@@ -17,6 +20,9 @@ import config.DIContainer;
 public class AutoServiceRunner {
     public static void main(String[] args) {
         DIContainer context = new DIContainer(
+                GarageSpotDAO.class,
+                MasterDAO.class,
+                OrderDAO.class,
                 GarageSpotService.class,
                 MasterService.class,
                 OrderService.class,
