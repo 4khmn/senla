@@ -1,22 +1,25 @@
 package autoservice.ui.actions.general;
 
-import autoservice.model.AutoService;
+import autoservice.model.service.GeneralService;
 import autoservice.model.exceptions.DBException;
+import autoservice.model.service.GarageSpotService;
+import autoservice.model.service.MasterService;
 import autoservice.ui.actions.IAction;
+import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.Scanner;
-
+@RequiredArgsConstructor
 public class GetClosestDateAction implements IAction {
 
-    private final AutoService service;
+    private final GeneralService service;
+    private final MasterService masterService;
+    private final GarageSpotService garageSpotService;
 
-    public GetClosestDateAction(AutoService autoService) {
-        this.service = autoService;
-    }
+
     @Override
     public void execute() {
-        if (service.getMastersCount() == 0 || service.getGarageSpotsCount() == 0) {
+        if (masterService.getMastersCount() == 0 || garageSpotService.getGarageSpotsCount() == 0) {
             System.out.println("В автосервисе отсувствуют мастера или гаражные места");
             return;
         }

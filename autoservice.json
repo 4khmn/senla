@@ -1,216 +1,107 @@
 {
-  "garageManager" : {
-    "garageSpotsCount" : 11,
-    "garageSpots" : [ {
-      "id" : 72,
-      "size" : 10.0,
-      "hasLift" : true,
-      "hasPit" : true,
-      "calendar" : [ {
-        "start" : "2026-01-10T01:28:30.985688",
-        "end" : "2026-01-10T02:28:30.985688"
-      }, {
-        "start" : "2026-01-24T22:14:50.129498",
-        "end" : "2026-01-24T23:14:50.129498"
-      } ]
+  "garageSpots" : [ {
+    "id" : 81,
+    "size" : 100.0,
+    "hasLift" : true,
+    "hasPit" : true,
+    "calendar" : [ {
+      "start" : "2026-02-01T13:20:28.033592",
+      "end" : "2026-02-01T18:20:28.033592"
     }, {
-      "id" : 73,
-      "size" : 10.0,
-      "hasLift" : true,
-      "hasPit" : true,
-      "calendar" : [ {
-        "start" : "2026-01-10T01:28:30.985688",
-        "end" : "2026-01-10T02:28:30.985688"
-      } ]
-    }, {
-      "id" : 74,
-      "size" : 10.0,
-      "hasLift" : true,
-      "hasPit" : true,
-      "calendar" : [ ]
-    }, {
-      "id" : 71,
-      "size" : 21.0,
-      "hasLift" : true,
-      "hasPit" : true,
-      "calendar" : [ ]
-    }, {
-      "id" : 75,
-      "size" : 21.0,
-      "hasLift" : true,
-      "hasPit" : true,
-      "calendar" : [ ]
-    }, {
-      "id" : 76,
-      "size" : 21.0,
-      "hasLift" : true,
-      "hasPit" : true,
-      "calendar" : [ ]
-    }, {
-      "id" : 77,
-      "size" : 21.0,
-      "hasLift" : true,
-      "hasPit" : true,
-      "calendar" : [ ]
-    }, {
-      "id" : 78,
-      "size" : 21.0,
-      "hasLift" : true,
-      "hasPit" : true,
-      "calendar" : [ ]
-    }, {
-      "id" : 79,
-      "size" : 100.0,
-      "hasLift" : true,
-      "hasPit" : false,
-      "calendar" : [ {
-        "start" : "2026-01-10T01:28:30.985688",
-        "end" : "2026-01-10T02:28:30.985688"
-      } ]
-    }, {
-      "id" : 80,
-      "size" : 21.0,
-      "hasLift" : true,
-      "hasPit" : true,
-      "calendar" : [ {
-        "start" : "2026-01-10T01:28:32.93593",
-        "end" : "2026-01-10T03:28:32.93593"
-      } ]
-    }, {
-      "id" : 70,
-      "size" : 20.0,
-      "hasLift" : true,
-      "hasPit" : true,
-      "calendar" : [ {
-        "start" : "2026-01-10T01:28:30.985688",
-        "end" : "2026-01-10T02:28:30.985688"
-      } ]
+      "start" : "2026-02-01T18:20:28.033592",
+      "end" : "2026-02-01T23:20:28.033592"
     } ]
-  },
-  "orderManager" : {
-    "ordersCount" : 6,
-    "orders" : [ {
-      "id" : 59,
-      "description" : "1",
-      "startTime" : "2026-01-10T01:28:30.985688",
-      "endTime" : "2026-01-10T02:28:30.985688",
-      "orderStatus" : "CLOSED",
-      "price" : 1000.00,
-      "createdAt" : "2026-01-25T00:04:11.099495",
-      "masterId" : 1,
-      "garageSpotId" : 70
+  }, {
+    "id" : 82,
+    "size" : 100.0,
+    "hasLift" : true,
+    "hasPit" : true,
+    "calendar" : [ {
+      "start" : "2026-02-01T13:20:31.501664",
+      "end" : "2026-02-01T19:20:31.501664"
     }, {
-      "id" : 60,
-      "description" : "4",
-      "startTime" : "2026-01-10T01:28:30.985688",
-      "endTime" : "2026-01-10T02:28:30.985688",
-      "orderStatus" : "CLOSED",
-      "price" : 1000.00,
-      "createdAt" : "2026-01-25T00:06:20.279921",
-      "masterId" : 4,
-      "garageSpotId" : 72
+      "start" : "2026-02-01T19:20:31.501664",
+      "end" : "2026-02-01T22:20:31.501664"
     }, {
-      "id" : 61,
-      "description" : "4",
-      "startTime" : "2026-01-10T01:28:30.985688",
-      "endTime" : "2026-01-10T02:28:30.985688",
-      "orderStatus" : "CLOSED",
-      "price" : 1000.00,
-      "createdAt" : "2026-01-25T00:10:05.50903",
-      "masterId" : 5,
-      "garageSpotId" : 73
-    }, {
-      "id" : 62,
-      "description" : "4",
-      "startTime" : "2026-01-10T01:28:30.985688",
-      "endTime" : "2026-01-10T02:28:30.985688",
-      "orderStatus" : "CLOSED",
-      "price" : 1000.00,
-      "createdAt" : "2026-01-25T00:12:20.319352",
-      "masterId" : 7,
-      "garageSpotId" : 79
-    }, {
-      "id" : 56,
-      "description" : "3",
-      "startTime" : "2026-01-10T01:28:32.93593",
-      "endTime" : "2026-01-10T03:28:32.93593",
-      "orderStatus" : "CLOSED",
-      "price" : 12.00,
-      "createdAt" : "2026-01-10T01:28:32.93893",
-      "masterId" : 8,
-      "garageSpotId" : 80
-    }, {
-      "id" : 58,
-      "description" : "помыть окно машины",
-      "startTime" : "2026-01-24T22:14:50.129498",
-      "endTime" : "2026-01-24T23:14:50.129498",
-      "orderStatus" : "CLOSED",
-      "price" : 100.00,
-      "createdAt" : "2026-01-24T22:14:50.152496",
-      "masterId" : 5,
-      "garageSpotId" : 72
+      "start" : "2026-02-01T22:20:31.501664",
+      "end" : "2026-02-02T03:20:31.501664"
     } ]
-  },
-  "masterManager" : {
-    "mastersCount" : 8,
-    "masters" : [ {
-      "id" : 5,
-      "name" : "max",
-      "salary" : 120000.00,
-      "calendar" : [ {
-        "start" : "2026-01-10T01:28:30.985688",
-        "end" : "2026-01-10T02:28:30.985688"
-      }, {
-        "start" : "2026-01-24T22:14:50.129498",
-        "end" : "2026-01-24T23:14:50.129498"
-      } ]
+  } ],
+  "orders" : [ {
+    "id" : 78,
+    "description" : "1",
+    "startTime" : "2026-02-01T13:20:28.033592",
+    "endTime" : "2026-02-01T18:20:28.033592",
+    "orderStatus" : "OPEN",
+    "price" : 5.00,
+    "createdAt" : "2026-02-01T13:20:28.058592",
+    "garageSpotId" : 81,
+    "masterId" : 9
+  }, {
+    "id" : 79,
+    "description" : "2",
+    "startTime" : "2026-02-01T13:20:31.501664",
+    "endTime" : "2026-02-01T19:20:31.501664",
+    "orderStatus" : "OPEN",
+    "price" : 1.00,
+    "createdAt" : "2026-02-01T13:20:31.507661",
+    "garageSpotId" : 82,
+    "masterId" : 10
+  }, {
+    "id" : 81,
+    "description" : "4",
+    "startTime" : "2026-02-01T18:20:28.033592",
+    "endTime" : "2026-02-01T23:20:28.033592",
+    "orderStatus" : "OPEN",
+    "price" : 1.00,
+    "createdAt" : "2026-02-01T13:21:49.105377",
+    "garageSpotId" : 81,
+    "masterId" : 9
+  }, {
+    "id" : 80,
+    "description" : "3",
+    "startTime" : "2026-02-01T19:20:31.501664",
+    "endTime" : "2026-02-01T22:20:31.501664",
+    "orderStatus" : "OPEN",
+    "price" : 1.00,
+    "createdAt" : "2026-02-01T13:21:32.454006",
+    "garageSpotId" : 82,
+    "masterId" : 10
+  }, {
+    "id" : 82,
+    "description" : "5",
+    "startTime" : "2026-02-01T22:20:31.501664",
+    "endTime" : "2026-02-02T03:20:31.501664",
+    "orderStatus" : "OPEN",
+    "price" : 1.00,
+    "createdAt" : "2026-02-01T13:22:00.680884",
+    "garageSpotId" : 82,
+    "masterId" : 10
+  } ],
+  "masters" : [ {
+    "id" : 9,
+    "name" : "денис",
+    "salary" : 10000.00,
+    "calendar" : [ {
+      "start" : "2026-02-01T13:20:28.033592",
+      "end" : "2026-02-01T18:20:28.033592"
     }, {
-      "id" : 6,
-      "name" : "name",
-      "salary" : 12.00,
-      "calendar" : [ ]
-    }, {
-      "id" : 1,
-      "name" : "roma",
-      "salary" : 1230000.00,
-      "calendar" : [ {
-        "start" : "2026-01-10T01:28:30.985688",
-        "end" : "2026-01-10T02:28:30.985688"
-      } ]
-    }, {
-      "id" : 2,
-      "name" : "denis",
-      "salary" : 0.00,
-      "calendar" : [ ]
-    }, {
-      "id" : 3,
-      "name" : "mark",
-      "salary" : 100000.00,
-      "calendar" : [ ]
-    }, {
-      "id" : 4,
-      "name" : "qwerty",
-      "salary" : 2.00,
-      "calendar" : [ {
-        "start" : "2026-01-10T01:28:30.985688",
-        "end" : "2026-01-10T02:28:30.985688"
-      } ]
-    }, {
-      "id" : 7,
-      "name" : "ki",
-      "salary" : 1000.00,
-      "calendar" : [ {
-        "start" : "2026-01-10T01:28:30.985688",
-        "end" : "2026-01-10T02:28:30.985688"
-      } ]
-    }, {
-      "id" : 8,
-      "name" : "0",
-      "salary" : 0.00,
-      "calendar" : [ {
-        "start" : "2026-01-10T01:28:32.93593",
-        "end" : "2026-01-10T03:28:32.93593"
-      } ]
+      "start" : "2026-02-01T18:20:28.033592",
+      "end" : "2026-02-01T23:20:28.033592"
     } ]
-  }
+  }, {
+    "id" : 10,
+    "name" : "макс",
+    "salary" : 10000.00,
+    "calendar" : [ {
+      "start" : "2026-02-01T13:20:31.501664",
+      "end" : "2026-02-01T19:20:31.501664"
+    }, {
+      "start" : "2026-02-01T19:20:31.501664",
+      "end" : "2026-02-01T22:20:31.501664"
+    }, {
+      "start" : "2026-02-01T22:20:31.501664",
+      "end" : "2026-02-02T03:20:31.501664"
+    } ]
+  } ]
 }

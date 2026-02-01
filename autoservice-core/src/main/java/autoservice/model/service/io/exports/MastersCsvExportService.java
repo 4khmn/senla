@@ -1,15 +1,14 @@
-package autoservice.model.io.exports;
+package autoservice.model.service.io.exports;
 
 import autoservice.model.entities.Master;
 import autoservice.model.service.MasterService;
-import config.annotation.Component;
-import config.annotation.Inject;
-@Component
-public class MastersCsvExport extends CsvExport {
+import org.springframework.stereotype.Service;
+
+@Service
+public class MastersCsvExportService extends CsvExport {
 
     private final MasterService masterService;
-    @Inject
-    public MastersCsvExport(MasterService masterService) {
+    public MastersCsvExportService(MasterService masterService) {
         super("id,name,salary", "masters.csv");
         this.masterService = masterService;
     }

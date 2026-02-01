@@ -1,41 +1,12 @@
 package autoservice;
-import autoservice.model.AutoService;
-import autoservice.model.io.exports.GarageSpotsCsvExport;
-import autoservice.model.io.exports.MastersCsvExport;
-import autoservice.model.io.exports.OrdersCsvExport;
-import autoservice.model.io.imports.CsvImportService;
-import autoservice.model.io.serialization.SerializationService;
-import autoservice.model.repository.GarageSpotDAO;
-import autoservice.model.repository.MasterDAO;
-import autoservice.model.repository.OrderDAO;
-import autoservice.model.service.GarageSpotService;
-import autoservice.model.service.MasterService;
-import autoservice.model.service.OrderService;
+import autoservice.model.config.AppConfig;
 import autoservice.ui.controller.MenuController;
-import autoservice.ui.factory.ConsoleMenuFactory;
-import autoservice.ui.menu.Navigator;
-import config.AppConfig;
-import config.DIContainer;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class AutoServiceRunner {
     public static void main(String[] args) {
-        DIContainer context = new DIContainer(
-                GarageSpotDAO.class,
-                MasterDAO.class,
-                OrderDAO.class,
-                GarageSpotService.class,
-                MasterService.class,
-                OrderService.class,
-                CsvImportService.class,
-                SerializationService.class,
-                GarageSpotsCsvExport.class,
-                MastersCsvExport.class,
-                OrdersCsvExport.class,
-                AutoService.class,
-                Navigator.class,
-                AppConfig.class,
-                ConsoleMenuFactory.class,
-                MenuController.class);
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+
         MenuController controller = context.getBean(MenuController.class);
         controller.run();
     }

@@ -1,4 +1,4 @@
-package autoservice.model.io.exports;
+package autoservice.model.service.io.exports;
 
 import lombok.extern.slf4j.Slf4j;
 

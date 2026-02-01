@@ -1,7 +1,7 @@
-package autoservice.model.io.imports;
+package autoservice.model.service.io.imports;
 
+import autoservice.model.config.PropertyConfig;
 import autoservice.model.utils.HibernateUtil;
-import config.AppConfig;
 import autoservice.model.entities.GarageSpot;
 import autoservice.model.entities.Master;
 import autoservice.model.entities.Order;
@@ -12,11 +12,11 @@ import autoservice.model.exceptions.ImportException;
 import autoservice.model.service.GarageSpotService;
 import autoservice.model.service.MasterService;
 import autoservice.model.service.OrderService;
-import config.annotation.Component;
-import config.annotation.Inject;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -24,25 +24,18 @@ import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 @Slf4j
-@Component
+@RequiredArgsConstructor
+@Service
 public class CsvImportService {
-    private OrderService orderService;
-    private GarageSpotService garageSpotService;
-    private MasterService masterService;
-    private final AppConfig appConfig;
+    private  final OrderService orderService;
+    private final GarageSpotService garageSpotService;
+    private final MasterService masterService;
+    private final PropertyConfig propertyConfig;
 
     private final String garageSpotHeader = "id,size,hasLift,hasPit";
     private final String masterHeader = "id,name,salary";
     private final String orderHeader = "id,description,masterId,garageSpotId,startTime,endTime,orderStatus,price";
 
-    @Inject
-    private CsvImportService(OrderService orderService, GarageSpotService garageSpotService, MasterService masterService) {
-        this.orderService = orderService;
-        this.garageSpotService = garageSpotService;
-        this.masterService = masterService;
-
-        this.appConfig = new AppConfig();
-    }
 
     public boolean importMasters() throws ImportException, CsvParsingException {
         log.info("Import masters started");
@@ -54,7 +47,7 @@ public class CsvImportService {
                     .getResourceAsStream("data/masters.csv")) {
                 if (input == null) {
                     log.error("Import master file not found");
-                    throw new RuntimeException("masters.csv не найден в resources");
+                    throw new ImportException("masters.csv не найден в resources");
                 }
 
 
@@ -121,7 +114,7 @@ public class CsvImportService {
                     .getResourceAsStream("data/garageSpots.csv")) {
                 if (input == null) {
                     log.error("Import garage spot file not found");
-                    throw new RuntimeException("garageSpots.csv не найден в resources");
+                    throw new ImportException("garageSpots.csv не найден в resources");
                 }
 
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
@@ -163,7 +156,7 @@ public class CsvImportService {
                                 garageSpot.setHasLift(hasLift);
                                 garageSpot.setHasPit(hasPit);
                             } else {
-                                if (appConfig.isGarageSpotAllowToAddRemove()) {
+                                if (propertyConfig.isGarageSpotAllowToAddRemove()) {
                                     garageSpotService.addGarageSpotFromImport(size, hasLift, hasPit);
                                 } else {
                                     log.error("Immpossible to add due properties file permission");
@@ -198,7 +191,7 @@ public class CsvImportService {
                     .getResourceAsStream("data/orders.csv")) {
                 if (input == null) {
                     log.error("Import orders file not found");
-                    throw new RuntimeException("orders.csv не найден в resources");
+                    throw new ImportException("orders.csv не найден в resources");
                 }
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
                     String header = reader.readLine();

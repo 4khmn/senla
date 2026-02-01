@@ -1,21 +1,20 @@
 package autoservice.ui.actions.masters;
 
-import autoservice.model.AutoService;
 import autoservice.model.exceptions.DBException;
+import autoservice.model.service.MasterService;
 import autoservice.ui.actions.IAction;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Scanner;
-
+@RequiredArgsConstructor
 public class DeleteMasterAction implements IAction {
 
-    private final AutoService service;
+    private final MasterService masterService;
 
-    public DeleteMasterAction(AutoService autoService) {
-        this.service = autoService;
-    }
+
     @Override
     public void execute() {
-        if (service.getMastersCount() == 0) {
+        if (masterService.getMastersCount() == 0) {
             System.out.println("В авто-сервисе нету мастеров.");
             return;
         }
@@ -23,7 +22,7 @@ public class DeleteMasterAction implements IAction {
         System.out.print("Введите id мастера, которого вы хотите удалить: ");
         long id = sc.nextLong();
         try {
-            service.deleteMaster(id);
+            masterService.deleteMaster(id);
             System.out.println("Мастер успешно удален!");
         } catch (DBException e) {
             System.out.println("Мастера с данным ID не найдено!");

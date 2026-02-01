@@ -1,25 +1,24 @@
 package autoservice.ui.actions.orders;
 
-import autoservice.model.AutoService;
 import autoservice.model.entities.Order;
 import autoservice.model.enums.OrdersSortByTimeFrameEnum;
 import autoservice.model.exceptions.DBException;
+import autoservice.model.service.OrderService;
 import autoservice.ui.actions.IAction;
+import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
-
+@RequiredArgsConstructor
 public class OrdersSortByTimeFrameAction implements IAction {
-    private final AutoService service;
+    private final OrderService orderService;
 
-    public OrdersSortByTimeFrameAction(AutoService autoService) {
-        this.service = autoService;
-    }
+
 
     @Override
     public void execute() {
-        if (service.getOrdersCount() == 0) {
+        if (orderService.getOrdersCount() == 0) {
             System.out.println("Список заказов пуст.");
             return;
         }
@@ -95,7 +94,7 @@ public class OrdersSortByTimeFrameAction implements IAction {
             };
         }
         try {
-            List<Order> orders = service.ordersSortByTimeFrame(startDate, endDate, sortType);
+            List<Order> orders = orderService.ordersSortByTimeFrame(startDate, endDate, sortType);
             if (orders.size() == 0) {
                 System.out.println("За выбранное время заказов нету.");
             } else {

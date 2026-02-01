@@ -1,24 +1,22 @@
 package autoservice.ui.actions.masters;
 
-import autoservice.model.AutoService;
 import autoservice.model.entities.Master;
 import autoservice.model.enums.MastersSortEnum;
 import autoservice.model.exceptions.DBException;
+import autoservice.model.service.MasterService;
 import autoservice.ui.actions.IAction;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Scanner;
-
+@RequiredArgsConstructor
 public class MastersSortAction implements IAction {
-    private final AutoService service;
+    private final MasterService masterService;
 
-    public MastersSortAction(AutoService autoService) {
-        this.service = autoService;
-    }
 
     @Override
     public void execute() {
-        if (service.getMastersCount() == 0) {
+        if (masterService.getMastersCount() == 0) {
             System.out.println("В авто-сервисе нету мастеров.");
             return;
         }
@@ -40,7 +38,7 @@ public class MastersSortAction implements IAction {
             };
         }
         try {
-            List<Master> masters = service.mastersSort(sortType);
+            List<Master> masters = masterService.mastersSort(sortType);
 
             System.out.println("Списко заказов: ");
             for (var v : masters) {

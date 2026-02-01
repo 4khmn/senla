@@ -1,30 +1,26 @@
 package autoservice.ui.actions.general;
 
-import autoservice.model.AutoService;
 import autoservice.model.exceptions.CsvParsingException;
 import autoservice.model.exceptions.DBException;
 import autoservice.model.exceptions.ImportException;
+import autoservice.model.service.io.imports.CsvImportService;
 import autoservice.ui.actions.IAction;
+import lombok.RequiredArgsConstructor;
 
-import java.io.IOException;
-
+@RequiredArgsConstructor
 public class CsvImportOrdersAction implements IAction {
-    private final AutoService service;
-    public CsvImportOrdersAction(AutoService service) {
-        this.service = service;
-    }
+    private final CsvImportService csvImportService;
+
     @Override
     public void execute() {
         try {
-            if (!service.importOrders()) {
+            if (!csvImportService.importOrders()) {
                 System.out.println("Файл пуст.");
             } else {
                 System.out.println("Данные успешно импортированы!");
             }
         } catch (ImportException e) {
             System.out.println(e.getMessage());
-        } catch (IOException e) {
-            System.out.println("Файл не найден. Создайте файл по пути <resources/data/orders.csv>");
         } catch (CsvParsingException e) {
             System.out.println(e.getMessage());
         } catch (DBException e) {

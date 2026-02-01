@@ -1,23 +1,25 @@
 package autoservice.ui.actions.orders;
 
-import autoservice.model.AutoService;
 import autoservice.model.exceptions.DBException;
+import autoservice.model.service.GarageSpotService;
+import autoservice.model.service.MasterService;
+import autoservice.model.service.OrderService;
 import autoservice.ui.actions.IAction;
+import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Scanner;
-
+@RequiredArgsConstructor
 public class AddOrderAtCurrentTimeAction implements IAction {
-    private final AutoService service;
+    private final MasterService masterService;
+    private final GarageSpotService garageSpotService;
+    private final OrderService orderService;
 
-    public AddOrderAtCurrentTimeAction(AutoService autoService) {
-        this.service = autoService;
-    }
 
     @Override
     public void execute() {
-        if (service.getMastersCount() == 0 || service.getGarageSpotsCount() == 0) {
+        if (masterService.getMastersCount() == 0 || garageSpotService.getGarageSpotsCount() == 0) {
             System.out.println("В автосервисе отсувствуют мастера или гаражные места");
             return;
         }
@@ -70,7 +72,7 @@ public class AddOrderAtCurrentTimeAction implements IAction {
                 System.out.print("Введите стоимость услуги: ");
                 BigDecimal price = sc.nextBigDecimal();
                 try {
-                    long idOfOrder = service.addOrderAtCurrentTime(date, desc, duration, price);
+                    long idOfOrder = orderService.addOrderAtCurrentTime(date, desc, duration, price);
                     if (idOfOrder != -1) {
                         System.out.println("Заказ успешно добавлен.");
                     } else {

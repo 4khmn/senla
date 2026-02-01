@@ -8,29 +8,30 @@ import autoservice.model.enums.OrderStatus;
 import autoservice.model.enums.OrdersSortByTimeFrameEnum;
 import autoservice.model.enums.OrdersSortEnum;
 import autoservice.model.exceptions.OrderException;
-import autoservice.model.repository.OrderDAO;
+import autoservice.model.repository.GarageSpotRepository;
+import autoservice.model.repository.MasterRepository;
+import autoservice.model.repository.OrderRepository;
+import autoservice.model.service.domain.GarageSpotDomainService;
+import autoservice.model.service.domain.MasterDomainService;
 import autoservice.model.utils.HibernateUtil;
-import config.annotation.Component;
-import config.annotation.Inject;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Component
+@Service
 @Slf4j
+@RequiredArgsConstructor
 public class OrderService {
-    private transient OrderDAO orderDAO;
-
-    @Inject
-    public OrderService(OrderDAO orderDAO) {
-        this.orderDAO = orderDAO;
-    }
-
+    private transient final OrderRepository orderRepository;
+    private transient final GarageSpotRepository garageSpotRepository;
+    private transient final MasterRepository masterRepository;
 
     //4 список заказов
     public List<Order> ordersSort(OrdersSortEnum decision) {
@@ -43,22 +44,22 @@ public class OrderService {
             switch (decision) {
                 case BY_CREATION_DATE:
                     //по дате подачи
-                    sortedOrders = orderDAO.ordersSortByCreationDate(false);
+                    sortedOrders = orderRepository.ordersSortByCreationDate(false);
                     transaction.commit();
                     break;
                 case BY_END_DATE:
                     //дата выполнения
-                    sortedOrders = orderDAO.ordersSortByEndDate(false);
+                    sortedOrders = orderRepository.ordersSortByEndDate(false);
                     transaction.commit();
                     break;
                 case BY_START_DATE:
                     //дата планируемого начала выполнения
-                    sortedOrders = orderDAO.ordersSortByStartDate();
+                    sortedOrders = orderRepository.ordersSortByStartDate();
                     transaction.commit();
                     break;
                 case BY_PRICE:
                     //по цене
-                    sortedOrders = orderDAO.ordersSortByPrice(false);
+                    sortedOrders = orderRepository.ordersSortByPrice(false);
                     transaction.commit();
                     break;
                 default:
@@ -77,7 +78,7 @@ public class OrderService {
             }
     }
 
-    //4
+    //4 список текущих выполняемых заказов
     public List<Order> activeOrdersSort(ActiveOrdersSortEnum decision) {
         log.info("Sorting active orders by decision={}", decision);
         Session session = HibernateUtil.getSession();
@@ -88,17 +89,17 @@ public class OrderService {
             switch (decision) {
                 case BY_CREATION_DATE:
                     //по дате подачи
-                    sortedOrders = orderDAO.ordersSortByCreationDate(true);
+                    sortedOrders = orderRepository.ordersSortByCreationDate(true);
                     transaction.commit();
                     break;
                 case BY_END_DATE:
                     //по дате выполнения
-                    sortedOrders = orderDAO.ordersSortByEndDate(true);
+                    sortedOrders = orderRepository.ordersSortByEndDate(true);
                     transaction.commit();
                     break;
                 case BY_PRICE:
                     //по цене
-                    sortedOrders = orderDAO.ordersSortByPrice(true);
+                    sortedOrders = orderRepository.ordersSortByPrice(true);
                     transaction.commit();
                     break;
                 default:
@@ -117,13 +118,13 @@ public class OrderService {
         }
     }
 
-    //4
+    //4 заказ, выполняемый конкретным мастером
     public Order getOrderByMaster(Master master) {
         Session session = HibernateUtil.getSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
-            Order orderByMaster = orderDAO.getOrderByMaster(master);
+            Order orderByMaster = orderRepository.getOrderByMaster(master);
             transaction.commit();
             return orderByMaster;
         } catch (Exception e) {
@@ -135,7 +136,7 @@ public class OrderService {
         }
     }
 
-    //4
+    //4 заказы (выполненные/удаленные/отмененные) за промежуток времени
     public List<Order> ordersSortByTimeFrame(LocalDateTime start, LocalDateTime end, OrdersSortByTimeFrameEnum decision) {
         log.info("Sorting orders by time frame by decision={}", decision);
         Session session = HibernateUtil.getSession();
@@ -146,17 +147,17 @@ public class OrderService {
             switch (decision) {
                 case BY_CREATION_DATE:
                     //по дате подачи
-                    ordersAtCurrentTime = orderDAO.ordersSortByTimeFrameByCreationDate(start, end);
+                    ordersAtCurrentTime = orderRepository.ordersSortByTimeFrameByCreationDate(start, end);
                     transaction.commit();
                     break;
                 case BY_END_DATE:
                     //по дате выполнения
-                    ordersAtCurrentTime = orderDAO.ordersSortByTimeFrameByEndDate(start, end);
+                    ordersAtCurrentTime = orderRepository.ordersSortByTimeFrameByEndDate(start, end);
                     transaction.commit();
                     break;
                 case BY_PRICE:
                     //по цене
-                    ordersAtCurrentTime = orderDAO.ordersSortByTimeFrameByPrice(start, end);
+                    ordersAtCurrentTime = orderRepository.ordersSortByTimeFrameByPrice(start, end);
                     transaction.commit();
                     break;
                 default:
@@ -178,26 +179,76 @@ public class OrderService {
 
     public long addOrderFromImport(String description, Master master, GarageSpot garageSpot, LocalDateTime startTime, LocalDateTime endtime, BigDecimal price) {
         Order order = new Order(description, master, garageSpot, startTime, endtime, price);
-        orderDAO.save(order);
+        orderRepository.save(order);
         return order.getId();
     }
 
-    public long addOrder(String description, Master master, GarageSpot garageSpot, LocalDateTime startTime, LocalDateTime endtime, BigDecimal price) {
-        Session session = HibernateUtil.getSession();
-        Transaction transaction = null;
-        Order order = new Order(description, master, garageSpot, startTime, endtime, price);
-        try {
-            transaction = session.beginTransaction();
-            orderDAO.save(order);
-            transaction.commit();
-            return order.getId();
-        } catch (Exception e) {
-            if (transaction != null && transaction.isActive()) {
-                transaction.rollback();
+    //сама записывает на ближайшее время
+    public long addOrder(String description, int durationInHours, BigDecimal price) {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime bestStartTime = null;
+        Master selectedMaster = null;
+        GarageSpot selectedSpot = null;
+
+        for (GarageSpot spot : this.getGarageSpotsWithCalendar()) {
+            LocalDateTime candidateStart = spot.findNextAvailableSlotInGarageSpotSchedule(now, durationInHours);
+
+            for (Master master : this.getMastersWithCalendar()) {
+                if (master.isAvailable(candidateStart, candidateStart.plusHours(durationInHours))) {
+                    if (bestStartTime == null || candidateStart.isBefore(bestStartTime)) {
+                        bestStartTime = candidateStart;
+                        selectedMaster = master;
+                        selectedSpot = spot;
+                    }
+
+                }
             }
-            log.error("Error creating new order", e);
-            throw new OrderException("Impossible to create new order", e);
         }
+        if (bestStartTime == null) {
+            throw new RuntimeException("No available time slot found");
+        }
+        LocalDateTime endTime = bestStartTime.plusHours(durationInHours);
+        return this.addOrder(description, selectedMaster, selectedSpot, bestStartTime, endTime, price);
+    }
+
+    //запись на конкретное время (-1 - записаться не удалось)
+    public long addOrderAtCurrentTime(LocalDateTime date, String description, int durationInHours, BigDecimal price) {
+        for (var garageSpot: this.getGarageSpotsWithCalendar()) {
+            if (garageSpot.isAvailable(date, date.plusHours(durationInHours))) {
+                for (var master: this.getMastersWithCalendar()) {
+                    if (master.isAvailable(date, date.plusHours(durationInHours))) {
+                        return this.addOrder(description, master, garageSpot, date, date.plusHours(durationInHours), price);
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+
+    public long addOrderWithCurrentMaster(String description, int durationInHours, BigDecimal price, Long masterId) {
+        Master master = masterRepository.findById(masterId);
+        if (master == null){
+            return -1;
+        }
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime bestStartTime = null;
+        GarageSpot selectedSpot = null;
+
+        for (GarageSpot spot : this.getGarageSpotsWithCalendar()) {
+            LocalDateTime candidateStart = spot.findNextAvailableSlotInGarageSpotSchedule(now, durationInHours);
+
+            if (master.isAvailable(candidateStart, candidateStart.plusHours(durationInHours))) {
+                if (bestStartTime == null || candidateStart.isBefore(bestStartTime)) {
+                    bestStartTime = candidateStart;
+                    selectedSpot = spot;
+                }
+            }
+        }
+        if (bestStartTime == null) {
+            throw new RuntimeException("No available time slot found");
+        }
+        LocalDateTime endTime = bestStartTime.plusHours(durationInHours);
+        return this.addOrder(description, master, selectedSpot, bestStartTime, endTime, price);
     }
 
 
@@ -206,7 +257,7 @@ public class OrderService {
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
-            orderDAO.update(order);
+            orderRepository.update(order);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null && transaction.isActive()) {
@@ -222,19 +273,19 @@ public class OrderService {
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
-            orderDAO.delete(id);
+            orderRepository.delete(id);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null && transaction.isActive()) {
                 transaction.rollback();
             }
             log.error("Error deleting order with id={}", id, e);
-            throw new OrderException("Impossible to delete order: " + id, e);
+            throw new OrderException("Impossible to delete order: " + id + ", maybe order with this id doesn't exist", e);
         }
     }
 
     public List<Order> getOrders() {
-        List<Order> orders = orderDAO.findAll();
+        List<Order> orders = orderRepository.findAll();
         for (var order : orders) {
             if (order.getEndTime().isBefore(LocalDateTime.now())) {
                 order.setOrderStatus(OrderStatus.CLOSED);
@@ -244,7 +295,7 @@ public class OrderService {
     }
 
     public Order getOrderById(long id) {
-        Order order = orderDAO.findById(id);
+        Order order = orderRepository.findById(id);
         if (order != null) {
             if (order.getEndTime().isBefore(LocalDateTime.now())) {
                 order.setOrderStatus(OrderStatus.CLOSED);
@@ -253,14 +304,13 @@ public class OrderService {
         }
         return null;
     }
-
     public boolean closeOrder(long id) {
         log.info("Closing order with id={}", id);
         Session session = HibernateUtil.getSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
-            Order byId = orderDAO.findById(id);
+            Order byId = orderRepository.findById(id);
             if (byId == null) {
                 transaction.rollback();
                 return false;
@@ -284,7 +334,7 @@ public class OrderService {
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
-            Order byId = orderDAO.findById(id);
+            Order byId = orderRepository.findById(id);
             if (byId == null) {
                 transaction.rollback();
                 return false;
@@ -310,7 +360,7 @@ public class OrderService {
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
-            List<Order> orders = orderDAO.findAll();
+            List<Order> orders = orderRepository.findAll();
             for (var v : orders) {
                 if (v.getMaster().equals(master) && v.getStartTime().isEqual(date)) {
                     transaction.commit();
@@ -395,6 +445,40 @@ public class OrderService {
     }
 
     public Long getOrdersCount() {
-        return orderDAO.count();
+        return orderRepository.count();
+    }
+
+    private long addOrder(String description, Master master, GarageSpot garageSpot, LocalDateTime startTime, LocalDateTime endtime, BigDecimal price) {
+        Session session = HibernateUtil.getSession();
+        Transaction transaction = null;
+        Order order = new Order(description, master, garageSpot, startTime, endtime, price);
+        try {
+            transaction = session.beginTransaction();
+            orderRepository.save(order);
+            transaction.commit();
+            return order.getId();
+        } catch (Exception e) {
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
+            log.error("Error creating new order", e);
+            throw new OrderException("Impossible to create new order", e);
+        }
+    }
+
+
+
+    private List<GarageSpot> getGarageSpotsWithCalendar() {
+        List<GarageSpot> spots = garageSpotRepository.findAll();
+        List<Object[]> slots = orderRepository.findTimeSlotsForAllGarageSpots();
+
+        return GarageSpotDomainService.getGarageSpotsWithCalendar(spots, slots);
+    }
+
+    private List<Master> getMastersWithCalendar() {
+        List<Master> masters = masterRepository.findAll();
+        List<Object[]> slots = orderRepository.findTimeSlotsForAllMasters();
+
+        return MasterDomainService.getMastersWithCalendar(masters, slots);
     }
 }

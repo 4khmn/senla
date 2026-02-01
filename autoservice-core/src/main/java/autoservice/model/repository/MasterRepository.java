@@ -3,17 +3,17 @@ package autoservice.model.repository;
 import autoservice.model.entities.Master;
 import autoservice.model.exceptions.DBException;
 import autoservice.model.utils.HibernateUtil;
-import config.annotation.Component;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-@Component
+@Repository
 @Slf4j
-public class MasterDAO extends HibernateAbstractDAO<Master, Long> {
+public class MasterRepository extends HibernateAbstractDAO<Master, Long> {
 
-    public MasterDAO() {
+    public MasterRepository() {
         super(Master.class);
     }
     public List<Master> mastersSortByName() {
