@@ -1,17 +1,15 @@
-package autoservice.model.io.exports;
+package autoservice.model.service.io.exports;
 
 import autoservice.model.entities.Order;
 import autoservice.model.service.OrderService;
-import config.annotation.Component;
-import config.annotation.Inject;
+import org.springframework.stereotype.Service;
 
-@Component
-public class OrdersCsvExport extends CsvExport {
+@Service
+public class OrdersCsvExportService extends CsvExport {
 
 
     private final OrderService orderService;
-    @Inject
-    public OrdersCsvExport(OrderService orderService) {
+    public OrdersCsvExportService(OrderService orderService) {
         super("id,description,masterId,garageSpotId,startTime,endTime,orderStatus,price", "orders.csv");
         this.orderService = orderService;
     }

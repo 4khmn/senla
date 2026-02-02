@@ -9,11 +9,12 @@ import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.Scanner;
+
 @RequiredArgsConstructor
-public class AddOrderAction implements IAction {
+public class AddOrderWithCurrentMasterAction implements IAction {
     private final MasterService masterService;
-    private final GarageSpotService garageSpotService;
     private final OrderService orderService;
+    private final GarageSpotService garageSpotService;
 
     @Override
     public void execute() {
@@ -22,7 +23,15 @@ public class AddOrderAction implements IAction {
             return;
         }
         Scanner sc = new Scanner(System.in);
+        int hour;
+        int day;
+        int month;
+        int year;
+        Long masterId;
+        System.out.println("Введите id интересующего вас мастера");
+        masterId = sc.nextLong();
         System.out.print("Введите описание заказа: ");
+        sc.nextLine();
         String desc = sc.nextLine();
         int duration = 0;
         while (true) {
@@ -44,8 +53,15 @@ public class AddOrderAction implements IAction {
                 System.out.print("Введите стоимость услуги: ");
                 BigDecimal price = sc.nextBigDecimal();
                 try {
-                    orderService.addOrder(desc, duration, price);
+                    long idOfOrder = orderService.addOrderWithCurrentMaster(desc, duration, price, masterId);
+                    if (idOfOrder != -1) {
+                        System.out.println("Заказ успешно добавлен.");
+                    } else {
+                        System.out.println("В данное время заказ добавить нельзя. ");
+                    }
                 } catch (DBException e) {
+                    System.out.println(e.getMessage());
+                } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
                 break;
@@ -54,6 +70,5 @@ public class AddOrderAction implements IAction {
                 sc.next();
             }
         }
-        System.out.println("Заказ успешно добавлен.");
     }
 }

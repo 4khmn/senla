@@ -1,24 +1,22 @@
 package autoservice.ui.actions.orders;
 
-import autoservice.model.AutoService;
 import autoservice.model.entities.Order;
 import autoservice.model.enums.OrdersSortEnum;
 import autoservice.model.exceptions.DBException;
+import autoservice.model.service.OrderService;
 import autoservice.ui.actions.IAction;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Scanner;
-
+@RequiredArgsConstructor
 public class OrdersSortAction implements IAction {
-    private final AutoService service;
+    private final OrderService orderService;
 
-    public OrdersSortAction(AutoService autoService) {
-        this.service = autoService;
-    }
 
     @Override
     public void execute() {
-        if (service.getOrdersCount() == 0) {
+        if (orderService.getOrdersCount() == 0) {
             System.out.println("Список заказов пуст.");
             return;
         }
@@ -44,7 +42,7 @@ public class OrdersSortAction implements IAction {
             };
         }
         try {
-            List<Order> orders = service.ordersSort(sortType);
+            List<Order> orders = orderService.ordersSort(sortType);
             if (orders.isEmpty()) {
                 System.out.println("Заказов не найдено.");
             } else {

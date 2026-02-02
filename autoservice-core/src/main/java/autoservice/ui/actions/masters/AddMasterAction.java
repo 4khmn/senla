@@ -1,19 +1,18 @@
 package autoservice.ui.actions.masters;
 
-import autoservice.model.AutoService;
 import autoservice.model.exceptions.DBException;
+import autoservice.model.service.MasterService;
 import autoservice.ui.actions.IAction;
+import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.Scanner;
-
+@RequiredArgsConstructor
 public class AddMasterAction implements IAction {
 
-    private final AutoService service;
+    private final MasterService masterService;
 
-    public AddMasterAction(AutoService autoService) {
-        this.service = autoService;
-    }
+
     @Override
     public void execute() {
         Scanner sc = new Scanner(System.in);
@@ -24,7 +23,7 @@ public class AddMasterAction implements IAction {
             try {
                 BigDecimal salary = sc.nextBigDecimal();
                 try {
-                    service.addMaster(name, salary);
+                    masterService.addMaster(name, salary);
                 } catch (DBException e) {
                     System.out.println(e.getMessage());
                 }
@@ -35,6 +34,6 @@ public class AddMasterAction implements IAction {
             }
         }
         System.out.println("Мастер успешно добавлен!");
-        System.out.println("Всего доступных мастеров: " + service.getMastersCount());
+        System.out.println("Всего доступных мастеров: " + masterService.getMastersCount());
     }
 }

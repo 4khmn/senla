@@ -1,38 +1,30 @@
 package autoservice.model.service;
 
 import autoservice.model.entities.GarageSpot;
-import autoservice.model.entities.TimeSlot;
 import autoservice.model.exceptions.GarageSpotException;
-import autoservice.model.repository.GarageSpotDAO;
-import autoservice.model.repository.OrderDAO;
+import autoservice.model.repository.GarageSpotRepository;
+import autoservice.model.repository.OrderRepository;
+import autoservice.model.service.domain.GarageSpotDomainService;
 import autoservice.model.utils.HibernateUtil;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import config.annotation.Component;
-import config.annotation.Inject;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Service;
 
 
 import java.time.LocalDateTime;
-import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.TreeSet;
-import java.util.HashMap;
 
-@Component
+@Service
 @Slf4j
+@RequiredArgsConstructor
 public class GarageSpotService {
 
-    private transient final GarageSpotDAO garageSpotsDAO;
-    private transient final OrderDAO orderDAO;
+    private transient final GarageSpotRepository garageSpotRepository;
+    private transient final OrderRepository orderRepository;
 
-    @Inject
-    public GarageSpotService(GarageSpotDAO garageSpotsDAO, OrderDAO orderDAO) {
-        this.garageSpotsDAO = garageSpotsDAO;
-        this.orderDAO = orderDAO;
-    }
 
     //метод для импорта
     public long addGarageSpotFromImport(double size, boolean hasLift, boolean hasPit) {
@@ -40,7 +32,7 @@ public class GarageSpotService {
             return -1;
         }
         GarageSpot garageSpot = new GarageSpot(size, hasLift, hasPit);
-        garageSpotsDAO.save(garageSpot);
+        garageSpotRepository.save(garageSpot);
         return garageSpot.getId();
     }
 
@@ -53,7 +45,7 @@ public class GarageSpotService {
         try {
             transaction = session.beginTransaction();
             GarageSpot garageSpot = new GarageSpot(size, hasLift, hasPit);
-            garageSpotsDAO.save(garageSpot);
+            garageSpotRepository.save(garageSpot);
             transaction.commit();
             return garageSpot.getId();
         } catch (Exception e) {
@@ -70,7 +62,7 @@ public class GarageSpotService {
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
-            garageSpotsDAO.delete(id);
+            garageSpotRepository.delete(id);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null && transaction.isActive()) {
@@ -86,7 +78,7 @@ public class GarageSpotService {
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
-            garageSpotsDAO.update(garageSpot);
+            garageSpotRepository.update(garageSpot);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null && transaction.isActive()) {
@@ -97,42 +89,29 @@ public class GarageSpotService {
         }
     }
     public List<GarageSpot> getGarageSpots() {
-        List<GarageSpot> spots = garageSpotsDAO.findAll();
+        List<GarageSpot> spots = garageSpotRepository.findAll();
 
-        List<Object[]> slots = orderDAO.findTimeSlotsForAllGarageSpots();
+        List<Object[]> slots = orderRepository.findTimeSlotsForAllGarageSpots();
 
-        Map<Long, TreeSet<TimeSlot>> calendarMap = new HashMap<>();
-        for (Object[] row : slots) {
-            Long garageSpotId = (Long) row[0];
-            LocalDateTime start = (LocalDateTime) row[1];
-            LocalDateTime end = (LocalDateTime) row[2];
-
-            calendarMap.computeIfAbsent(garageSpotId, k -> new TreeSet<>())
-                    .add(new TimeSlot(start, end));
-        }
-        for (GarageSpot gs : spots) {
-            gs.setCalendar(calendarMap.getOrDefault(gs.getId(), new TreeSet<>()));
-        }
-        return spots;
+        return GarageSpotDomainService.getGarageSpotsWithCalendar(spots, slots);
     }
 
     public Long getGarageSpotsCount() {
-        return garageSpotsDAO.count();
+        return garageSpotRepository.count();
     }
 
     //4
     public GarageSpot getGarageSpotById(long id) {
-        GarageSpot spot = garageSpotsDAO.findById(id);
+        GarageSpot spot = garageSpotRepository.findById(id);
         if (spot != null) {
             spot.setCalendar(
-                    orderDAO.findTimeSlotsByGarageSpot(id)
+                    orderRepository.findTimeSlotsByGarageSpot(id)
             );
         }
         return spot;
     }
 
     //4 список свободных мест в сервисных гаражах
-    @JsonIgnore
     public List<GarageSpot> getFreeSpots() {
         log.info("Fetching free garage spots");
         Session session = HibernateUtil.getSession();

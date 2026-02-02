@@ -1,22 +1,22 @@
 package autoservice.ui.actions.garageSpots;
 
-import autoservice.model.AutoService;
+import autoservice.model.service.GeneralService;
 import autoservice.model.exceptions.DBException;
+import autoservice.model.service.GarageSpotService;
 import autoservice.ui.actions.IAction;
+import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.Scanner;
-
+@RequiredArgsConstructor
 public class GetNumberOfFreeSpotsByDateAction implements IAction {
 
-    private final AutoService service;
+    private final GarageSpotService garageSpotService;
+    private final GeneralService generalService;
 
-    public GetNumberOfFreeSpotsByDateAction(AutoService autoService) {
-        this.service = autoService;
-    }
     @Override
     public void execute() {
-        if (service.getGarageSpotsCount() == 0) {
+        if (garageSpotService.getGarageSpotsCount() == 0) {
             System.out.println("В авто-сервисе нету гаражных мест.");
             return;
         }
@@ -38,6 +38,9 @@ public class GetNumberOfFreeSpotsByDateAction implements IAction {
                 year = Integer.parseInt(split[3]);
                 try {
                     date = LocalDateTime.of(year, month, day, hour, 0);
+                    if (date.isBefore(LocalDateTime.now())) {
+                        throw new RuntimeException();
+                    }
                     break;
                 } catch (Exception e) {
                     System.out.println("Неверный ввод даты, попробуйте еще раз!");
@@ -47,7 +50,7 @@ public class GetNumberOfFreeSpotsByDateAction implements IAction {
             }
         }
         try {
-            int freeSpotsByDate = service.getNumberOfFreeSpotsByDate(date);
+            int freeSpotsByDate = generalService.getNumberOfFreeSpotsByDate(date);
             if (freeSpotsByDate > 0) {
                 System.out.println("Всего свободных мест а выбранное время: " + freeSpotsByDate);
             } else {

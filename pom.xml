@@ -13,7 +13,6 @@
 
     <modules>
         <module>autoservice-core</module>
-        <module>autoservice-config</module>
 
     </modules>
 
@@ -46,6 +45,19 @@
 
     </dependencies>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>6.2.15</version>
+            </dependency>
+        </dependencies>
+
+    </dependencyManagement>
+
+
+
     <build>
         <plugins>
             <plugin>
@@ -63,7 +75,7 @@
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>3.6.0</version>
                 <configuration>
-                    <configLocation>autoservice-config/src/main/resources/checkstyle.xml</configLocation>
+                    <configLocation>autoservice-core/src/main/resources/checkstyle.xml</configLocation>
                     <consoleOutput>true</consoleOutput>
                     <failsOnError>true</failsOnError>
                     <linkXRef>false</linkXRef>

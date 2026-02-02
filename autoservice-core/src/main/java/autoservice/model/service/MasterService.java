@@ -2,40 +2,33 @@ package autoservice.model.service;
 
 import autoservice.model.entities.Master;
 import autoservice.model.entities.Order;
-import autoservice.model.entities.TimeSlot;
 import autoservice.model.enums.MastersSortEnum;
 import autoservice.model.exceptions.MasterException;
-import autoservice.model.repository.MasterDAO;
-import autoservice.model.repository.OrderDAO;
+import autoservice.model.repository.MasterRepository;
+import autoservice.model.repository.OrderRepository;
+import autoservice.model.service.domain.MasterDomainService;
 import autoservice.model.utils.HibernateUtil;
-import config.annotation.Component;
-import config.annotation.Inject;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeSet;
 
 import static java.lang.Math.abs;
-@Component
+@Service
 @Slf4j
+@RequiredArgsConstructor
 public class MasterService {
-    private transient final MasterDAO masterDAO;
-    private transient final OrderDAO orderDAO;
+    private transient final MasterRepository masterRepository;
+    private transient final OrderRepository orderRepository;
 
-    @Inject
-    public MasterService(MasterDAO masterDAO, OrderDAO orderDAO) {
-        this.masterDAO = masterDAO;
-        this.orderDAO = orderDAO;
-    }
 
-    //4
+    //4 список авто-мастеров
     public List<Master> mastersSort(MastersSortEnum decision) {
         log.info("Sorting masters by decision={}", decision);
         Session session = HibernateUtil.getSession();
@@ -46,7 +39,7 @@ public class MasterService {
             switch (decision) {
                 case BY_NAME:
                     //по алфавиту
-                    sortedMasters = masterDAO.mastersSortByName();
+                    sortedMasters = masterRepository.mastersSortByName();
                     transaction.commit();
                     break;
                 case BY_EMPLOYMENT:
@@ -89,7 +82,7 @@ public class MasterService {
         }
     }
 
-    //4
+    //4 мастер, выполняющий конкретный заказ
     public Master getMasterByOrder(Order order) {
         log.info("Getting master by order with id{}", order.getId());
         Master master = order.getMaster();
@@ -98,27 +91,15 @@ public class MasterService {
     }
 
     public List<Master> getMasters() {
-        List<Master> masters = masterDAO.findAll();
-        List<Object[]> slots = orderDAO.findTimeSlotsForAllMasters();
+        List<Master> masters = masterRepository.findAll();
+        List<Object[]> slots = orderRepository.findTimeSlotsForAllMasters();
 
-        Map<Long, TreeSet<TimeSlot>> calendarMap = new HashMap<>();
-        for (Object[] row : slots) {
-            Long masterId = (Long) row[0];
-            LocalDateTime start = (LocalDateTime) row[1];
-            LocalDateTime end = (LocalDateTime) row[2];
-
-            calendarMap.computeIfAbsent(masterId, k -> new TreeSet<>())
-                    .add(new TimeSlot(start, end));
-        }
-        for (Master m : masters) {
-            m.setCalendar(calendarMap.getOrDefault(m.getId(), new TreeSet<>()));
-        }
-        return masters;
+        return MasterDomainService.getMastersWithCalendar(masters, slots);
     }
 
     public long addMasterFromImport(String name, BigDecimal salary) {
         Master master = new Master(name, salary);
-        masterDAO.save(master);
+        masterRepository.save(master);
         return master.getId();
     }
 
@@ -128,7 +109,7 @@ public class MasterService {
         try {
             transaction = session.beginTransaction();
             Master master = new Master(name, salary);
-            masterDAO.save(master);
+            masterRepository.save(master);
             transaction.commit();
             return master.getId();
         } catch (Exception e) {
@@ -145,7 +126,7 @@ public class MasterService {
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
-            masterDAO.delete(id);
+            masterRepository.delete(id);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null && transaction.isActive()) {
@@ -162,7 +143,7 @@ public class MasterService {
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
-            masterDAO.update(master);
+            masterRepository.update(master);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null && transaction.isActive()) {
@@ -174,10 +155,10 @@ public class MasterService {
     }
 
     public Master getMasterById(long id) {
-        Master master = masterDAO.findById(id);
+        Master master = masterRepository.findById(id);
         if (master != null) {
             master.setCalendar(
-                    orderDAO.findTimeSlotsByMaster(id)
+                    orderRepository.findTimeSlotsByMaster(id)
             );
         }
         return master;
@@ -211,6 +192,6 @@ public class MasterService {
     }
 
     public Long getMastersCount() {
-        return masterDAO.count();
+        return masterRepository.count();
     }
 }

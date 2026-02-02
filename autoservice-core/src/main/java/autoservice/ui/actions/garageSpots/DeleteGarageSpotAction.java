@@ -1,22 +1,20 @@
 package autoservice.ui.actions.garageSpots;
 
-import autoservice.model.AutoService;
 import autoservice.model.exceptions.DBException;
+import autoservice.model.service.GarageSpotService;
 import autoservice.ui.actions.IAction;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Scanner;
-
+@RequiredArgsConstructor
 public class DeleteGarageSpotAction implements IAction {
 
-    private final AutoService service;
+    private final GarageSpotService garageSpotService;
 
-    public DeleteGarageSpotAction(AutoService autoService) {
-        this.service = autoService;
-    }
 
     @Override
     public void execute() {
-        if (service.getGarageSpotsCount() == 0) {
+        if (garageSpotService.getGarageSpotsCount() == 0) {
             System.out.println("В авто-сервисе нету гаражных мест.");
             return;
         }
@@ -25,9 +23,9 @@ public class DeleteGarageSpotAction implements IAction {
         System.out.print("Введите id гаражного места, которое вы хотите удалить: ");
         long id = sc.nextLong();
         try {
-            if (service.getGarageSpotById(id) != null) {
-                if (service.getGarageSpotById(id).scheduleIsEmpty() == true) {
-                    service.deleteGarageSpot(id);
+            if (garageSpotService.getGarageSpotById(id) != null) {
+                if (garageSpotService.getGarageSpotById(id).scheduleIsEmpty() == true) {
+                    garageSpotService.deleteGarageSpot(id);
                     System.out.println("Гаражное место успешно удалено!");
                 } else {
                     System.out.println("Это место еще обслуживает заказы!");

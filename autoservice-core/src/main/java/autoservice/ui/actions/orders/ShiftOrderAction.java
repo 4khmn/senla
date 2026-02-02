@@ -1,20 +1,18 @@
 package autoservice.ui.actions.orders;
 
-import autoservice.model.AutoService;
+import autoservice.model.service.OrderService;
 import autoservice.ui.actions.IAction;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Scanner;
-
+@RequiredArgsConstructor
 public class ShiftOrderAction implements IAction {
-    private final AutoService service;
+    private final OrderService orderService;
 
-    public ShiftOrderAction(AutoService autoService) {
-        this.service = autoService;
-    }
 
     @Override
     public void execute() {
-        if (service.getOrdersCount() == 0) {
+        if (orderService.getOrdersCount() == 0) {
             System.out.println("Список заказов пуст.");
             return;
         }
@@ -26,7 +24,7 @@ public class ShiftOrderAction implements IAction {
             int durationInHours = sc.nextInt();
             if (durationInHours > 0) {
                 try {
-                    if (service.shiftOrder(id, durationInHours)) {
+                    if (orderService.shiftOrder(id, durationInHours)) {
                         System.out.println("Заказ успешно сдвинут.");
                     } else {
                         System.out.println("Id заказа введено не верно.");

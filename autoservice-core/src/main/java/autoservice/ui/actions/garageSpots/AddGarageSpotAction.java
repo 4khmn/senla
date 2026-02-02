@@ -1,17 +1,15 @@
 package autoservice.ui.actions.garageSpots;
 
-import autoservice.model.AutoService;
 import autoservice.model.exceptions.DBException;
+import autoservice.model.service.GarageSpotService;
 import autoservice.ui.actions.IAction;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Scanner;
-
+@RequiredArgsConstructor
 public class AddGarageSpotAction implements IAction {
-    private final AutoService service;
+    private final GarageSpotService garageSpotService;
 
-    public AddGarageSpotAction(AutoService autoService) {
-        this.service = autoService;
-    }
     @Override
     public void execute() {
 
@@ -50,13 +48,13 @@ public class AddGarageSpotAction implements IAction {
         }
 
         try {
-            service.addGarageSpot(size, hasLift, hasPit);
+            garageSpotService.addGarageSpot(size, hasLift, hasPit);
         } catch (DBException e) {
             System.out.println(e.getMessage());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         System.out.println("Гаражное место добавлено!");
-        System.out.println("Всего доступных гаражных мест: " + service.getGarageSpotsCount());
+        System.out.println("Всего доступных гаражных мест: " + garageSpotService.getGarageSpotsCount());
     }
 }

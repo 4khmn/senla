@@ -1,21 +1,19 @@
 package autoservice.ui.actions.general;
 
-import autoservice.model.AutoService;
 import autoservice.model.exceptions.DBException;
+import autoservice.model.service.io.exports.MastersCsvExportService;
 import autoservice.ui.actions.IAction;
+import lombok.RequiredArgsConstructor;
 
 import java.io.IOException;
-
+@RequiredArgsConstructor
 public class CsvExportMasterAction implements IAction {
-    private final AutoService service;
+    private final MastersCsvExportService mastersCsvExportService;
 
-    public CsvExportMasterAction(AutoService service) {
-        this.service = service;
-    }
     @Override
     public void execute() {
         try {
-            service.exportMasters();
+            mastersCsvExportService.export();
             System.out.println("Данные успешно экспортированы! Они лежат по пути  <data/masters.csv>");
         } catch (IOException e) {
             System.out.println("Файл не найден.");

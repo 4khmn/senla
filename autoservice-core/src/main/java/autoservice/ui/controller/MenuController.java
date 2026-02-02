@@ -1,28 +1,22 @@
 package autoservice.ui.controller;
 
-import autoservice.model.AutoService;
-import autoservice.model.io.serialization.SerializationService;
+import autoservice.model.service.io.serialization.SerializationDTO;
+import autoservice.model.service.io.serialization.SerializationService;
 import autoservice.ui.factory.ConsoleMenuFactory;
 import autoservice.ui.factory.IMenuFactory;
 import autoservice.ui.menu.Navigator;
-import config.annotation.Component;
-import config.annotation.Inject;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 @Component
+@RequiredArgsConstructor
 public class MenuController {
-    private AutoService service;
+    private final SerializationDTO dto;
     private final SerializationService serializer;
     private final IMenuFactory factory;
     private final Navigator navigator;
 
-    @Inject
-    public MenuController(AutoService service,  SerializationService serializer, Navigator navigator, ConsoleMenuFactory menuFactory) {
-        this.serializer = serializer;
-        this.service = service;
-        this.navigator = navigator;
-        this.factory = menuFactory;
-    }
 
     public void run() {
         navigator.setCurrentMenu(factory.createMainMenu());
@@ -43,7 +37,7 @@ public class MenuController {
         }
 
         try {
-            serializer.saveStateToFile(service, "autoservice.json");
+            serializer.saveStateToFile(dto, "autoservice.json");
         } catch (Exception e) {
             System.out.println("Ошибка сохранения: " + e.getMessage());
         }

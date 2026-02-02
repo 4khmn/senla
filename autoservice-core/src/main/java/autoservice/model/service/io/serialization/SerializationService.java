@@ -1,16 +1,15 @@
-package autoservice.model.io.serialization;
+package autoservice.model.service.io.serialization;
 
-import autoservice.model.AutoService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import config.annotation.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
 
-@Component
+@Service
 public class SerializationService {
 
     private final ObjectMapper mapper;
@@ -26,8 +25,8 @@ public class SerializationService {
     }
 
 
-    public void saveStateToFile(AutoService service, String filename) throws IOException {
-        mapper.writeValue(new File(filename), service);
+    public void saveStateToFile(SerializationDTO dto, String filename) throws IOException {
+        mapper.writeValue(new File(filename), dto);
     }
 
 

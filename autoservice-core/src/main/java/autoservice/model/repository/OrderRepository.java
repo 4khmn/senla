@@ -7,18 +7,19 @@ import autoservice.model.enums.OrderSortField;
 import autoservice.model.enums.OrderStatus;
 import autoservice.model.exceptions.DBException;
 import autoservice.model.utils.HibernateUtil;
-import config.annotation.Component;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.TreeSet;
-@Component
+@Repository
 @Slf4j
-public class OrderDAO extends HibernateAbstractDAO<Order, Long> {
+public class OrderRepository extends HibernateAbstractDAO<Order, Long> {
 
-    public OrderDAO() {
+    public OrderRepository() {
         super(Order.class);
     }
     public List<Order> findAll() {

@@ -2,13 +2,13 @@ package autoservice.model.repository;
 
 import autoservice.model.entities.GarageSpot;
 import autoservice.model.utils.HibernateUtil;
-import config.annotation.Component;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
-@Component
-public class GarageSpotDAO extends HibernateAbstractDAO<GarageSpot, Long> {
-    public GarageSpotDAO() {
+@Repository
+public class GarageSpotRepository extends HibernateAbstractDAO<GarageSpot, Long> {
+    public GarageSpotRepository() {
         super(GarageSpot.class);
     }
 

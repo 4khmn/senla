@@ -1,16 +1,14 @@
-package autoservice.model.io.exports;
+package autoservice.model.service.io.exports;
 
 import autoservice.model.entities.GarageSpot;
 import autoservice.model.service.GarageSpotService;
-import config.annotation.Component;
-import config.annotation.Inject;
+import org.springframework.stereotype.Service;
 
-@Component
-public class GarageSpotsCsvExport extends CsvExport {
+@Service
+public class GarageSpotsCsvExportService extends CsvExport {
 
     private final GarageSpotService garageSpotService;
-    @Inject
-    public GarageSpotsCsvExport(GarageSpotService manager) {
+    public GarageSpotsCsvExportService(GarageSpotService manager) {
         super("id,size,hasLift,hasPit", "garageSpots.csv");
         this.garageSpotService = manager;
     }
