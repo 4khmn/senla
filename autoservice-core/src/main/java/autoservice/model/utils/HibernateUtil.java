@@ -15,7 +15,7 @@ public class HibernateUtil {
     static {
         try {
             sessionFactory = new Configuration()
-                    .configure("hibernate.cfg.xml")
+                    .configure("hibernate/hibernate.cfg.xml")
                     .addAnnotatedClass(Master.class)
                     .addAnnotatedClass(Order.class)
                     .addAnnotatedClass(GarageSpot.class)

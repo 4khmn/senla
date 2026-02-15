@@ -125,14 +125,14 @@ public class Master implements Identifiable {
             LocalDateTime candidateEnd = candidateStart.plusHours(durationInHours);
 
             if (next == null || candidateEnd.isBefore(next.getStart())) {
-                if (candidateStart.isAfter(from)){
+                if (candidateStart.isAfter(from)) {
                     return candidateStart;
-                } else{
+                } else {
                     return from;
                 }
             }
         }
-        if(calendar.last().getEnd().isAfter(from)) {
+        if (calendar.last().getEnd().isAfter(from)) {
             return calendar.last().getEnd();
         } else {
             return from;

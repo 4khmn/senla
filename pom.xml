@@ -75,7 +75,7 @@
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>3.6.0</version>
                 <configuration>
-                    <configLocation>autoservice-core/src/main/resources/checkstyle.xml</configLocation>
+                    <configLocation>autoservice-core/src/main/resources/code-style/checkstyle.xml</configLocation>
                     <consoleOutput>true</consoleOutput>
                     <failsOnError>true</failsOnError>
                     <linkXRef>false</linkXRef>

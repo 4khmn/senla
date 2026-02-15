@@ -57,6 +57,6 @@
     </module>
 
     <module name="SuppressionFilter">
-        <property name="file" value="autoservice-core/src/main/resources/suppressions.xml"/>
+        <property name="file" value="autoservice-core/src/main/resources/code-style/suppressions.xml"/>
     </module>
 </module>

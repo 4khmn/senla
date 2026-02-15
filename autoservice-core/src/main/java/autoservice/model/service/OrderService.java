@@ -227,7 +227,7 @@ public class OrderService {
 
     public long addOrderWithCurrentMaster(String description, int durationInHours, BigDecimal price, Long masterId) {
         Master master = masterRepository.findById(masterId);
-        if (master == null){
+        if (master == null) {
             return -1;
         }
         LocalDateTime now = LocalDateTime.now();
