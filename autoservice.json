@@ -1,107 +1,43 @@
 {
   "garageSpots" : [ {
-    "id" : 81,
-    "size" : 100.0,
+    "id" : 1,
+    "size" : 20.5,
     "hasLift" : true,
-    "hasPit" : true,
+    "hasPit" : false,
     "calendar" : [ {
-      "start" : "2026-02-01T13:20:28.033592",
-      "end" : "2026-02-01T18:20:28.033592"
-    }, {
-      "start" : "2026-02-01T18:20:28.033592",
-      "end" : "2026-02-01T23:20:28.033592"
+      "start" : "2026-01-02T10:00:00",
+      "end" : "2026-01-02T14:00:00"
     } ]
   }, {
-    "id" : 82,
-    "size" : 100.0,
-    "hasLift" : true,
+    "id" : 2,
+    "size" : 18.0,
+    "hasLift" : false,
     "hasPit" : true,
-    "calendar" : [ {
-      "start" : "2026-02-01T13:20:31.501664",
-      "end" : "2026-02-01T19:20:31.501664"
-    }, {
-      "start" : "2026-02-01T19:20:31.501664",
-      "end" : "2026-02-01T22:20:31.501664"
-    }, {
-      "start" : "2026-02-01T22:20:31.501664",
-      "end" : "2026-02-02T03:20:31.501664"
-    } ]
+    "calendar" : [ ]
   } ],
   "orders" : [ {
-    "id" : 78,
-    "description" : "1",
-    "startTime" : "2026-02-01T13:20:28.033592",
-    "endTime" : "2026-02-01T18:20:28.033592",
-    "orderStatus" : "OPEN",
-    "price" : 5.00,
-    "createdAt" : "2026-02-01T13:20:28.058592",
-    "garageSpotId" : 81,
-    "masterId" : 9
-  }, {
-    "id" : 79,
-    "description" : "2",
-    "startTime" : "2026-02-01T13:20:31.501664",
-    "endTime" : "2026-02-01T19:20:31.501664",
-    "orderStatus" : "OPEN",
-    "price" : 1.00,
-    "createdAt" : "2026-02-01T13:20:31.507661",
-    "garageSpotId" : 82,
-    "masterId" : 10
-  }, {
-    "id" : 81,
-    "description" : "4",
-    "startTime" : "2026-02-01T18:20:28.033592",
-    "endTime" : "2026-02-01T23:20:28.033592",
-    "orderStatus" : "OPEN",
-    "price" : 1.00,
-    "createdAt" : "2026-02-01T13:21:49.105377",
-    "garageSpotId" : 81,
-    "masterId" : 9
-  }, {
-    "id" : 80,
-    "description" : "3",
-    "startTime" : "2026-02-01T19:20:31.501664",
-    "endTime" : "2026-02-01T22:20:31.501664",
-    "orderStatus" : "OPEN",
-    "price" : 1.00,
-    "createdAt" : "2026-02-01T13:21:32.454006",
-    "garageSpotId" : 82,
-    "masterId" : 10
-  }, {
-    "id" : 82,
-    "description" : "5",
-    "startTime" : "2026-02-01T22:20:31.501664",
-    "endTime" : "2026-02-02T03:20:31.501664",
-    "orderStatus" : "OPEN",
-    "price" : 1.00,
-    "createdAt" : "2026-02-01T13:22:00.680884",
-    "garageSpotId" : 82,
-    "masterId" : 10
+    "id" : 1,
+    "description" : "Engine repair",
+    "startTime" : "2026-01-02T10:00:00",
+    "endTime" : "2026-01-02T14:00:00",
+    "orderStatus" : "CLOSED",
+    "price" : 15000.00,
+    "createdAt" : "2026-02-15T13:31:03.008813",
+    "masterId" : 1,
+    "garageSpotId" : 1
   } ],
   "masters" : [ {
-    "id" : 9,
-    "name" : "денис",
-    "salary" : 10000.00,
+    "id" : 1,
+    "name" : "Ivan Petrov",
+    "salary" : 50000.00,
     "calendar" : [ {
-      "start" : "2026-02-01T13:20:28.033592",
-      "end" : "2026-02-01T18:20:28.033592"
-    }, {
-      "start" : "2026-02-01T18:20:28.033592",
-      "end" : "2026-02-01T23:20:28.033592"
+      "start" : "2026-01-02T10:00:00",
+      "end" : "2026-01-02T14:00:00"
     } ]
   }, {
-    "id" : 10,
-    "name" : "макс",
-    "salary" : 10000.00,
-    "calendar" : [ {
-      "start" : "2026-02-01T13:20:31.501664",
-      "end" : "2026-02-01T19:20:31.501664"
-    }, {
-      "start" : "2026-02-01T19:20:31.501664",
-      "end" : "2026-02-01T22:20:31.501664"
-    }, {
-      "start" : "2026-02-01T22:20:31.501664",
-      "end" : "2026-02-02T03:20:31.501664"
-    } ]
+    "id" : 2,
+    "name" : "Alex Smirnov",
+    "salary" : 60000.00,
+    "calendar" : [ ]
   } ]
 }

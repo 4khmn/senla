@@ -2198,3 +2198,196 @@ Caused by: org.postgresql.util.PSQLException: ОШИБКА: повторяюще
 [15:58:09.363] [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
 [15:58:09.813] [main] INFO  org.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@3249e278] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
 [15:58:09.863] [main] INFO  org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[13:23:07.117] [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.10.Final
+[13:23:07.290] [main] WARN  org.hibernate.orm.deprecation - HHH90000012: Recognized obsolete hibernate namespace http://hibernate.sourceforge.net/hibernate-configuration. Use namespace http://www.hibernate.org/dtd/hibernate-configuration instead.  Support for obsolete DTD/XSD namespaces may be removed at any time.
+[13:23:07.512] [main] INFO  org.hibernate.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+[13:23:07.598] [main] WARN  org.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+[13:23:07.602] [main] INFO  org.hibernate.orm.connections.pooling - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/garage_db]
+[13:23:07.602] [main] INFO  org.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {password=****, user=postgres}
+[13:23:07.602] [main] INFO  org.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+[13:23:07.605] [main] INFO  org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 20 (min=1)
+[13:23:07.822] [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+[13:23:08.400] [main] INFO  org.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@69364b2d] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+[13:23:08.469] [main] INFO  org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[13:23:08.728] [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+[13:23:08.774] [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@68c34db2
+[13:23:08.776] [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+[13:23:09.312] [main] WARN  org.springframework.context.annotation.AnnotationConfigApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'liquibase' defined in autoservice.model.config.LiquibaseConfig: liquibase.exception.LiquibaseException: liquibase.exception.MigrationFailedException: Migration failed for changeset db/changelog/releases/001_create_tables.sql::1::denis:
+     Reason: liquibase.exception.DatabaseException: ОШИБКА: отношение "garage_spot" уже существует [Failed SQL: (0) CREATE TABLE garage_spot (
+    id BIGSERIAL PRIMARY KEY,
+    size DOUBLE PRECISION NOT NULL,
+    has_lift BOOLEAN NOT NULL,
+    has_pit BOOLEAN NOT NULL
+)]
+[13:23:09.313] [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+[13:23:09.428] [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+[13:23:14.916] [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.10.Final
+[13:23:15.061] [main] WARN  org.hibernate.orm.deprecation - HHH90000012: Recognized obsolete hibernate namespace http://hibernate.sourceforge.net/hibernate-configuration. Use namespace http://www.hibernate.org/dtd/hibernate-configuration instead.  Support for obsolete DTD/XSD namespaces may be removed at any time.
+[13:23:15.224] [main] INFO  org.hibernate.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+[13:23:15.338] [main] WARN  org.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+[13:23:15.342] [main] INFO  org.hibernate.orm.connections.pooling - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/garage_db]
+[13:23:15.342] [main] INFO  org.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {password=****, user=postgres}
+[13:23:15.342] [main] INFO  org.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+[13:23:15.344] [main] INFO  org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 20 (min=1)
+[13:23:15.540] [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+[13:23:16.047] [main] INFO  org.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@7675c171] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+[13:23:16.096] [main] INFO  org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[13:23:16.354] [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+[13:23:16.404] [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@5c4f4330
+[13:23:16.406] [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+[13:23:16.961] [main] WARN  org.springframework.context.annotation.AnnotationConfigApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'liquibase' defined in autoservice.model.config.LiquibaseConfig: liquibase.exception.LiquibaseException: liquibase.exception.MigrationFailedException: Migration failed for changeset db/changelog/releases/001_create_tables.sql::1::denis:
+     Reason: liquibase.exception.DatabaseException: ОШИБКА: отношение "garage_spot" уже существует [Failed SQL: (0) CREATE TABLE garage_spot (
+    id BIGSERIAL PRIMARY KEY,
+    size DOUBLE PRECISION NOT NULL,
+    has_lift BOOLEAN NOT NULL,
+    has_pit BOOLEAN NOT NULL
+)]
+[13:23:16.962] [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+[13:23:17.023] [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+[13:25:46.645] [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.10.Final
+[13:25:46.812] [main] WARN  org.hibernate.orm.deprecation - HHH90000012: Recognized obsolete hibernate namespace http://hibernate.sourceforge.net/hibernate-configuration. Use namespace http://www.hibernate.org/dtd/hibernate-configuration instead.  Support for obsolete DTD/XSD namespaces may be removed at any time.
+[13:25:46.990] [main] INFO  org.hibernate.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+[13:25:47.061] [main] WARN  org.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+[13:25:47.064] [main] INFO  org.hibernate.orm.connections.pooling - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/garage_db]
+[13:25:47.064] [main] INFO  org.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {password=****, user=postgres}
+[13:25:47.064] [main] INFO  org.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+[13:25:47.066] [main] INFO  org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 20 (min=1)
+[13:25:47.259] [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+[13:25:47.723] [main] INFO  org.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@5bde57ab] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+[13:25:47.780] [main] INFO  org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[13:25:48.047] [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+[13:25:48.095] [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@67763ebe
+[13:25:48.097] [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+[13:25:48.659] [main] WARN  org.springframework.context.annotation.AnnotationConfigApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'liquibase' defined in autoservice.model.config.LiquibaseConfig: liquibase.exception.LiquibaseException: liquibase.exception.MigrationFailedException: Migration failed for changeset db/changelog/releases/001_create_tables.sql::1::denis:
+     Reason: liquibase.exception.DatabaseException: ОШИБКА: отношение "garage_spot" уже существует [Failed SQL: (0) CREATE TABLE garage_spot (
+    id BIGSERIAL PRIMARY KEY,
+    size DOUBLE PRECISION NOT NULL,
+    has_lift BOOLEAN NOT NULL,
+    has_pit BOOLEAN NOT NULL
+)]
+[13:25:48.659] [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+[13:25:48.701] [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+[13:28:00.619] [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.10.Final
+[13:28:00.761] [main] WARN  org.hibernate.orm.deprecation - HHH90000012: Recognized obsolete hibernate namespace http://hibernate.sourceforge.net/hibernate-configuration. Use namespace http://www.hibernate.org/dtd/hibernate-configuration instead.  Support for obsolete DTD/XSD namespaces may be removed at any time.
+[13:28:00.923] [main] INFO  org.hibernate.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+[13:28:01.041] [main] WARN  org.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+[13:28:01.044] [main] INFO  org.hibernate.orm.connections.pooling - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/garage_db]
+[13:28:01.045] [main] INFO  org.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {password=****, user=postgres}
+[13:28:01.045] [main] INFO  org.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+[13:28:01.047] [main] INFO  org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 20 (min=1)
+[13:28:01.270] [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+[13:28:01.744] [main] INFO  org.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@15e1f8fe] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+[13:28:01.806] [main] INFO  org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[13:28:02.091] [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+[13:28:02.149] [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@29dcdd1c
+[13:28:02.151] [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+[13:28:02.703] [main] WARN  org.springframework.context.annotation.AnnotationConfigApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'liquibase' defined in autoservice.model.config.LiquibaseConfig: liquibase.exception.LiquibaseException: liquibase.exception.MigrationFailedException: Migration failed for changeset db/changelog/releases/001_create_tables.sql::1::denis:
+     Reason: liquibase.exception.DatabaseException: ОШИБКА: отношение "garage_spot" уже существует [Failed SQL: (0) CREATE TABLE garage_spot (
+    id BIGSERIAL PRIMARY KEY,
+    size DOUBLE PRECISION NOT NULL,
+    has_lift BOOLEAN NOT NULL,
+    has_pit BOOLEAN NOT NULL
+)]
+[13:28:02.704] [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+[13:28:02.715] [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+[13:30:18.418] [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.10.Final
+[13:30:18.591] [main] WARN  org.hibernate.orm.deprecation - HHH90000012: Recognized obsolete hibernate namespace http://hibernate.sourceforge.net/hibernate-configuration. Use namespace http://www.hibernate.org/dtd/hibernate-configuration instead.  Support for obsolete DTD/XSD namespaces may be removed at any time.
+[13:30:18.773] [main] INFO  org.hibernate.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+[13:30:18.891] [main] WARN  org.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+[13:30:18.894] [main] INFO  org.hibernate.orm.connections.pooling - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/garage_db]
+[13:30:18.895] [main] INFO  org.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {password=****, user=postgres}
+[13:30:18.895] [main] INFO  org.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+[13:30:18.898] [main] INFO  org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 20 (min=1)
+[13:30:19.099] [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+[13:30:19.626] [main] INFO  org.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@626e0c86] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+[13:30:19.670] [main] INFO  org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[13:30:19.934] [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+[13:30:19.983] [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@17134190
+[13:30:19.985] [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+[13:30:20.521] [main] WARN  org.springframework.context.annotation.AnnotationConfigApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'liquibase' defined in autoservice.model.config.LiquibaseConfig: liquibase.exception.LiquibaseException: liquibase.exception.MigrationFailedException: Migration failed for changeset db/changelog/releases/001_create_tables.sql::1::denis:
+     Reason: liquibase.exception.DatabaseException: ОШИБКА: отношение "garage_spot" уже существует [Failed SQL: (0) CREATE TABLE garage_spot (
+    id BIGSERIAL PRIMARY KEY,
+    size DOUBLE PRECISION NOT NULL,
+    has_lift BOOLEAN NOT NULL,
+    has_pit BOOLEAN NOT NULL
+)]
+[13:30:20.522] [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+[13:30:20.558] [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+[13:31:01.016] [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.10.Final
+[13:31:01.162] [main] WARN  org.hibernate.orm.deprecation - HHH90000012: Recognized obsolete hibernate namespace http://hibernate.sourceforge.net/hibernate-configuration. Use namespace http://www.hibernate.org/dtd/hibernate-configuration instead.  Support for obsolete DTD/XSD namespaces may be removed at any time.
+[13:31:01.321] [main] INFO  org.hibernate.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+[13:31:01.438] [main] WARN  org.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+[13:31:01.442] [main] INFO  org.hibernate.orm.connections.pooling - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/garage_db]
+[13:31:01.442] [main] INFO  org.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {password=****, user=postgres}
+[13:31:01.442] [main] INFO  org.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+[13:31:01.445] [main] INFO  org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 20 (min=1)
+[13:31:01.638] [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+[13:31:02.135] [main] INFO  org.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@9cfc77] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+[13:31:02.194] [main] INFO  org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[13:31:02.442] [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+[13:31:02.488] [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@653a5967
+[13:31:02.490] [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+[13:31:18.713] [main] INFO  autoservice.model.service.OrderService - Sorting orders by decision=BY_CREATION_DATE
+[13:31:18.739] [main] INFO  autoservice.model.service.OrderService - Orders successfully sorted by decision=BY_CREATION_DATE
+[13:35:12.811] [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.10.Final
+[13:35:12.958] [main] WARN  org.hibernate.orm.deprecation - HHH90000012: Recognized obsolete hibernate namespace http://hibernate.sourceforge.net/hibernate-configuration. Use namespace http://www.hibernate.org/dtd/hibernate-configuration instead.  Support for obsolete DTD/XSD namespaces may be removed at any time.
+[13:35:13.121] [main] INFO  org.hibernate.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+[13:35:13.235] [main] WARN  org.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+[13:35:13.238] [main] INFO  org.hibernate.orm.connections.pooling - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/garage_db]
+[13:35:13.239] [main] INFO  org.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {password=****, user=postgres}
+[13:35:13.239] [main] INFO  org.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+[13:35:13.241] [main] INFO  org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 20 (min=1)
+[13:35:13.439] [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+[13:35:13.922] [main] INFO  org.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@22ead351] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+[13:35:13.972] [main] INFO  org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[13:35:14.245] [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+[13:35:14.296] [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@634aa81e
+[13:35:14.297] [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+[13:37:56.731] [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.10.Final
+[13:37:56.877] [main] WARN  org.hibernate.orm.deprecation - HHH90000012: Recognized obsolete hibernate namespace http://hibernate.sourceforge.net/hibernate-configuration. Use namespace http://www.hibernate.org/dtd/hibernate-configuration instead.  Support for obsolete DTD/XSD namespaces may be removed at any time.
+[13:37:57.043] [main] INFO  org.hibernate.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+[13:37:57.159] [main] WARN  org.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+[13:37:57.162] [main] INFO  org.hibernate.orm.connections.pooling - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/garage_db]
+[13:37:57.163] [main] INFO  org.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {password=****, user=postgres}
+[13:37:57.163] [main] INFO  org.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+[13:37:57.165] [main] INFO  org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 20 (min=1)
+[13:37:57.344] [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+[13:37:57.828] [main] INFO  org.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@697a0948] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+[13:37:57.881] [main] INFO  org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[13:37:58.142] [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+[13:37:58.188] [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@3f3c8b60
+[13:37:58.189] [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+[13:38:04.045] [main] INFO  autoservice.model.service.OrderService - Sorting orders by decision=BY_CREATION_DATE
+[13:38:04.070] [main] INFO  autoservice.model.service.OrderService - Orders successfully sorted by decision=BY_CREATION_DATE
+[13:40:05.112] [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.10.Final
+[13:40:05.298] [main] WARN  org.hibernate.orm.deprecation - HHH90000012: Recognized obsolete hibernate namespace http://hibernate.sourceforge.net/hibernate-configuration. Use namespace http://www.hibernate.org/dtd/hibernate-configuration instead.  Support for obsolete DTD/XSD namespaces may be removed at any time.
+[13:40:05.475] [main] INFO  org.hibernate.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+[13:40:05.549] [main] WARN  org.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+[13:40:05.553] [main] INFO  org.hibernate.orm.connections.pooling - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/garage_db]
+[13:40:05.553] [main] INFO  org.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {password=****, user=postgres}
+[13:40:05.553] [main] INFO  org.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+[13:40:05.556] [main] INFO  org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 20 (min=1)
+[13:40:05.736] [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+[13:40:06.216] [main] INFO  org.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@4ef4f627] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+[13:40:06.272] [main] INFO  org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[13:40:06.545] [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+[13:40:06.596] [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@7f51f588
+[13:40:06.597] [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+[13:40:27.191] [main] INFO  autoservice.model.service.OrderService - Sorting orders by decision=BY_CREATION_DATE
+[13:40:27.208] [main] INFO  autoservice.model.service.OrderService - Orders successfully sorted by decision=BY_CREATION_DATE
+[13:41:26.866] [main] INFO  autoservice.model.service.MasterService - Sorting masters by decision=BY_NAME
+[13:41:26.869] [main] INFO  autoservice.model.service.MasterService - Masters successfully sorted by decision=BY_NAME
+[13:42:14.468] [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.10.Final
+[13:42:14.615] [main] WARN  org.hibernate.orm.deprecation - HHH90000012: Recognized obsolete hibernate namespace http://hibernate.sourceforge.net/hibernate-configuration. Use namespace http://www.hibernate.org/dtd/hibernate-configuration instead.  Support for obsolete DTD/XSD namespaces may be removed at any time.
+[13:42:14.781] [main] INFO  org.hibernate.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+[13:42:14.892] [main] WARN  org.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+[13:42:14.895] [main] INFO  org.hibernate.orm.connections.pooling - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/garage_db]
+[13:42:14.896] [main] INFO  org.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {password=****, user=postgres}
+[13:42:14.896] [main] INFO  org.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+[13:42:14.899] [main] INFO  org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 20 (min=1)
+[13:42:15.183] [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+[13:42:15.704] [main] INFO  org.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@50b734c4] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+[13:42:15.755] [main] INFO  org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[13:42:16.028] [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+[13:42:16.076] [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@37d0d373
+[13:42:16.077] [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.

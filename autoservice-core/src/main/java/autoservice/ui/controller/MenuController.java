@@ -2,7 +2,6 @@ package autoservice.ui.controller;
 
 import autoservice.model.service.io.serialization.SerializationDTO;
 import autoservice.model.service.io.serialization.SerializationService;
-import autoservice.ui.factory.ConsoleMenuFactory;
 import autoservice.ui.factory.IMenuFactory;
 import autoservice.ui.menu.Navigator;
 import lombok.RequiredArgsConstructor;
