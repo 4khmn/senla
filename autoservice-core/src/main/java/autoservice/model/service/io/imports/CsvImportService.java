@@ -1,7 +1,8 @@
 package autoservice.model.service.io.imports;
 
-import autoservice.model.config.PropertyConfig;
-import autoservice.model.utils.HibernateUtil;
+import autoservice.model.dto.create.GarageSpotCreateDto;
+import autoservice.model.dto.create.MasterCreateDto;
+import autoservice.model.utils.PropertyUtil;
 import autoservice.model.entities.GarageSpot;
 import autoservice.model.entities.Master;
 import autoservice.model.entities.Order;
@@ -14,9 +15,8 @@ import autoservice.model.service.MasterService;
 import autoservice.model.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -30,19 +30,15 @@ public class CsvImportService {
     private  final OrderService orderService;
     private final GarageSpotService garageSpotService;
     private final MasterService masterService;
-    private final PropertyConfig propertyConfig;
+    private final PropertyUtil propertyUtil;
 
     private final String garageSpotHeader = "id,size,hasLift,hasPit";
     private final String masterHeader = "id,name,salary";
     private final String orderHeader = "id,description,masterId,garageSpotId,startTime,endTime,orderStatus,price";
 
-
-    public boolean importMasters() throws ImportException, CsvParsingException {
-        log.info("Import masters started");
-        Session session = HibernateUtil.getSession();
-        Transaction transaction = null;
+    @Transactional
+    public void importMasters() {
         try {
-            transaction = session.beginTransaction();
             try (InputStream input = getClass().getClassLoader()
                     .getResourceAsStream("data/masters.csv")) {
                 if (input == null) {
@@ -54,7 +50,7 @@ public class CsvImportService {
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
                     String header = reader.readLine();
                     if (header == null) {
-                        return false;
+                        throw new ImportException("Файл пуст");
                     }
                     if (!header.equals(masterHeader)) {
                         log.error("Invalid header in master file");
@@ -78,38 +74,26 @@ public class CsvImportService {
                             log.error("Invalid master file line: {}", line);
                             throw new CsvParsingException("Ошибка в строке (line - " + line + ")");
                         }
-                        Master master = masterService.getMasterById(id);
-                        if (master != null) {
+                        Master master = masterService.getMasterByIdImport(id);
+                        if  (master != null) {
                             master.setName(name);
                             master.setSalary(salary);
                         } else {
-                            masterService.addMasterFromImport(name, salary);
+                            masterService.addMaster(new MasterCreateDto(name, salary));
                         }
                     }
                 }
             }
 
-            transaction.commit();
-            log.info("Import masters finished successfully");
-            return true;
 
         } catch (Exception e) {
-            if (transaction != null && transaction.isActive()) {
-                transaction.rollback();
-            }
             log.error("Import masters failed", e);
             throw new ImportException("Импорт не выполнен: " + e.getMessage());
-
         }
     }
-
-    public boolean importGarageSpots() throws ImportException, CsvParsingException, IllegalGarageSpotSize {
-        log.info("Import garage spots started");
-        Session session = HibernateUtil.getSession();
-        Transaction transaction = null;
+    @Transactional
+    public void importGarageSpots() {
         try {
-            transaction = session.beginTransaction();
-
             try (InputStream input = getClass().getClassLoader()
                     .getResourceAsStream("data/garageSpots.csv")) {
                 if (input == null) {
@@ -120,7 +104,7 @@ public class CsvImportService {
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
                     String header = reader.readLine();
                     if (header == null) {
-                        return false;
+                        throw new ImportException("Файл пуст");
                     }
                     if (!header.equals(garageSpotHeader)) {
                         log.error("Invalid header in garage spot file");
@@ -150,14 +134,14 @@ public class CsvImportService {
                             log.error("Invalid garage spot size in line: {}", line);
                             throw new IllegalGarageSpotSize("Минимальный размер гаража - 8 (line - " + line + ")");
                         } else {
-                            GarageSpot garageSpot = garageSpotService.getGarageSpotById(id);
+                            GarageSpot garageSpot = garageSpotService.getGarageSpotByIdImport(id);
                             if (garageSpot != null) {
                                 garageSpot.setSize(size);
                                 garageSpot.setHasLift(hasLift);
                                 garageSpot.setHasPit(hasPit);
                             } else {
-                                if (propertyConfig.isGarageSpotAllowToAddRemove()) {
-                                    garageSpotService.addGarageSpotFromImport(size, hasLift, hasPit);
+                                if (propertyUtil.isGarageSpotAllowToAddRemove()) {
+                                    garageSpotService.addGarageSpot(new GarageSpotCreateDto(size, hasLift, hasPit));
                                 } else {
                                     log.error("Immpossible to add due properties file permission");
                                     throw new CsvParsingException("невозможно добавить из за properties (line - " + line + ")");
@@ -167,26 +151,16 @@ public class CsvImportService {
                     }
                 }
             }
-            transaction.commit();
-            log.info("Import garage spots finished successfully");
-            return true;
         } catch (Exception e) {
-            if (transaction != null && transaction.isActive()) {
-                transaction.rollback();
-            }
             log.error("Import garage spots failed", e);
             throw new ImportException("Импорт не выполнен: " + e.getMessage());
 
         }
     }
 
-
-    public boolean importOrders() throws ImportException, CsvParsingException {
-        log.info("Import orders started");
-        Session session = HibernateUtil.getSession();
-        Transaction transaction = null;
+    @Transactional
+    public void importOrders() {
         try {
-            transaction = session.beginTransaction();
             try (InputStream input = getClass().getClassLoader()
                     .getResourceAsStream("data/orders.csv")) {
                 if (input == null) {
@@ -196,7 +170,7 @@ public class CsvImportService {
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
                     String header = reader.readLine();
                     if (header == null) {
-                        return false;
+                        throw new ImportException("Файл пуст");
                     }
                     if (!header.equals(orderHeader)) {
                         log.error("Invalid header in orders file");
@@ -231,22 +205,25 @@ public class CsvImportService {
                             log.error("Invalid orders file line: {}", line);
                             throw new CsvParsingException("Ошибка в строке (line - " + line + ")\n" + e.getMessage());
                         }
-
+                        Order order = orderService.getOrderByIdImport(id);
                         //если такой ордер уже есть - меняем его поля
-                        Order order = orderService.getOrderById(id);
                         if (order != null) {
                             order.setOrderStatus(orderStatus);
                             order.setPrice(price);
                             order.setDescription(description);
-                            Master master = masterService.getMasterById(masterId);
-                            GarageSpot garageSpot = garageSpotService.getGarageSpotById(garageId);
+                            Master master = masterService.getMasterByIdImport(masterId);
+                            GarageSpot garageSpot = garageSpotService.getGarageSpotByIdImport(garageId);
+                            if (master == null || garageSpot == null) {
+                                //невалидный мастер или гараж
+                                log.error("Invalid master or garage spot, line: {}", line);
+                                throw new ImportException("Невалидный мастер или гараж (line - " + line + ")");
+                            }
                             if (master.getId() == order.getMasterId()) {
                                 master = order.getMaster();
                             }
                             if (garageSpot.getId() == order.getGarageSpotId()) {
                                 garageSpot = order.getGarageSpot();
                             }
-                            if (master != null && garageSpot != null) {
                                 order.getMaster().freeTimeSlot(order.getStartTime(), order.getEndTime());
                                 order.getGarageSpot().freeTimeSlot(order.getStartTime(), order.getEndTime());
                                 if (master.isAvailable(startTime, endTime) && garageSpot.isAvailable(startTime, endTime)) {
@@ -263,15 +240,10 @@ public class CsvImportService {
                                     log.error("Impossible to add due masters or garage spot schedule, line: {}", line);
                                     throw new ImportException("Нельзя изменить из-за расписания мастера или гаража (line - " + line + ")");
                                 }
-                            } else {
-                                //невалидный мастер или гараж
-                                log.error("Invalid master or garage spot, line: {}", line);
-                                throw new ImportException("Невалидный мастер или гараж (line - " + line + ")");
-                            }
                         } else {
                             //новый заказ
-                            Master master = masterService.getMasterById(masterId);
-                            GarageSpot garageSpot = garageSpotService.getGarageSpotById(garageId);
+                            Master master = masterService.getMasterByIdImport(masterId);
+                            GarageSpot garageSpot = garageSpotService.getGarageSpotByIdImport(garageId);
                             if (master != null && garageSpot != null) {
                                 if (master.isAvailable(startTime, endTime) && garageSpot.isAvailable(startTime, endTime)) {
                                     orderService.addOrderFromImport(description, master, garageSpot, startTime, endTime, price);
@@ -289,13 +261,7 @@ public class CsvImportService {
                     }
                 }
             }
-            transaction.commit();
-            log.info("Import orders finished successfully");
-            return true;
         } catch (Exception e) {
-            if (transaction != null && transaction.isActive()) {
-                transaction.rollback();
-            }
             log.error("Import orders failed", e);
             throw new ImportException("Импорт не выполнен: " + e.getMessage());
         }

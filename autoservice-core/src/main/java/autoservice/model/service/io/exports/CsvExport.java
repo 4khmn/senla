@@ -1,12 +1,13 @@
 package autoservice.model.service.io.exports;
 
-import lombok.extern.slf4j.Slf4j;
+
+import autoservice.model.exceptions.ExportException;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-@Slf4j
 public abstract class CsvExport {
     protected final String header;
     protected final String fileName;
@@ -15,11 +16,10 @@ public abstract class CsvExport {
         this.header = header;
         this.fileName = fileName;
     }
-
     protected abstract String formatEntity(Object entity);
 
-    public void export() throws IOException {
-        log.info("Start exporting data to {}", fileName);
+    @Transactional(readOnly = true)
+    public void export() {
         File dataDir = new File("data");
         if (!dataDir.exists()) {
             dataDir.mkdirs();
@@ -33,8 +33,9 @@ public abstract class CsvExport {
                 writer.write(formatEntity(entity));
                 writer.newLine();
             }
+        } catch (IOException e) {
+            throw new ExportException("Не удалось записать данные в файл по адресу: " + file.getAbsolutePath(), e);
         }
-        log.info("Data successfully exported to {}", fileName);
     }
 
     protected abstract Iterable<?> getEntities();

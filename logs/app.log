@@ -191,14 +191,14 @@
 [17:36:17.404] [main] INFO  config.DIContainer - Creating instance of AppConfig
 [17:36:17.405] [main] INFO  config.DIContainer - Creating instance of ConsoleMenuFactory
 [17:36:17.407] [main] INFO  config.DIContainer - Creating instance of MenuController
-[17:36:23.650] [main] INFO  autoservice.model.service.GeneralService - Fetching free spots count by date 3000-10-10T10:00
+[17:36:23.650] [main] INFO  autoservice.model.service.ScheduleService - Fetching free spots count by date 3000-10-10T10:00
 [17:36:23.653] [main] INFO  autoservice.model.service.MasterService - Fetching all masters
 [17:36:23.666] [main] INFO  autoservice.model.service.MasterService - All masters successfully found
-[17:36:23.667] [main] INFO  autoservice.model.service.GeneralService - Number of free spots by date 4
-[17:36:57.943] [main] INFO  autoservice.model.service.GeneralService - Fetching free spots count by date 1000-10-10T10:00
+[17:36:23.667] [main] INFO  autoservice.model.service.ScheduleService - Number of free spots by date 4
+[17:36:57.943] [main] INFO  autoservice.model.service.ScheduleService - Fetching free spots count by date 1000-10-10T10:00
 [17:36:57.945] [main] INFO  autoservice.model.service.MasterService - Fetching all masters
 [17:36:57.947] [main] INFO  autoservice.model.service.MasterService - All masters successfully found
-[17:36:57.947] [main] INFO  autoservice.model.service.GeneralService - Number of free spots by date 4
+[17:36:57.947] [main] INFO  autoservice.model.service.ScheduleService - Number of free spots by date 4
 [17:37:53.274] [main] INFO  config.DIContainer - Creating instance of GarageSpotService
 [17:37:53.276] [main] INFO  config.DIContainer - Creating instance of MasterService
 [17:37:53.276] [main] INFO  config.DIContainer - Creating instance of OrderService
@@ -248,8 +248,8 @@
 [17:41:23.800] [main] INFO  config.DIContainer - Creating instance of AppConfig
 [17:41:23.800] [main] INFO  config.DIContainer - Creating instance of ConsoleMenuFactory
 [17:41:23.802] [main] INFO  config.DIContainer - Creating instance of MenuController
-[17:41:26.545] [main] INFO  autoservice.model.service.GeneralService - Fetching closest date by duration 10
-[17:41:26.556] [main] INFO  autoservice.model.service.GeneralService - Closest date with duration=10 successfully found
+[17:41:26.545] [main] INFO  autoservice.model.service.ScheduleService - Fetching closest date by duration 10
+[17:41:26.556] [main] INFO  autoservice.model.service.ScheduleService - Closest date with duration=10 successfully found
 [17:42:51.221] [main] INFO  autoservice.model.repository.GenericDAO - Deleting entity with id=55 from database orders
 [17:42:51.221] [main] INFO  autoservice.model.repository.GenericDAO - Entity with id=55 deleted successfully from database orders
 [17:43:07.772] [main] INFO  autoservice.model.service.OrderService - Canceling order with id=56
@@ -260,7 +260,7 @@
 autoservice.model.exceptions.CsvParsingException: Ошибка в строке (line - 71,21,true,truee)
 Illegal boolean value: truee
 	at autoservice.model.service.io.imports.CsvImportService.importGarageSpots(CsvImportService.java:168)
-	at autoservice.model.service.GeneralService.importGarageSpots(AutoService.java:319)
+	at autoservice.model.service.ScheduleService.importGarageSpots(AutoService.java:319)
 	at autoservice.ui.actions.general.CsvImportGarageSpotsAction.execute(CsvImportGarageSpotsAction.java:20)
 	at autoservice.ui.menu.MenuItem.doAction(MenuItem.java:30)
 	at autoservice.ui.menu.Navigator.navigate(Navigator.java:41)
@@ -470,7 +470,7 @@ Illegal boolean value: truee
 autoservice.model.exceptions.GarageSpotException: Невозможно получить гаражное место с id=70
 	at autoservice.model.service.GarageSpotService.getGarageSpotById(GarageSpotService.java:120)
 	at autoservice.model.service.io.imports.CsvImportService.importGarageSpots(CsvImportService.java:163)
-	at autoservice.model.service.GeneralService.importGarageSpots(AutoService.java:319)
+	at autoservice.model.service.ScheduleService.importGarageSpots(AutoService.java:319)
 	at autoservice.ui.actions.general.CsvImportGarageSpotsAction.execute(CsvImportGarageSpotsAction.java:20)
 	at autoservice.ui.menu.MenuItem.doAction(MenuItem.java:30)
 	at autoservice.ui.menu.Navigator.navigate(Navigator.java:41)
@@ -505,7 +505,7 @@ autoservice.model.exceptions.GarageSpotException: Невозможно полу�
 autoservice.model.exceptions.GarageSpotException: Невозможно получить гаражное место с id=70
 	at autoservice.model.service.GarageSpotService.getGarageSpotById(GarageSpotService.java:121)
 	at autoservice.model.service.io.imports.CsvImportService.importGarageSpots(CsvImportService.java:163)
-	at autoservice.model.service.GeneralService.importGarageSpots(AutoService.java:319)
+	at autoservice.model.service.ScheduleService.importGarageSpots(AutoService.java:319)
 	at autoservice.ui.actions.general.CsvImportGarageSpotsAction.execute(CsvImportGarageSpotsAction.java:20)
 	at autoservice.ui.menu.MenuItem.doAction(MenuItem.java:30)
 	at autoservice.ui.menu.Navigator.navigate(Navigator.java:41)
@@ -596,8 +596,8 @@ autoservice.model.exceptions.GarageSpotException: Невозможно полу�
 [22:21:30.821] [main] INFO  org.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@1d0cac30] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
 [22:21:30.878] [main] INFO  org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
 [22:21:31.017] [main] INFO  autoservice.model.service.GarageSpotService - Fetching free garage spots
-[22:22:14.696] [main] INFO  autoservice.model.service.GeneralService - Fetching free spots count by date 1000-10-10T10:00
-[22:22:14.720] [main] INFO  autoservice.model.service.GeneralService - Number of free spots by date 5
+[22:22:14.696] [main] INFO  autoservice.model.service.ScheduleService - Fetching free spots count by date 1000-10-10T10:00
+[22:22:14.720] [main] INFO  autoservice.model.service.ScheduleService - Number of free spots by date 5
 [22:23:11.827] [main] INFO  autoservice.model.service.GarageSpotService - Fetching free garage spots
 [22:26:47.351] [main] INFO  config.DIContainer - Creating instance of GarageSpotService
 [22:26:47.356] [main] INFO  config.DIContainer - Creating instance of MasterService
@@ -783,7 +783,7 @@ autoservice.model.exceptions.GarageSpotException: Невозможно полу�
 autoservice.model.exceptions.GarageSpotException: Невозможно получить гаражное место с id=70
 	at autoservice.model.service.GarageSpotService.getGarageSpotById(GarageSpotService.java:111)
 	at autoservice.model.service.io.imports.CsvImportService.importGarageSpots(CsvImportService.java:163)
-	at autoservice.model.service.GeneralService.importGarageSpots(AutoService.java:319)
+	at autoservice.model.service.ScheduleService.importGarageSpots(AutoService.java:319)
 	at autoservice.ui.actions.general.CsvImportGarageSpotsAction.execute(CsvImportGarageSpotsAction.java:20)
 	at autoservice.ui.menu.MenuItem.doAction(MenuItem.java:30)
 	at autoservice.ui.menu.Navigator.navigate(Navigator.java:41)
@@ -818,7 +818,7 @@ autoservice.model.exceptions.GarageSpotException: Невозможно полу�
 autoservice.model.exceptions.GarageSpotException: Невозможно получить гаражное место с id=70
 	at autoservice.model.service.GarageSpotService.getGarageSpotById(GarageSpotService.java:111)
 	at autoservice.model.service.io.imports.CsvImportService.importGarageSpots(CsvImportService.java:163)
-	at autoservice.model.service.GeneralService.importGarageSpots(AutoService.java:319)
+	at autoservice.model.service.ScheduleService.importGarageSpots(AutoService.java:319)
 	at autoservice.ui.actions.general.CsvImportGarageSpotsAction.execute(CsvImportGarageSpotsAction.java:20)
 	at autoservice.ui.menu.MenuItem.doAction(MenuItem.java:30)
 	at autoservice.ui.menu.Navigator.navigate(Navigator.java:41)
@@ -829,7 +829,7 @@ autoservice.model.exceptions.GarageSpotException: Невозможно полу�
 autoservice.model.exceptions.MasterException: Невозможно получить мастера с id=1
 	at autoservice.model.service.MasterService.getMasterById(MasterService.java:168)
 	at autoservice.model.service.io.imports.CsvImportService.importMasters(CsvImportService.java:91)
-	at autoservice.model.service.GeneralService.importMasters(AutoService.java:316)
+	at autoservice.model.service.ScheduleService.importMasters(AutoService.java:316)
 	at autoservice.ui.actions.general.CsvImportMastersAction.execute(CsvImportMastersAction.java:19)
 	at autoservice.ui.menu.MenuItem.doAction(MenuItem.java:30)
 	at autoservice.ui.menu.Navigator.navigate(Navigator.java:41)
@@ -842,7 +842,7 @@ java.lang.IllegalStateException: Transaction already active
 	at org.hibernate.internal.AbstractSharedSessionContract.beginTransaction(AbstractSharedSessionContract.java:503)
 	at autoservice.model.service.OrderService.getOrderById(OrderService.java:248)
 	at autoservice.model.service.io.imports.CsvImportService.importOrders(CsvImportService.java:246)
-	at autoservice.model.service.GeneralService.importOrders(AutoService.java:323)
+	at autoservice.model.service.ScheduleService.importOrders(AutoService.java:323)
 	at autoservice.ui.actions.general.CsvImportOrdersAction.execute(CsvImportOrdersAction.java:19)
 	at autoservice.ui.menu.MenuItem.doAction(MenuItem.java:30)
 	at autoservice.ui.menu.Navigator.navigate(Navigator.java:41)
@@ -852,7 +852,7 @@ java.lang.IllegalStateException: Transaction already active
 autoservice.model.exceptions.OrderException: Can't find Order with id=55
 	at autoservice.model.service.OrderService.getOrderById(OrderService.java:261)
 	at autoservice.model.service.io.imports.CsvImportService.importOrders(CsvImportService.java:246)
-	at autoservice.model.service.GeneralService.importOrders(AutoService.java:323)
+	at autoservice.model.service.ScheduleService.importOrders(AutoService.java:323)
 	at autoservice.ui.actions.general.CsvImportOrdersAction.execute(CsvImportOrdersAction.java:19)
 	at autoservice.ui.menu.MenuItem.doAction(MenuItem.java:30)
 	at autoservice.ui.menu.Navigator.navigate(Navigator.java:41)
@@ -893,7 +893,7 @@ autoservice.model.exceptions.OrderException: Can't find Order with id=55
 autoservice.model.exceptions.GarageSpotException: Невозможно получить гаражное место с id=70
 	at autoservice.model.service.GarageSpotService.getGarageSpotById(GarageSpotService.java:111)
 	at autoservice.model.service.io.imports.CsvImportService.importGarageSpots(CsvImportService.java:163)
-	at autoservice.model.service.GeneralService.importGarageSpots(AutoService.java:319)
+	at autoservice.model.service.ScheduleService.importGarageSpots(AutoService.java:319)
 	at autoservice.ui.actions.general.CsvImportGarageSpotsAction.execute(CsvImportGarageSpotsAction.java:20)
 	at autoservice.ui.menu.MenuItem.doAction(MenuItem.java:30)
 	at autoservice.ui.menu.Navigator.navigate(Navigator.java:41)
@@ -954,7 +954,7 @@ autoservice.model.exceptions.GarageSpotException: Невозможно полу�
 autoservice.model.exceptions.GarageSpotException: Невозможно получить гаражное место с id=70
 	at autoservice.model.service.GarageSpotService.getGarageSpotById(GarageSpotService.java:111)
 	at autoservice.model.service.io.imports.CsvImportService.importGarageSpots(CsvImportService.java:163)
-	at autoservice.model.service.GeneralService.importGarageSpots(AutoService.java:319)
+	at autoservice.model.service.ScheduleService.importGarageSpots(AutoService.java:319)
 	at autoservice.ui.actions.general.CsvImportGarageSpotsAction.execute(CsvImportGarageSpotsAction.java:20)
 	at autoservice.ui.menu.MenuItem.doAction(MenuItem.java:30)
 	at autoservice.ui.menu.Navigator.navigate(Navigator.java:41)
@@ -990,7 +990,7 @@ autoservice.model.exceptions.GarageSpotException: Невозможно полу�
 autoservice.model.exceptions.CsvParsingException: Ошибка в строке (line - 71,21,true,truee)
 Illegal boolean value: truee
 	at autoservice.model.service.io.imports.CsvImportService.importGarageSpots(CsvImportService.java:157)
-	at autoservice.model.service.GeneralService.importGarageSpots(AutoService.java:319)
+	at autoservice.model.service.ScheduleService.importGarageSpots(AutoService.java:319)
 	at autoservice.ui.actions.general.CsvImportGarageSpotsAction.execute(CsvImportGarageSpotsAction.java:20)
 	at autoservice.ui.menu.MenuItem.doAction(MenuItem.java:30)
 	at autoservice.ui.menu.Navigator.navigate(Navigator.java:41)
@@ -1027,7 +1027,7 @@ Illegal boolean value: truee
 autoservice.model.exceptions.MasterException: Невозможно получить мастера с id=1
 	at autoservice.model.service.MasterService.getMasterById(MasterService.java:168)
 	at autoservice.model.service.io.imports.CsvImportService.importMasters(CsvImportService.java:91)
-	at autoservice.model.service.GeneralService.importMasters(AutoService.java:316)
+	at autoservice.model.service.ScheduleService.importMasters(AutoService.java:316)
 	at autoservice.ui.actions.general.CsvImportMastersAction.execute(CsvImportMastersAction.java:19)
 	at autoservice.ui.menu.MenuItem.doAction(MenuItem.java:30)
 	at autoservice.ui.menu.Navigator.navigate(Navigator.java:41)
@@ -1088,7 +1088,7 @@ autoservice.model.exceptions.MasterException: Невозможно получи�
 autoservice.model.exceptions.GarageSpotException: Невозможно добавить новое гаражное место
 	at autoservice.model.service.GarageSpotService.addGarageSpot(GarageSpotService.java:46)
 	at autoservice.model.service.io.imports.CsvImportService.importGarageSpots(CsvImportService.java:170)
-	at autoservice.model.service.GeneralService.importGarageSpots(AutoService.java:319)
+	at autoservice.model.service.ScheduleService.importGarageSpots(AutoService.java:319)
 	at autoservice.ui.actions.general.CsvImportGarageSpotsAction.execute(CsvImportGarageSpotsAction.java:20)
 	at autoservice.ui.menu.MenuItem.doAction(MenuItem.java:30)
 	at autoservice.ui.menu.Navigator.navigate(Navigator.java:41)
@@ -1149,7 +1149,7 @@ autoservice.model.exceptions.GarageSpotException: Невозможно доба�
 autoservice.model.exceptions.MasterException: Невозможно получить мастера с id=1
 	at autoservice.model.service.MasterService.getMasterById(MasterService.java:168)
 	at autoservice.model.service.io.imports.CsvImportService.importOrders(CsvImportService.java:283)
-	at autoservice.model.service.GeneralService.importOrders(AutoService.java:323)
+	at autoservice.model.service.ScheduleService.importOrders(AutoService.java:323)
 	at autoservice.ui.actions.general.CsvImportOrdersAction.execute(CsvImportOrdersAction.java:19)
 	at autoservice.ui.menu.MenuItem.doAction(MenuItem.java:30)
 	at autoservice.ui.menu.Navigator.navigate(Navigator.java:41)
@@ -1188,7 +1188,7 @@ autoservice.model.exceptions.MasterException: Невозможно получи�
 [22:58:58.174] [main] ERROR autoservice.model.service.io.imports.CsvImportService - Import orders failed
 autoservice.model.exceptions.ImportException: Нельзя добавить из-за расписания мастера или гаража (line - 55,1,1,70,2026-01-10T01:28:30.985688,2026-01-10T02:28:30.985688,CLOSED,1000.00)
 	at autoservice.model.service.io.imports.CsvImportService.importOrders(CsvImportService.java:291)
-	at autoservice.model.service.GeneralService.importOrders(AutoService.java:323)
+	at autoservice.model.service.ScheduleService.importOrders(AutoService.java:323)
 	at autoservice.ui.actions.general.CsvImportOrdersAction.execute(CsvImportOrdersAction.java:19)
 	at autoservice.ui.menu.MenuItem.doAction(MenuItem.java:30)
 	at autoservice.ui.menu.Navigator.navigate(Navigator.java:41)
@@ -1632,7 +1632,7 @@ autoservice.model.exceptions.ImportException: Нельзя добавить из
 [00:05:25.541] [main] ERROR autoservice.model.service.io.imports.CsvImportService - Import orders failed
 autoservice.model.exceptions.ImportException: Нельзя добавить из-за расписания мастера или гаража (line - 55,1,1,70,2026-01-10T01:28:30.985688,2026-01-10T02:28:30.985688,CLOSED,1000.00)
 	at autoservice.model.service.io.imports.CsvImportService.importOrders(CsvImportService.java:290)
-	at autoservice.model.service.GeneralService.importOrders(AutoService.java:323)
+	at autoservice.model.service.ScheduleService.importOrders(AutoService.java:323)
 	at autoservice.ui.actions.general.CsvImportOrdersAction.execute(CsvImportOrdersAction.java:19)
 	at autoservice.ui.menu.MenuItem.doAction(MenuItem.java:30)
 	at autoservice.ui.menu.Navigator.navigate(Navigator.java:41)
@@ -1693,7 +1693,7 @@ autoservice.model.exceptions.ImportException: Нельзя добавить из
 [00:09:31.327] [main] ERROR autoservice.model.service.io.imports.CsvImportService - Import orders failed
 autoservice.model.exceptions.ImportException: Нельзя добавить из-за расписания мастера или гаража (line - 55,4,4,72,2026-01-10T01:28:30.985688,2026-01-10T02:28:30.985688,CLOSED,1000.00)
 	at autoservice.model.service.io.imports.CsvImportService.importOrders(CsvImportService.java:292)
-	at autoservice.model.service.GeneralService.importOrders(AutoService.java:323)
+	at autoservice.model.service.ScheduleService.importOrders(AutoService.java:323)
 	at autoservice.ui.actions.general.CsvImportOrdersAction.execute(CsvImportOrdersAction.java:19)
 	at autoservice.ui.menu.MenuItem.doAction(MenuItem.java:30)
 	at autoservice.ui.menu.Navigator.navigate(Navigator.java:41)

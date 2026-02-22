@@ -1,18 +1,20 @@
 package autoservice.model.service;
 
+import autoservice.model.dto.create.GarageSpotCreateDto;
+import autoservice.model.dto.response.GarageSpotResponseDto;
 import autoservice.model.entities.GarageSpot;
-import autoservice.model.exceptions.GarageSpotException;
+import autoservice.model.exceptions.IllegalGarageSpotSize;
+import autoservice.model.exceptions.NotFoundException;
+import autoservice.model.exceptions.PermissionException;
+import autoservice.model.mapper.GarageSpotMapper;
 import autoservice.model.repository.GarageSpotRepository;
 import autoservice.model.repository.OrderRepository;
 import autoservice.model.service.domain.GarageSpotDomainService;
-import autoservice.model.utils.HibernateUtil;
+import autoservice.model.utils.PropertyUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.stereotype.Service;
-
-
+import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ArrayList;
@@ -24,70 +26,39 @@ public class GarageSpotService {
 
     private transient final GarageSpotRepository garageSpotRepository;
     private transient final OrderRepository orderRepository;
+    private transient final GarageSpotMapper mapper;
+    private final PropertyUtil propertyUtil;
 
 
-    //метод для импорта
-    public long addGarageSpotFromImport(double size, boolean hasLift, boolean hasPit) {
-        if (size < 8) {
-            return -1;
-        }
-        GarageSpot garageSpot = new GarageSpot(size, hasLift, hasPit);
-        garageSpotRepository.save(garageSpot);
-        return garageSpot.getId();
-    }
-
-    public long addGarageSpot(double size, boolean hasLift, boolean hasPit) {
-        if (size < 8) {
-            return -1;
-        }
-        Session session = HibernateUtil.getSession();
-        Transaction transaction = null;
-        try {
-            transaction = session.beginTransaction();
-            GarageSpot garageSpot = new GarageSpot(size, hasLift, hasPit);
+    @Transactional
+    public GarageSpotResponseDto addGarageSpot(GarageSpotCreateDto garageSpotCreateDto) {
+        if (propertyUtil.isGarageSpotAllowToAddRemove()) {
+            if (garageSpotCreateDto.size() < 8) {
+                throw new IllegalGarageSpotSize("garage-spot size has to be more than 7");
+            }
+            GarageSpot garageSpot = new GarageSpot(garageSpotCreateDto.size(), garageSpotCreateDto.hasLift(), garageSpotCreateDto.hasPit());
             garageSpotRepository.save(garageSpot);
-            transaction.commit();
-            return garageSpot.getId();
-        } catch (Exception e) {
-            if (transaction != null && transaction.isActive()) {
-                transaction.rollback();
-            }
-            log.error("Error adding new garageSpot", e);
-            throw new GarageSpotException("Impossible to add new garageSpot", e);
+            return mapper.toDto(garageSpot);
+        } else {
+            throw new PermissionException("It is not allowed to add garage-spots due to application.properties!");
         }
     }
 
+    @Transactional
     public void deleteGarageSpot(long id) {
-        Session session = HibernateUtil.getSession();
-        Transaction transaction = null;
-        try {
-            transaction = session.beginTransaction();
+        if (propertyUtil.isGarageSpotAllowToAddRemove()) {
             garageSpotRepository.delete(id);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null && transaction.isActive()) {
-                transaction.rollback();
-            }
-            log.error("Error deleting garageSpot with id={}", id, e);
-            throw new GarageSpotException("Impossible to delete garageSpot with id=" + id, e);
+        } else {
+            throw new PermissionException("It is not allowed to delete garage-spots due to application.properties!");
         }
     }
 
+    @Transactional
     public void update(GarageSpot garageSpot) {
-        Session session = HibernateUtil.getSession();
-        Transaction transaction = null;
-        try {
-            transaction = session.beginTransaction();
-            garageSpotRepository.update(garageSpot);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null && transaction.isActive()) {
-                transaction.rollback();
-            }
-            log.error("Error updating garageSpot with id={}", garageSpot.getId(), e);
-            throw new GarageSpotException("Impossible to update garage spot with id=" + garageSpot.getId(), e);
-        }
+        garageSpotRepository.update(garageSpot);
     }
+
+    @Transactional(readOnly = true)
     public List<GarageSpot> getGarageSpots() {
         List<GarageSpot> spots = garageSpotRepository.findAll();
 
@@ -96,44 +67,47 @@ public class GarageSpotService {
         return GarageSpotDomainService.getGarageSpotsWithCalendar(spots, slots);
     }
 
+    @Transactional(readOnly = true)
     public Long getGarageSpotsCount() {
         return garageSpotRepository.count();
     }
 
     //4
-    public GarageSpot getGarageSpotById(long id) {
-        GarageSpot spot = garageSpotRepository.findById(id);
-        if (spot != null) {
-            spot.setCalendar(
-                    orderRepository.findTimeSlotsByGarageSpot(id)
+    @Transactional(readOnly = true)
+    public GarageSpotResponseDto getGarageSpotById(long id) {
+        GarageSpot spot = garageSpotRepository.findById(id).orElseThrow(
+                () -> new NotFoundException("Garage spot with id=" + id + " not found")
+        );
+        spot.setCalendar(
+                orderRepository.findTimeSlotsByGarageSpot(id)
+        );
+        return mapper.toDto(spot);
+    }
+
+    public GarageSpot getGarageSpotByIdImport(long id) {
+        GarageSpot garageSpot = garageSpotRepository.findById(id).orElse(null);
+        if (garageSpot == null) {
+            return null;
+        } else {
+            garageSpot.setCalendar(
+                    orderRepository.findTimeSlotsByMaster(id)
             );
         }
-        return spot;
+        return garageSpot;
     }
 
     //4 список свободных мест в сервисных гаражах
-    public List<GarageSpot> getFreeSpots() {
+    @Transactional(readOnly = true)
+    public List<GarageSpotResponseDto> getFreeSpots() {
         log.info("Fetching free garage spots");
-        Session session = HibernateUtil.getSession();
-        Transaction transaction = null;
-        try {
-            transaction = session.beginTransaction();
-            List<GarageSpot> freeGarageSpots = new ArrayList<>();
-            List<GarageSpot> garageSpots = getGarageSpots();
-            for (var v : garageSpots) {
-                if (v.isAvailable(LocalDateTime.now(), LocalDateTime.now().plusMinutes(1))) {
-                    freeGarageSpots.add(v);
-                }
+        List<GarageSpot> freeGarageSpots = new ArrayList<>();
+        List<GarageSpot> garageSpots = getGarageSpots();
+        for (var v : garageSpots) {
+            if (v.isAvailable(LocalDateTime.now(), LocalDateTime.now().plusMinutes(1))) {
+                freeGarageSpots.add(v);
             }
-            transaction.commit();
-            log.info("Free garage spots successfully found");
-            return freeGarageSpots;
-        } catch (Exception e) {
-            if (transaction != null && transaction.isActive()) {
-                transaction.rollback();
-            }
-            log.error("Error getting free garage spots", e);
-            throw new GarageSpotException("Impossible to get free spots", e);
         }
+        log.info("Free garage spots successfully found");
+        return freeGarageSpots.stream().map(mapper::toDto).toList();
     }
 }
