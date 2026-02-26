@@ -1,95 +1,70 @@
 package autoservice.model.service;
 
+import autoservice.model.dto.create.MasterCreateDto;
+import autoservice.model.dto.response.MasterResponseDto;
 import autoservice.model.entities.Master;
 import autoservice.model.entities.Order;
 import autoservice.model.enums.MastersSortEnum;
-import autoservice.model.exceptions.MasterException;
+import autoservice.model.exceptions.NotFoundException;
+import autoservice.model.mapper.MasterMapper;
 import autoservice.model.repository.MasterRepository;
 import autoservice.model.repository.OrderRepository;
 import autoservice.model.service.domain.MasterDomainService;
-import autoservice.model.utils.HibernateUtil;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 
 import static java.lang.Math.abs;
 @Service
-@Slf4j
 @RequiredArgsConstructor
 public class MasterService {
     private transient final MasterRepository masterRepository;
     private transient final OrderRepository orderRepository;
+    private transient final MasterMapper mapper;
 
 
     //4 список авто-мастеров
-    public List<Master> mastersSort(MastersSortEnum decision) {
-        log.info("Sorting masters by decision={}", decision);
-        Session session = HibernateUtil.getSession();
-        Transaction transaction = null;
-        try {
-            transaction = session.beginTransaction();
-            List<Master> sortedMasters;
-            switch (decision) {
-                case BY_NAME:
-                    //по алфавиту
-                    sortedMasters = masterRepository.mastersSortByName();
-                    transaction.commit();
-                    break;
-                case BY_EMPLOYMENT:
-                    //по занятости
-                    sortedMasters = getMasters().stream()
-                            .sorted((master1, master2) -> {
-                                int freeMaster1HoursToday = getFreeMasterHoursToday(master1);
-                                int freeMaster2HoursToday = getFreeMasterHoursToday(master2);
-
-
-                                // если оба свободны, сравниваем их по имени
-                                if (freeMaster1HoursToday == freeMaster2HoursToday) {
-                                    return master1.getName().compareTo(master2.getName());
-                                }
-                                //сначала более свободные
-                                if (freeMaster1HoursToday > freeMaster2HoursToday) {
-                                    return -1;
-                                }
-                                if (freeMaster1HoursToday < freeMaster2HoursToday) {
-                                    return 1;
-                                }
-                                return 0;
-                            })
-                            .toList();
-                    transaction.commit();
-                    break;
-                default:
-                    //error
-                    log.error("Invalid decision={}", decision);
-                    throw new IllegalArgumentException("IInvalid decision: " + decision);
-            }
-            log.info("Masters successfully sorted by decision={}", decision);
-            return sortedMasters;
-        } catch (Exception e) {
-            if (transaction != null && transaction.isActive()) {
-                transaction.rollback();
-            }
-            log.error("Error sorting masters by decision={}", decision, e);
-            throw new MasterException("Impossible to sort masters by decision=" + decision, e);
+    @Transactional(readOnly = true)
+    public List<MasterResponseDto> mastersSort(MastersSortEnum decision) {
+        List<Master> sortedMasters;
+        switch (decision) {
+            case BY_NAME:
+                //по алфавиту
+                sortedMasters = masterRepository.mastersSortByName();
+                break;
+            case BY_EMPLOYMENT:
+                //по занятости
+                sortedMasters = getMasters().stream()
+                        .sorted(Comparator.comparingInt(this::getFreeMasterHoursToday)
+                                .reversed() //сначала те, у кого больше свободных часов
+                                .thenComparing(Master::getName)) //затем по имени
+                        .toList();
+                break;
+            default:
+                //error
+                throw new IllegalArgumentException("IInvalid decision: " + decision);
         }
+        return sortedMasters.stream()
+                .map(mapper::toDto)
+                .toList();
     }
 
     //4 мастер, выполняющий конкретный заказ
-    public Master getMasterByOrder(Order order) {
-        log.info("Getting master by order with id{}", order.getId());
+    @Transactional(readOnly = true)
+    public MasterResponseDto getMasterByOrder(Long orderId) {
+        Order order = orderRepository.findById(orderId).orElseThrow(
+                () -> new NotFoundException("Order with id=" + orderId + " not found")
+        );
         Master master = order.getMaster();
-        log.info("Master successfully found by order with master_id={}", master.getId());
-        return master;
+        return mapper.toDto(master);
     }
 
+    @Transactional(readOnly = true)
     public List<Master> getMasters() {
         List<Master> masters = masterRepository.findAll();
         List<Object[]> slots = orderRepository.findTimeSlotsForAllMasters();
@@ -97,66 +72,40 @@ public class MasterService {
         return MasterDomainService.getMastersWithCalendar(masters, slots);
     }
 
-    public long addMasterFromImport(String name, BigDecimal salary) {
-        Master master = new Master(name, salary);
+
+    @Transactional
+    public MasterResponseDto addMaster(MasterCreateDto masterCreateDto) {
+        Master master = new Master(masterCreateDto.name(), masterCreateDto.salary());
         masterRepository.save(master);
-        return master.getId();
+        return mapper.toDto(master);
     }
 
-    public long addMaster(String name, BigDecimal salary) {
-        Session session = HibernateUtil.getSession();
-        Transaction transaction = null;
-        try {
-            transaction = session.beginTransaction();
-            Master master = new Master(name, salary);
-            masterRepository.save(master);
-            transaction.commit();
-            return master.getId();
-        } catch (Exception e) {
-            if (transaction != null && transaction.isActive()) {
-                transaction.rollback();
-            }
-            log.error("Error adding master with name={}, salary={}", name, salary, e);
-            throw new MasterException("impossible to add master", e);
-        }
-    }
-
+    @Transactional
     public void deleteMaster(long id) {
-        Session session = HibernateUtil.getSession();
-        Transaction transaction = null;
-        try {
-            transaction = session.beginTransaction();
-            masterRepository.delete(id);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null && transaction.isActive()) {
-                transaction.rollback();
-            }
-            log.error("Error deleting master with id={}", id, e);
-            throw new MasterException("Impossible to delete master with id=" + id, e);
-        }
+        masterRepository.delete(id);
     }
 
-
+    @Transactional
     public void update(Master master) {
-        Session session = HibernateUtil.getSession();
-        Transaction transaction = null;
-        try {
-            transaction = session.beginTransaction();
-            masterRepository.update(master);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null && transaction.isActive()) {
-                transaction.rollback();
-            }
-            log.error("Error updating master with id={}", master.getId(), e);
-            throw new MasterException("Impossible to update master with id=" + master.getId(), e);
-        }
+        masterRepository.update(master);
     }
 
-    public Master getMasterById(long id) {
-        Master master = masterRepository.findById(id);
-        if (master != null) {
+    @Transactional(readOnly = true)
+    public MasterResponseDto getMasterById(long id) {
+        Master master = masterRepository.findById(id).orElseThrow(
+                () -> new NotFoundException("master with id: " + id + " not found")
+        );
+        master.setCalendar(
+                orderRepository.findTimeSlotsByMaster(id)
+        );
+        return mapper.toDto(master);
+    }
+
+    public Master getMasterByIdImport(long id) {
+        Master master = masterRepository.findById(id).orElse(null);
+        if (master == null) {
+            return null;
+        } else {
             master.setCalendar(
                     orderRepository.findTimeSlotsByMaster(id)
             );
