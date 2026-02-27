@@ -11,4 +11,4 @@ CREATE TABLE orders (
 
     CONSTRAINT fk_master FOREIGN KEY (master_id) REFERENCES master(id),
     CONSTRAINT fk_garage_spot FOREIGN KEY (garage_spot_id) REFERENCES garage_spot(id)
-);
+);wwwwww
