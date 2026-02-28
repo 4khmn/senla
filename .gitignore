@@ -8,4 +8,4 @@ target/
 bin/
 out/
 
-autoservice-core/src/main/resources/properties/secrets.properties
+src/main/resources/properties/secrets.properties
