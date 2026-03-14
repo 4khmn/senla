@@ -6,6 +6,7 @@ import autoservice.model.service.io.exports.OrdersCsvExportService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +22,7 @@ public class DataExportController {
     private final GarageSpotsCsvExportService garageSpotsExportService;
     private final OrdersCsvExportService ordersExportService;
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping("/masters")
     public ResponseEntity<Void> exportMasters() {
         log.info("GET /api/export/masters - initiating masters export to CSV");
@@ -29,6 +31,7 @@ public class DataExportController {
         return ResponseEntity.ok().build();
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping("/garage-spots")
     public ResponseEntity<Void> exportGarageSpots() {
         log.info("GET /api/export/garage-spots - initiating garage spots export to CSV");
@@ -37,6 +40,7 @@ public class DataExportController {
         return ResponseEntity.ok().build();
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping("/orders")
     public ResponseEntity<Void> exportOrders() {
         log.info("GET /api/export/orders - initiating orders export to CSV");

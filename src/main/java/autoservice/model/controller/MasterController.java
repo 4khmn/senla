@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,6 +50,7 @@ public class MasterController {
         return ResponseEntity.ok(masters.stream().map(mapper::toDto).toList());
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PostMapping
     public ResponseEntity<MasterResponseDto> createMaster(@RequestBody MasterCreateDto dto) {
         log.info("POST /api/masters - creating master={}", dto);
@@ -57,6 +59,7 @@ public class MasterController {
         return ResponseEntity.status(HttpStatus.CREATED).body(master);
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMaster(@PathVariable long id) {
         log.info("DELETE /api/masters/{} - deleting master by id={}", id, id);
@@ -75,6 +78,7 @@ public class MasterController {
         return ResponseEntity.ok(masterResponseDtos);
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping("/{id}/active-order")
     public ResponseEntity<OrderResponseDto> getActiveOrder(@PathVariable("id") long masterId) {
         log.info("GET /api/masters/{}/active-order - fetching order by master with id={}", masterId, masterId);

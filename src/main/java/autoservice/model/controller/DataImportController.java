@@ -5,6 +5,7 @@ import autoservice.model.service.io.imports.CsvImportService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +18,7 @@ public class DataImportController {
 
     private final CsvImportService csvImportService;
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PostMapping("/masters")
     public ResponseEntity<Void> importMasters() {
         log.info("POST /api/import/masters - initiating masters import from CSV");
@@ -25,6 +27,7 @@ public class DataImportController {
         return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PostMapping("/garage-spots")
     public ResponseEntity<Void> importGarageSpots() {
         log.info("POST /api/import/garage-spots - initiating garage spots import from CSV");
@@ -33,6 +36,7 @@ public class DataImportController {
         return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PostMapping("/orders")
     public ResponseEntity<Void> importOrders() {
         log.info("POST /api/import/orders - initiating orders import from CSV");

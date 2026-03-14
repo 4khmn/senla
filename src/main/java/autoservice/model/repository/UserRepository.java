@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public class UserRepository extends HibernateAbstractDAO<User, Long>{
+public class UserRepository extends HibernateAbstractDAO<User, Long> {
 
     public UserRepository() {
         super(User.class);
