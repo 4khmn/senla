@@ -35,7 +35,7 @@ public class JwtUtil {
                 .compact();
     }
 
-    public String getNameGromJwt(String token) {
+    public String extractUsername(String token) {
         return parseToken(token)
                 .getBody()
                 .getSubject();
