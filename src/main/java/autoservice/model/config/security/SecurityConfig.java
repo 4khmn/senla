@@ -58,7 +58,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/masters/*/active-orders").hasAuthority("ADMIN")
 
                         .requestMatchers(HttpMethod.DELETE, "/api/orders/*").hasRole("ADMIN")
-                        .requestMatchers("/api/orders").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/orders").hasRole("ADMIN")
                         .requestMatchers("/api/orders/active").hasRole("ADMIN")
                         .requestMatchers("/api/orders/history").hasRole("ADMIN")
 
