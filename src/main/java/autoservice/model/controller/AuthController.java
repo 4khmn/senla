@@ -2,6 +2,7 @@ package autoservice.model.controller;
 
 import autoservice.model.dto.create.UserCreateDto;
 import autoservice.model.dto.request.LoginRequest;
+import autoservice.model.dto.response.LoginResponseDto;
 import autoservice.model.entities.User;
 import autoservice.model.service.UserService;
 import autoservice.model.config.security.JwtUtil;
@@ -28,7 +29,7 @@ public class AuthController {
     private final UserService userService;
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.username(), loginRequest.password())
         );
@@ -36,7 +37,7 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtil.generateToken(authentication);
 
-        return ResponseEntity.ok(jwt);
+        return ResponseEntity.ok(new LoginResponseDto(jwt));
     }
 
     @PostMapping("/register")
