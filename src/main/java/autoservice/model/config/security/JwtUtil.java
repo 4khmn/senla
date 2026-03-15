@@ -1,4 +1,4 @@
-package autoservice.model.utils;
+package autoservice.model.config.security;
 
 import autoservice.model.entities.User;
 import io.jsonwebtoken.Claims;
@@ -18,7 +18,7 @@ public class JwtUtil {
     private static final String SECRET =
             "my-super-secret-key-for-jwt-signing-which-is-very-long";
 
-    private final long expirationMs = 15 * 60 * 1000;
+    private final long expirationMs =  15 * 60 * 1000;
 
     private final SecretKey key = Keys.hmacShaKeyFor(
             SECRET.getBytes(StandardCharsets.UTF_8)
@@ -47,6 +47,8 @@ public class JwtUtil {
             parseToken(token);
             return true;
         } catch (Exception e) {
+            System.err.println("DEBUG: Token invalid! Reason: " + e.getMessage());
+            e.printStackTrace();
             return false;
         }
     }

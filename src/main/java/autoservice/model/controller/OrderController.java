@@ -13,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,7 +63,6 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.CREATED).body(order);
     }
 
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteOrder(@PathVariable long id) {
         log.info("DELETE /api/orders - deleting order={}", id);
@@ -106,7 +104,6 @@ public class OrderController {
         return ResponseEntity.noContent().build();
     }
 
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping
     public ResponseEntity<List<OrderResponseDto>> getAllOrders(
             @RequestParam(name = "sort", defaultValue = "BY_CREATION_DATE") OrdersSortEnum decision) {
@@ -116,7 +113,6 @@ public class OrderController {
         return ResponseEntity.ok(orders);
     }
 
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping("/active")
     public ResponseEntity<List<OrderResponseDto>> getActiveOrders(
             @RequestParam(name = "sort", defaultValue = "BY_CREATION_DATE") ActiveOrdersSortEnum decision) {
@@ -126,7 +122,6 @@ public class OrderController {
         return ResponseEntity.ok(activeOrders);
     }
 
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping("/history")
     public ResponseEntity<List<OrderResponseDto>> getOrdersHistory(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
