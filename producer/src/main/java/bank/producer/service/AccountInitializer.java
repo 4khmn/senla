@@ -6,6 +6,7 @@ import bank.producer.repository.JdbcAccountRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 @Service
+@DependsOn("dataSourceInitializer")
 @RequiredArgsConstructor
 public class AccountInitializer {
     private final AccountRepository accountRepository;
