@@ -1,0 +1,7 @@
+C:\Users\PC_DENIS\Documents\senla\producer\src\main\java\bank\producer\config\DatabaseConfig.java
+C:\Users\PC_DENIS\Documents\senla\producer\src\main\java\bank\producer\config\KafkaProducerConfig.java
+C:\Users\PC_DENIS\Documents\senla\producer\src\main\java\bank\producer\ProducerApplication.java
+C:\Users\PC_DENIS\Documents\senla\producer\src\main\java\bank\producer\repository\AccountRepository.java
+C:\Users\PC_DENIS\Documents\senla\producer\src\main\java\bank\producer\repository\JdbcAccountRepository.java
+C:\Users\PC_DENIS\Documents\senla\producer\src\main\java\bank\producer\service\AccountInitializer.java
+C:\Users\PC_DENIS\Documents\senla\producer\src\main\java\bank\producer\service\MessageGenerator.java

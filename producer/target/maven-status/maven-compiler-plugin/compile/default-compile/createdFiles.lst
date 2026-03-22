@@ -1,0 +1,8 @@
+bank\producer\repository\JdbcAccountRepository$1.class
+bank\producer\config\KafkaProducerConfig.class
+bank\producer\repository\AccountRepository.class
+bank\producer\repository\JdbcAccountRepository.class
+bank\producer\service\MessageGenerator.class
+bank\producer\service\AccountInitializer.class
+bank\producer\ProducerApplication.class
+bank\producer\config\DatabaseConfig.class
