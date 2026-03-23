@@ -25,19 +25,11 @@ public class JdbcAccountRepository implements AccountRepository {
     public void saveAll(List<Account> accounts) {
         String sql = "INSERT INTO accounts (id, balance) VALUES (?, ?)";
 
-        jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
-            @Override
-            public void setValues(PreparedStatement ps, int i) throws SQLException {
-                Account account = accounts.get(i);
-                ps.setLong(1, account.getId());
-                ps.setBigDecimal(2, account.getBalance());
-            }
-
-            @Override
-            public int getBatchSize() {
-                return accounts.size();
-            }
-        });
+        jdbcTemplate.batchUpdate(sql, accounts, accounts.size(),
+                (PreparedStatement ps, Account account) -> {
+                    ps.setLong(1, account.getId());
+                    ps.setBigDecimal(2, account.getBalance());
+                });
     }
 
     @Override

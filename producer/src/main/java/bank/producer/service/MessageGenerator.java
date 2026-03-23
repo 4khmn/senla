@@ -3,9 +3,11 @@ package bank.producer.service;
 import bank.common.TransferMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@DependsOn("dataSourceInitializer")
 @Slf4j
 public class MessageGenerator {
 
@@ -22,7 +25,7 @@ public class MessageGenerator {
     private final KafkaTemplate<String, TransferMessage> kafkaTemplate;
     private final Random random = new Random();
 
-
+    @Transactional("kafkaTransactionManager")
     @Scheduled(fixedDelay = 200)
     public void sendMessage() {
         var accountMap = accountInitializer.getAccountMap();
@@ -48,6 +51,6 @@ public class MessageGenerator {
 
         log.info("[PRODUCER] Sending message: {} | From: {} To: {} Amount: {}",
                 message.getId(), fromId, toId, amount);
-        kafkaTemplate.send("transfer", null, message);
+        kafkaTemplate.send("transfer", UUID.randomUUID().toString(), message);
     }
 }

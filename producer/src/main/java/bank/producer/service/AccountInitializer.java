@@ -2,10 +2,8 @@ package bank.producer.service;
 
 import bank.common.Account;
 import bank.producer.repository.AccountRepository;
-import bank.producer.repository.JdbcAccountRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 
