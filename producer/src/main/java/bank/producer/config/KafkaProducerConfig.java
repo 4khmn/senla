@@ -39,8 +39,8 @@ public class KafkaProducerConfig {
         configProps.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, true);
 
         configProps.put(ProducerConfig.ACKS_CONFIG, "all");
-        DefaultKafkaProducerFactory<String, TransferMessage> factory = new DefaultKafkaProducerFactory<>(configProps);
         configProps.put(ProducerConfig.TRANSACTIONAL_ID_CONFIG, "bank-tx-" + java.util.UUID.randomUUID().toString());
+        DefaultKafkaProducerFactory<String, TransferMessage> factory = new DefaultKafkaProducerFactory<>(configProps);
         factory.setTransactionIdPrefix("bank-tx-");
         return factory;
     }

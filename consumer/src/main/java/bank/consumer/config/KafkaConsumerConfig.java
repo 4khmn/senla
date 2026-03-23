@@ -27,7 +27,7 @@ public class KafkaConsumerConfig {
             bootstrapServers = "localhost:9092";
         }
 
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
 
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "bank-group");
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
@@ -36,6 +36,7 @@ public class KafkaConsumerConfig {
         props.put(ConsumerConfig.FETCH_MIN_BYTES_CONFIG, 50 * 1024);
         props.put(ConsumerConfig.FETCH_MAX_WAIT_MS_CONFIG, 1000);
 
+        props.put(ConsumerConfig.ISOLATION_LEVEL_CONFIG, "read_committed");
         JsonDeserializer<TransferMessage> jsonDeserializer = new JsonDeserializer<>(TransferMessage.class);
         jsonDeserializer.addTrustedPackages("*");
         jsonDeserializer.setUseTypeHeaders(false);
